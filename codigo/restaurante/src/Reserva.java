@@ -1,24 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
+import java.time.LocalDateTime;
 
-package com.mycompany.reserva;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-/**
- *
- * @author Gustavo Delfino
- */
 public class Reserva {
 
     private Cliente cliente;
     private int quantPessoas;
-    Date dataHoraEntrada;
-    Date dataHoraSaida;
+    LocalDateTime dataHoraEntrada;
+    LocalDateTime dataHoraSaida;
     
-    public Reserva(Cliente cliente, int quantPessoas, Date dataHoraEntrada){
+    public Reserva(Cliente cliente, int quantPessoas, LocalDateTime dataHoraEntrada){
         this.cliente = cliente;
         this.quantPessoas = quantPessoas;
         this.dataHoraEntrada = dataHoraEntrada;
@@ -40,20 +29,19 @@ public class Reserva {
         this.quantPessoas = quantPessoas;
     }
 
-    public Date getDataHoraEntrada() {
+    public LocalDateTime getDataHoraEntrada() {
         return dataHoraEntrada;
     }
 
-    public void setDataHoraEntrada(Date dataHoraEntrada) {
+    public void setDataHoraEntrada(LocalDateTime dataHoraEntrada) {
         this.dataHoraEntrada = dataHoraEntrada;
     }
 
-    public Date getDataHoraSaida() {
+    public LocalDateTime getDataHoraSaida() {
         return dataHoraSaida;
     }
 
-    public void setDataHoraSaida(Date dataHoraSaida) {
+    public void setDataHoraSaida(LocalDateTime dataHoraSaida) {
         this.dataHoraSaida = dataHoraSaida;
     }
-  
 }

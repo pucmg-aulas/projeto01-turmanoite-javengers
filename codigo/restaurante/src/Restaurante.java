@@ -1,9 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package restaurante;
-
 import java.util.ArrayList;
 
 /**
@@ -16,11 +10,15 @@ public class Restaurante {
     private ArrayList<Mesa> mesasOcupadas;
     private ArrayList<Reserva> listaDeEspera;
 
-    public Restaurante(ArrayList<Mesa> mesasDisponiveis, ArrayList<Mesa> mesasOcupadas, ArrayList<Reserva> listaDeEspera) {
+    public Restaurante(ArrayList<Mesa> mesasDisponiveis, ArrayList<Mesa> mesasOcupadas, ArrayList<Reserva> listaDeEspera) { // possivelmente deletado
         this.mesasDisponiveis = mesasDisponiveis;
         this.mesasOcupadas = mesasOcupadas;
         this.listaDeEspera = listaDeEspera;
     }
+
+    /* public Restaurante(ArrayList<Mesa> mesasDisponiveis) {
+        this.mesasDisponiveis = mesasDisponiveis;
+    } */
 
     public ArrayList<Mesa> getMesasDisponiveis() {
         return mesasDisponiveis;
@@ -72,9 +70,13 @@ public class Restaurante {
         return false; //retorna false se não tiver mesas disponíveis
     }
 
+    public void adicionaListaDeEspera(Reserva reserva) {
+        listaDeEspera.add(reserva); //adiciona um método na lista de espera
+    }
+
     public boolean verificaListaDeEspera() {
-        for (Reserva reserva : listaDeEspera) { //itera as reservas da lista de espera
-            if (fazReservaDeMesa(reserva)) { //verifica se alguma reserva da lista de espera pode ser alocada
+        for (Reserva reserva : listaDeEspera) { // itera as reservas da lista de espera
+            if (fazReservaDeMesa(reserva)) { // verifica se alguma reserva da lista de espera pode ser alocada
                 return true;
             }
         }
