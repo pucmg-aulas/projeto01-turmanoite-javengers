@@ -24,8 +24,13 @@ public class RestauranteMain {
         StringBuilder nomeFormatado = new StringBuilder(); // Construtor para o nome de usuário formatado
 
         for (int i = 0; i < palavras.length; i++) {
-            if (i == 0 || Character.isSpaceChar(palavras[i - 1].charAt(palavras[i - 1].length() - 1))) { // Verifica se é a primeira palavra ou após um espaço
-                nomeFormatado.append(palavras[i].substring(0, 1).toUpperCase()).append(palavras[i].substring(1).toLowerCase());
+            if (i == 0 || Character.isSpaceChar(palavras[i - 1].charAt(palavras[i - 1].length() - 1))) { // Verifica se
+                                                                                                         // é a primeira
+                                                                                                         // palavra ou
+                                                                                                         // após um
+                                                                                                         // espaço
+                nomeFormatado.append(palavras[i].substring(0, 1).toUpperCase())
+                        .append(palavras[i].substring(1).toLowerCase());
             } else {
                 nomeFormatado.append(palavras[i].toLowerCase());
             }
@@ -59,60 +64,57 @@ public class RestauranteMain {
         Scanner s = new Scanner(System.in);
         String input;
 
-        System.out.println("Bem vindo ao restaurante À La Classe!");
-
-        do {
-            System.out.println("\nPor favor, informe seu nome:");
-            input = s.nextLine();
-
-            if (!nomeValido(input)) {
-                clear();
-                System.out.println("Nome inválido. Por favor, tente novamente.");
-            }
-        } while (!nomeValido(input));
-
-        Cliente cliente = new Cliente(formatarNome(input));
-
-        clear();
-        System.out.println("Cadastro realizado com sucesso!");
+        System.out.println("Gerenciamento do restaurante À La Classe");
         boolean entradaValida = false;
 
         while (true) {
             do {
                 System.out.println("\nPor favor, selecione uma das seguintes opções:");
-                System.out.println("\n1) Fazer reserva\n2) Sair");
+                System.out.println("\n1) Adicionar cliente\n\n2) Liberar mesa\n\n0) Sair");
                 input = s.nextLine();
 
                 if (input.equalsIgnoreCase("1")) {
-                    int quantPessoas;
+                    do {
+                        System.out.println("\nInforme o nome do cliente:");
+                        input = s.nextLine();
+
+                        if (!nomeValido(input)) {
+                            clear();
+                            System.out.println("Nome inválido. Por favor, tente novamente.");
+                        }
+                    } while (!nomeValido(input));
+
+                    Cliente cliente = new Cliente(formatarNome(input));
+
                     clear();
+                    System.out.println("Cadastro realizado com sucesso.");
+
+                    int quantPessoas;
                     do {
                         System.out.println("Informe a quantidade de pessoas da reserva:");
                         quantPessoas = s.nextInt();
 
                         if (quantPessoas > 0) {
                             clear();
-                            entradaValida = true;
                         } else {
                             clear();
                             System.out.println("Entrada inválida.");
                         }
-                    } while (!entradaValida);
-                    entradaValida = false;
+                    } while (quantPessoas < 1);
 
-                    //cliente.fazerReserva(cliente, quantPessoas, LocalDateTime.now());
-                    Reserva reserva = new Reserva (cliente, quantPessoas, LocalDateTime.now());
+                    Reserva reserva = new Reserva(cliente, quantPessoas, LocalDateTime.now());
 
                     if (restaurante.getListaDeEspera().size() == 0) {
                         if (restaurante.fazReservaDeMesa(reserva)) {
-                            System.out.println("Há uma mesa disponível! Por favor, entre em contato com um garçom para que ele te leve à sua mesa.");
+                            System.out.println(
+                                    "Há uma mesa disponível! Por favor, entre em contato com um garçom para que ele te leve à sua mesa.");
                         } else {
                             restaurante.adicionaListaDeEspera(reserva);
-                            System.out.println("Não há mesas disponíveis no momento - você foi adicionado à lista de espera.");
+                            System.out.println(
+                                    "Não há mesas disponíveis no momento - você foi adicionado à lista de espera.");
                         }
                     }
                     entradaValida = true;
-
                 } else if (input.equalsIgnoreCase("2")) {
                     clear();
                     System.out.println("Obrigado por utilizar nossos serviços!");
@@ -124,9 +126,11 @@ public class RestauranteMain {
                     System.out.print("Entrada inválida. ");
                 }
 
-                /* } else if (input == "0") {
-                    cliente.cancelarReserva();
-                    entradaValida = true; */
+                /*
+                 * } else if (input == "0") {
+                 * cliente.cancelarReserva();
+                 * entradaValida = true;
+                 */
             } while (!entradaValida);
         }
     }
