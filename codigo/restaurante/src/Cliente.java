@@ -1,15 +1,29 @@
 public class Cliente {
-    private String nome;
 
-    public Cliente(String nome){
+    private String nome;
+    private Reserva reservaAtual;
+
+    public Cliente(String nome) {
         this.nome = nome;
     }
 
-    public void fazerReserva(){
-
+    public String getNome() {
+        return nome;
     }
 
-    public void cancelarReserva(){
+    public void fazerReserva(Reserva reserva) {
+        if (reservaAtual != null) {
+            throw new IllegalStateException("Cliente já possui uma reserva ativa.");
+        }
 
+        this.reservaAtual = reserva;
+    }
+
+    public void cancelarReserva() {
+        this.reservaAtual = null;
+    }
+
+    public Reserva getReservaAtual() {
+        return reservaAtual;
     }
 }
