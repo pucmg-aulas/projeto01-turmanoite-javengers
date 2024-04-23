@@ -62,7 +62,7 @@ public class Restaurante {
 
     public boolean fazReservaDeMesa(Reserva reserva) {
         for (Mesa mesa : mesasDisponiveis) { //itera as mesas disponíveis
-            if (mesa.getQuantCadeiras() >= reserva.quantPessoas) { //se houver mesa disponível que atende a quantidade de pessoas:
+            if (mesa.getQuantCadeiras() >= reserva.getQuantPessoas()) { //se houver mesa disponível que atende a quantidade de pessoas:
                 mesasOcupadas.add(mesa); //adiciona a mesa a mesas ocupadas
                 mesasDisponiveis.remove(mesa); //remove a mesa de mesas disponíveis
                 listaDeEspera.remove(reserva); //remove a reserva da lista de espera
