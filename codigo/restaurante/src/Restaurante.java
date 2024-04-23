@@ -1,9 +1,5 @@
 import java.util.ArrayList;
 
-/**
- *
- * @author dti Digital
- */
 public class Restaurante {
 
     private ArrayList<Mesa> mesasDisponiveis;
@@ -58,6 +54,14 @@ public class Restaurante {
         verificaListaDeEspera(); //sempre que uma mesa ficar livre, faz a verificação da lista de espera
     }
 
+    public void adicionaListaDeEspera(Reserva reserva) {
+        listaDeEspera.add(reserva); //adiciona uma reserva na lista de espera
+    }
+
+    public void removeListaDeEspera(Reserva reserva) {
+        listaDeEspera.remove(reserva); //remove uma reserva da lista de espera
+    }
+
     public boolean fazReservaDeMesa(Reserva reserva) {
         for (Mesa mesa : mesasDisponiveis) { //itera as mesas disponíveis
             if (mesa.getQuantCadeiras() >= reserva.getQuantPessoas()) { //se houver mesa disponível que atende a quantidade de pessoas:
@@ -68,10 +72,6 @@ public class Restaurante {
             }
         }
         return false; //retorna false se não tiver mesas disponíveis
-    }
-
-    public void adicionaListaDeEspera(Reserva reserva) {
-        listaDeEspera.add(reserva); //adiciona um método na lista de espera
     }
 
     public boolean verificaListaDeEspera() {
