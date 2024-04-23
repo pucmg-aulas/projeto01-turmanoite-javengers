@@ -1,11 +1,11 @@
 public class Mesa {
-    private int quantidadeCadeiras;
+    private int quantCadeiras;
 
-    public Mesa(int quantidadeCadeiras) {
-        this.quantidadeCadeiras = quantidadeCadeiras;
+    public Mesa(int quantCadeiras) {
+        this.quantCadeiras = quantCadeiras;
     }
 
     public int getQuantCadeiras() { 
-        return quantidadeCadeiras;
+        return quantCadeiras;
     }
 }
