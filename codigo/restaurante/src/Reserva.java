@@ -14,14 +14,12 @@ import java.util.Date;
 public class Reserva {
 
     private Cliente cliente;
-    private boolean estaNaEspera;
     private int quantPessoas;
     Date dataHoraEntrada;
     Date dataHoraSaida;
     
-    public Reserva(Cliente cliente, boolean estaNaEspera, int quantPessoas, Date dataHoraEntrada){
+    public Reserva(Cliente cliente, int quantPessoas, Date dataHoraEntrada){
         this.cliente = cliente;
-        this.estaNaEspera = estaNaEspera;
         this.quantPessoas = quantPessoas;
         this.dataHoraEntrada = dataHoraEntrada;
         
@@ -33,14 +31,6 @@ public class Reserva {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-    }
-
-    public boolean isEstaNaEspera() {
-        return estaNaEspera;
-    }
-
-    public void setEstaNaEspera(boolean estaNaEspera) {
-        this.estaNaEspera = estaNaEspera;
     }
 
     public int getQuantPessoas() {
