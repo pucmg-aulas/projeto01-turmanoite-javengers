@@ -22,7 +22,6 @@ public class Reserva {
         this.cliente = cliente;
         this.quantPessoas = quantPessoas;
         this.dataHoraEntrada = dataHoraEntrada;
-        
     }
 
     public Cliente getCliente() {
@@ -56,6 +55,5 @@ public class Reserva {
     public void setDataHoraSaida(Date dataHoraSaida) {
         this.dataHoraSaida = dataHoraSaida;
     }
-    
-    
+  
 }
