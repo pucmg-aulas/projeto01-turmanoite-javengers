@@ -1,85 +1,128 @@
 import java.util.ArrayList;
 
 public class Restaurante {
+    private ArrayList<Mesa> mesas = new ArrayList<>();
+    private ArrayList<Reserva> filaDeEspera = new ArrayList<>();
+    private ArrayList<Reserva> reservas = new ArrayList<>();
 
-    private ArrayList<Mesa> mesasDisponiveis;
-    private ArrayList<Mesa> mesasOcupadas;
-    private ArrayList<Reserva> listaDeEspera;
-
-    public Restaurante(ArrayList<Mesa> mesasDisponiveis, ArrayList<Mesa> mesasOcupadas, ArrayList<Reserva> listaDeEspera) { // possivelmente deletado
-        this.mesasDisponiveis = mesasDisponiveis;
-        this.mesasOcupadas = mesasOcupadas;
-        this.listaDeEspera = listaDeEspera;
+    public Restaurante() {
     }
 
-    /* public Restaurante(ArrayList<Mesa> mesasDisponiveis) {
-        this.mesasDisponiveis = mesasDisponiveis;
-    } */
-
-    public ArrayList<Mesa> getMesasDisponiveis() {
-        return mesasDisponiveis;
+    public Restaurante(ArrayList<Mesa> mesas) {
+        this.mesas = mesas;
     }
 
-    public void setMesasDisponiveis(ArrayList<Mesa> mesasDisponiveis) {
-        this.mesasDisponiveis = mesasDisponiveis;
+    public Restaurante(ArrayList<Mesa> mesas, ArrayList<Reserva> filaDeEspera, ArrayList<Reserva> reservas) {
+        this.mesas = mesas;
+        this.filaDeEspera = filaDeEspera;
+        this.reservas = reservas;
     }
 
-    public ArrayList<Mesa> getMesasOcupadas() {
-        return mesasOcupadas;
+    public ArrayList<Reserva> getFilaDeEspera() {
+        return filaDeEspera;
     }
 
-    public void setMesasOcupadas(ArrayList<Mesa> mesasOcupadas) {
-        this.mesasOcupadas = mesasOcupadas;
+    public void setFilaDeEspera(ArrayList<Reserva> filaDeEspera) {
+        this.filaDeEspera = filaDeEspera;
     }
 
-    public ArrayList<Reserva> getListaDeEspera() {
-        return listaDeEspera;
+    public ArrayList<Reserva> getReservas() {
+        return reservas;
     }
 
-    public void setListaDeEspera(ArrayList<Reserva> listaDeEspera) {
-        this.listaDeEspera = listaDeEspera;
+    public void setReservas(ArrayList<Reserva> reservas) {
+        this.reservas = reservas;
     }
 
-    public void adicionaMesaOcupada(Mesa mesa) {
-        mesasOcupadas.add(mesa); //adiciona a mesa a mesas ocupadas
+    public void adicionaFilaDeEspera(Reserva reserva) {
+        filaDeEspera.add(reserva);
     }
 
-    public void liberaMesaOcupada(Mesa mesa) {
-        mesasOcupadas.remove(mesa); //remove a mesa das mesas ocupadas
-        adicionaMesaLivre(mesa); //adiciona a mesa as mesas livres
-    }
-
-    public void adicionaMesaLivre(Mesa mesa) {
-        mesasDisponiveis.add(mesa); //adiciona a mesa as mesas livres
-        verificaListaDeEspera(); //sempre que uma mesa ficar livre, faz a verificação da lista de espera
-    }
-
-    public void adicionaListaDeEspera(Reserva reserva) {
-        listaDeEspera.add(reserva); //adiciona uma reserva na lista de espera
-    }
-
-    public void removeListaDeEspera(Reserva reserva) {
-        listaDeEspera.remove(reserva); //remove uma reserva da lista de espera
+    public void removeFilaDeEspera(Reserva reserva) {
+        filaDeEspera.remove(reserva);
     }
 
     public boolean fazReservaDeMesa(Reserva reserva) {
-        for (Mesa mesa : mesasDisponiveis) { //itera as mesas disponíveis
-            if (mesa.getQuantCadeiras() >= reserva.getQuantPessoas()) { //se houver mesa disponível que atende a quantidade de pessoas:
-                mesasOcupadas.add(mesa); //adiciona a mesa a mesas ocupadas
-                mesasDisponiveis.remove(mesa); //remove a mesa de mesas disponíveis
-                listaDeEspera.remove(reserva); //remove a reserva da lista de espera
-                return true;
+        for (Mesa mesa : this.mesas) {
+            if (!mesa.isOcupada()) {
+                if (mesa.getQuantCadeiras() >= reserva.getQuantPessoas()) {
+                    reserva.setMesa(mesa);
+                    mesa.setOcupada(true);
+                    filaDeEspera.remove(reserva);
+                    return true;
+                }
             }
         }
-        return false; //retorna false se não tiver mesas disponíveis
+        return false;
     }
 
-    public boolean verificaListaDeEspera() {
-        for (Reserva reserva : listaDeEspera) { // itera as reservas da lista de espera
-            if (fazReservaDeMesa(reserva)) { // verifica se alguma reserva da lista de espera pode ser alocada
+    public void exibeMesasDisponiveis() {
+        int indice = 1;
+
+        System.out.println("Mesas disponíveis: \n");
+
+        for (Mesa mesa : this.mesas) {
+            if (!mesa.isOcupada()) {
+                System.out.println("Mesa " + indice + " com " + mesa.getQuantCadeiras() + " cadeiras");
+                indice++;
+            }
+        }
+        System.out.println();
+    }
+
+    public void exibeReservas() {
+        int indice = 1;
+        
+        if (reservas.size() == 0) {
+            System.out.println("Não há clientes no momento.");
+            return;
+        }
+        
+        System.out.println("Clientes: \n");
+
+        for (Reserva reserva : reservas) {
+            System.out.println(indice + ": " + reserva.getCliente().getNome());
+            indice++;
+        }
+        System.out.println();
+    }
+
+    public void exibeFilaDeEspera() {
+        int indice = 1;
+
+        if (reservas.size() == 0) {
+            System.out.println("Não há clientes na fila de espera no momento.");
+            return;
+        }
+
+        System.out.println("Clientes na fila de espera: \n");
+
+        for (Reserva reserva : filaDeEspera) {
+            System.out.println(indice + ": " + reserva.getCliente().getNome());
+            indice++;
+        }
+        System.out.println();
+    }
+
+    public boolean verificaFilaDeEspera() {
+        for (Reserva reserva : filaDeEspera) {
+            if (fazReservaDeMesa(reserva)) {
                 return true;
             }
         }
-        return false; //retorna false se não tiver mesas disponíveis
+        return false;
+    }
+
+    public void removeReserva(Reserva reserva) {
+        reserva.getMesa().setOcupada(false);
+        reservas.remove(reserva);
+    }
+
+    public int quantidadeReservas(){
+        return reservas.size();
+    }
+
+    public int quantidadeFilaDeEspera(){
+        return filaDeEspera.size();
     }
 }
