@@ -18,16 +18,8 @@ public class Atendimento {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
     public int getQuantPessoas() {
         return quantPessoas;
-    }
-
-    public void setQuantPessoas(int quantPessoas) {
-        this.quantPessoas = quantPessoas;
     }
 
     public Mesa getMesa() {

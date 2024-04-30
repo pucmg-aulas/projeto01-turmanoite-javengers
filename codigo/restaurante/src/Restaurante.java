@@ -42,6 +42,29 @@ public class Restaurante {
     public void removeFilaDeEspera(Atendimento atendimento) {
         filaDeEspera.remove(atendimento);
     }
+    
+    public void removeReserva(Atendimento atendimento) {
+        atendimento.getMesa().setOcupada(false);
+        atendimentos.remove(atendimento);
+    }
+
+    public int quantidadeReservas() {
+        return atendimentos.size();
+    }
+
+    public int quantidadeFilaDeEspera() {
+        return filaDeEspera.size();
+    }
+
+    
+    public boolean verificaFilaDeEspera() {
+        for (Atendimento atendimento : filaDeEspera) {
+            if (fazReservaDeMesa(atendimento)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public boolean fazReservaDeMesa(Atendimento atendimento) {
         for (Mesa mesa : this.mesas) {
@@ -107,25 +130,4 @@ public class Restaurante {
         System.out.println();
     }
 
-    public boolean verificaFilaDeEspera() {
-        for (Atendimento atendimento : filaDeEspera) {
-            if (fazReservaDeMesa(atendimento)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void removeReserva(Atendimento atendimento) {
-        atendimento.getMesa().setOcupada(false);
-        atendimentos.remove(atendimento);
-    }
-
-    public int quantidadeReservas() {
-        return atendimentos.size();
-    }
-
-    public int quantidadeFilaDeEspera() {
-        return filaDeEspera.size();
-    }
 }
