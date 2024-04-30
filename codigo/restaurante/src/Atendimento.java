@@ -1,6 +1,6 @@
 import java.time.LocalDateTime;
 
-public class Reserva {
+public class Atendimento {
 
     private Cliente cliente;
     private int quantPessoas;
@@ -8,7 +8,7 @@ public class Reserva {
     private LocalDateTime dataHoraEntrada;
     private LocalDateTime dataHoraSaida;
     
-    public Reserva(Cliente cliente, int quantPessoas, LocalDateTime dataHoraEntrada){
+    public Atendimento(Cliente cliente, int quantPessoas, LocalDateTime dataHoraEntrada){
         this.cliente = cliente;
         this.quantPessoas = quantPessoas;
         this.dataHoraEntrada = dataHoraEntrada;

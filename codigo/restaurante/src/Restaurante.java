@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class Restaurante {
     private ArrayList<Mesa> mesas = new ArrayList<>();
-    private ArrayList<Reserva> filaDeEspera = new ArrayList<>();
-    private ArrayList<Reserva> reservas = new ArrayList<>();
+    private ArrayList<Atendimento> filaDeEspera = new ArrayList<>();
+    private ArrayList<Atendimento> atendimentos = new ArrayList<>();
 
     public Restaurante() {
     }
@@ -12,43 +12,44 @@ public class Restaurante {
         this.mesas = mesas;
     }
 
-    public Restaurante(ArrayList<Mesa> mesas, ArrayList<Reserva> filaDeEspera, ArrayList<Reserva> reservas) {
+    public Restaurante(ArrayList<Mesa> mesas, ArrayList<Atendimento> filaDeEspera,
+            ArrayList<Atendimento> atendimentos) {
         this.mesas = mesas;
         this.filaDeEspera = filaDeEspera;
-        this.reservas = reservas;
+        this.atendimentos = atendimentos;
     }
 
-    public ArrayList<Reserva> getFilaDeEspera() {
+    public ArrayList<Atendimento> getFilaDeEspera() {
         return filaDeEspera;
     }
 
-    public void setFilaDeEspera(ArrayList<Reserva> filaDeEspera) {
+    public void setFilaDeEspera(ArrayList<Atendimento> filaDeEspera) {
         this.filaDeEspera = filaDeEspera;
     }
 
-    public ArrayList<Reserva> getReservas() {
-        return reservas;
+    public ArrayList<Atendimento> getReservas() {
+        return atendimentos;
     }
 
-    public void setReservas(ArrayList<Reserva> reservas) {
-        this.reservas = reservas;
+    public void setReservas(ArrayList<Atendimento> atendimentos) {
+        this.atendimentos = atendimentos;
     }
 
-    public void adicionaFilaDeEspera(Reserva reserva) {
-        filaDeEspera.add(reserva);
+    public void adicionaFilaDeEspera(Atendimento atendimento) {
+        filaDeEspera.add(atendimento);
     }
 
-    public void removeFilaDeEspera(Reserva reserva) {
-        filaDeEspera.remove(reserva);
+    public void removeFilaDeEspera(Atendimento atendimento) {
+        filaDeEspera.remove(atendimento);
     }
 
-    public boolean fazReservaDeMesa(Reserva reserva) {
+    public boolean fazReservaDeMesa(Atendimento atendimento) {
         for (Mesa mesa : this.mesas) {
             if (!mesa.isOcupada()) {
-                if (mesa.getQuantCadeiras() >= reserva.getQuantPessoas()) {
-                    reserva.setMesa(mesa);
+                if (mesa.getQuantCadeiras() >= atendimento.getQuantPessoas()) {
+                    atendimento.setMesa(mesa);
                     mesa.setOcupada(true);
-                    filaDeEspera.remove(reserva);
+                    filaDeEspera.remove(atendimento);
                     return true;
                 }
             }
@@ -72,16 +73,17 @@ public class Restaurante {
 
     public void exibeReservas() {
         int indice = 1;
-        
-        if (reservas.size() == 0) {
+
+        if (atendimentos.size() == 0) {
             System.out.println("Não há clientes no momento.");
             return;
         }
-        
+
         System.out.println("Clientes: \n");
 
-        for (Reserva reserva : reservas) {
-            System.out.println(indice + ": " + reserva.getCliente().getNome());
+        for (Atendimento atendimento : atendimentos) {
+            System.out.println(indice + ": " + atendimento.getCliente().getNome() + " com "
+                    + atendimento.getQuantPessoas() + " pessoas.");
             indice++;
         }
         System.out.println();
@@ -90,39 +92,40 @@ public class Restaurante {
     public void exibeFilaDeEspera() {
         int indice = 1;
 
-        if (reservas.size() == 0) {
+        if (atendimentos.size() == 0) {
             System.out.println("Não há clientes na fila de espera no momento.");
             return;
         }
 
         System.out.println("Clientes na fila de espera: \n");
 
-        for (Reserva reserva : filaDeEspera) {
-            System.out.println(indice + ": " + reserva.getCliente().getNome());
+        for (Atendimento atendimento : filaDeEspera) {
+            System.out.println(indice + ": " + atendimento.getCliente().getNome() + " com "
+                    + atendimento.getQuantPessoas() + " pessoas.");
             indice++;
         }
         System.out.println();
     }
 
     public boolean verificaFilaDeEspera() {
-        for (Reserva reserva : filaDeEspera) {
-            if (fazReservaDeMesa(reserva)) {
+        for (Atendimento atendimento : filaDeEspera) {
+            if (fazReservaDeMesa(atendimento)) {
                 return true;
             }
         }
         return false;
     }
 
-    public void removeReserva(Reserva reserva) {
-        reserva.getMesa().setOcupada(false);
-        reservas.remove(reserva);
+    public void removeReserva(Atendimento atendimento) {
+        atendimento.getMesa().setOcupada(false);
+        atendimentos.remove(atendimento);
     }
 
-    public int quantidadeReservas(){
-        return reservas.size();
+    public int quantidadeReservas() {
+        return atendimentos.size();
     }
 
-    public int quantidadeFilaDeEspera(){
+    public int quantidadeFilaDeEspera() {
         return filaDeEspera.size();
     }
 }

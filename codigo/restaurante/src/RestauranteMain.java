@@ -42,6 +42,7 @@ public class RestauranteMain {
     }
 
     public static void main(String[] args) throws Exception {
+        clear();
         ArrayList<Mesa> mesas = new ArrayList<Mesa>();
 
         for (int i = 0; i < 4; i++) {
@@ -69,101 +70,107 @@ public class RestauranteMain {
         do {
             System.out.println("\nOpções:");
             System.out.println(
-                    "\n1) Iniciar atendimento\n\n2) Encerrar atendimento\n\n3) Exibir mesas disponíveis\n\n4) Exibir lista de espera\n\n5) Remover reserva da lista de espera\n\n0) Sair");
+                    "\n1) Iniciar atendimento\n\n2) Encerrar atendimento\n\n3) Exibir mesas disponíveis\n\n4) Exibir lista de espera\n\n5) Remover atendimento da lista de espera\n\n0) Sair");
             System.out.print("\nPor favor, selecione uma opção: ");
             escolha = leitor.nextLine();
             clear();
+            switch (escolha) {
+                case "1":
+                    do {
+                        System.out.print("\nInforme o nome do cliente: ");
+                        escolha = leitor.nextLine();
 
-            if (escolha.equals("1")) {
-                do {
-                    System.out.print("\nInforme o nome do cliente: ");
-                    escolha = leitor.nextLine();
+                        if (!nomeValido(escolha)) {
 
-                    if (!nomeValido(escolha)) {
+                            System.out.println("Nome inválido. Por favor, tente novamente.");
+                        }
+                    } while (!nomeValido(escolha));
 
-                        System.out.println("Nome inválido. Por favor, tente novamente.");
-                    }
-                } while (!nomeValido(escolha));
+                    Cliente cliente = new Cliente(formatarNome(escolha));
 
-                Cliente cliente = new Cliente(formatarNome(escolha));
+                    System.out.println("Cadastro realizado com sucesso.");
+                    clear();
 
-                System.out.println("Cadastro realizado com sucesso.");
-                clear();
+                    int quantPessoas = 0;
 
-                int quantPessoas = 0;
+                    do {
+                        System.out.print("\nInforme a quantidade de pessoas da atendimento: ");
+                        quantPessoas = leitor.nextInt();
+                        leitor.nextLine();
 
-                do {
-                    System.out.print("\nInforme a quantidade de pessoas da reserva: ");
-                    quantPessoas = leitor.nextInt();
-                    leitor.nextLine();
+                        if (quantPessoas > 0) {
+                            clear();
+                        } else {
+                            clear();
+                            System.out.println("Entrada inválida.");
+                        }
+                    } while (quantPessoas < 1);
 
-                    if (quantPessoas > 0) {
-                        clear();
+                    Atendimento atendimento = new Atendimento(cliente, quantPessoas, LocalDateTime.now());
+
+                    if (restaurante.fazReservaDeMesa(atendimento)) {
+                        restaurante.getReservas().add(atendimento);
+                        System.out.println(
+                                "Há uma mesa disponível!");
                     } else {
-                        clear();
-                        System.out.println("Entrada inválida.");
+                        restaurante.adicionaFilaDeEspera(atendimento);
+                        System.out.println(
+                                "Não há mesas disponíveis no momento - o cliente foi adicionado à fila de espera.");
                     }
-                } while (quantPessoas < 1);
+                    break;
+                case "2":
+                    restaurante.exibeReservas();
 
-                Reserva reserva = new Reserva(cliente, quantPessoas, LocalDateTime.now());
+                    if (restaurante.quantidadeReservas() > 0) {
+                        System.out.print("Qual cliente você deseja encerrar o atendimento: ");
 
-                if (restaurante.fazReservaDeMesa(reserva)) {
-                    restaurante.getReservas().add(reserva);
-                    System.out.println(
-                            "Há uma mesa disponível!");
-                } else {
-                    restaurante.adicionaFilaDeEspera(reserva);
-                    System.out.println(
-                            "Não há mesas disponíveis no momento - o cliente foi adicionado à fila de espera.");
-                }
+                        int indice;
+                        do {
+                            indice = leitor.nextInt();
+                            leitor.nextLine();
+                            if (indice < 1 || indice > restaurante.quantidadeReservas()) {
+                                System.out.print("\nValor inválido! Digite um valor válido: ");
+                            }
+                        } while (indice < 1 || indice > restaurante.quantidadeReservas());
 
-            } else if (escolha.equals("2")) {
-                restaurante.exibeReservas();
+                        Atendimento reservaEscolhida = restaurante.getReservas().get(indice - 1);
+                        reservaEscolhida.setDataHoraSaida(LocalDateTime.now());
+                        restaurante.removeReserva(reservaEscolhida);
+                    }
+                    break;
+                case "3":
+                    restaurante.exibeMesasDisponiveis();
+                    break;
+                case "4":
+                    restaurante.exibeFilaDeEspera();
+                    break;
+                case "5":
+                    restaurante.exibeFilaDeEspera();
 
-                if (restaurante.quantidadeReservas() > 0) {
-                    System.out.print("Qual cliente você deseja encerrar o atendimento: ");
+                    if (restaurante.quantidadeFilaDeEspera() > 0) {
+                        System.out.print("Qual cliente você deseja cancelar a atendimento: ");
 
-                    int indice;
-                    do {
-                        indice = leitor.nextInt();
-                        leitor.nextLine();
-                        if (indice < 1 || indice > restaurante.quantidadeReservas()) {
-                            System.out.print("\nValor inválido! Digite um valor válido: ");
-                        }
-                    } while (indice < 1 || indice > restaurante.quantidadeReservas());
+                        int indice;
+                        do {
+                            indice = leitor.nextInt();
+                            leitor.nextLine();
+                            if (indice < 1 || indice > restaurante.quantidadeFilaDeEspera()) {
+                                System.out.print("\nValor inválido! Digite um valor válido: ");
+                            }
+                        } while (indice < 1 || indice > restaurante.quantidadeFilaDeEspera());
 
-                    Reserva reservaEscolhida = restaurante.getReservas().get(indice - 1);
-                    reservaEscolhida.setDataHoraSaida(LocalDateTime.now());
-                    restaurante.removeReserva(reservaEscolhida);
-                }
-            } else if (escolha.equals("3")) {
-                restaurante.exibeMesasDisponiveis();
-            } else if (escolha.equals("4")) {
-                restaurante.exibeFilaDeEspera();
-            } else if (escolha.equals("5")) {
-                restaurante.exibeFilaDeEspera();
-
-                if (restaurante.quantidadeFilaDeEspera() > 0) {
-                    System.out.print("Qual cliente você deseja cancelar a reserva: ");
-
-                    int indice;
-                    do {
-                        indice = leitor.nextInt();
-                        leitor.nextLine();
-                        if (indice < 1 || indice > restaurante.quantidadeFilaDeEspera()) {
-                            System.out.print("\nValor inválido! Digite um valor válido: ");
-                        }
-                    } while (indice < 1 || indice > restaurante.quantidadeFilaDeEspera());
-
-                    Reserva reservaEscolhida = restaurante.getFilaDeEspera().get(indice - 1);
-                    restaurante.removeReserva(reservaEscolhida);
-                }
-            } else if (escolha.equals("0")) {
-                System.out.println("Obrigado por utilizar nossos serviços!");
-                leitor.close();
-                System.exit(0);
-            } else {
-                System.out.print("Entrada inválida!");
+                        Atendimento reservaEscolhida = restaurante.getFilaDeEspera().get(indice - 1);
+                        restaurante.removeReserva(reservaEscolhida);
+                    }
+                    break;
+                case "0":
+                    System.out.println("Obrigado por utilizar nossos serviços!");
+                    leitor.close();
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.print("Entrada inválida!");
+                    break;
             }
         } while (!escolha.equals("0"));
     }
