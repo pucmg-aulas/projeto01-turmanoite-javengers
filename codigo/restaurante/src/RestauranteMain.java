@@ -160,7 +160,7 @@ public class RestauranteMain {
                         } while (indice < 1 || indice > restaurante.quantidadeFilaDeEspera());
 
                         Atendimento reservaEscolhida = restaurante.getFilaDeEspera().get(indice - 1);
-                        restaurante.removeReserva(reservaEscolhida);
+                        restaurante.removeFilaDeEspera(reservaEscolhida);
                     }
                     break;
                 case "0":

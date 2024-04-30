@@ -36,6 +36,7 @@ public class Restaurante {
     }
 
     public void adicionaFilaDeEspera(Atendimento atendimento) {
+        System.out.println(1);
         filaDeEspera.add(atendimento);
     }
 
@@ -115,7 +116,7 @@ public class Restaurante {
     public void exibeFilaDeEspera() {
         int indice = 1;
 
-        if (atendimentos.size() == 0) {
+        if (filaDeEspera.size() == 0) {
             System.out.println("Não há clientes na fila de espera no momento.");
             return;
         }
