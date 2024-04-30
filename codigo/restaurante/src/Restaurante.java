@@ -27,11 +27,11 @@ public class Restaurante {
         this.filaDeEspera = filaDeEspera;
     }
 
-    public ArrayList<Atendimento> getReservas() {
+    public ArrayList<Atendimento> getAtendimentos() {
         return atendimentos;
     }
 
-    public void setReservas(ArrayList<Atendimento> atendimentos) {
+    public void setAtendimentos(ArrayList<Atendimento> atendimentos) {
         this.atendimentos = atendimentos;
     }
 
@@ -48,7 +48,7 @@ public class Restaurante {
         atendimentos.remove(atendimento);
     }
 
-    public int quantidadeReservas() {
+    public int quantidadeAtendimentos() {
         return atendimentos.size();
     }
 
@@ -94,7 +94,7 @@ public class Restaurante {
         System.out.println();
     }
 
-    public void exibeReservas() {
+    public void exibeAtendimentos() {
         int indice = 1;
 
         if (atendimentos.size() == 0) {

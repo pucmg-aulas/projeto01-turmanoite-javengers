@@ -109,7 +109,7 @@ public class RestauranteMain {
                     Atendimento atendimento = new Atendimento(cliente, quantPessoas, LocalDateTime.now());
 
                     if (restaurante.fazReservaDeMesa(atendimento)) {
-                        restaurante.getReservas().add(atendimento);
+                        restaurante.getAtendimentos().add(atendimento);
                         System.out.println(
                                 "Há uma mesa disponível!");
                     } else {
@@ -119,21 +119,21 @@ public class RestauranteMain {
                     }
                     break;
                 case "2":
-                    restaurante.exibeReservas();
+                    restaurante.exibeAtendimentos();
 
-                    if (restaurante.quantidadeReservas() > 0) {
+                    if (restaurante.quantidadeAtendimentos() > 0) {
                         System.out.print("Qual cliente você deseja encerrar o atendimento: ");
 
                         int indice;
                         do {
                             indice = leitor.nextInt();
                             leitor.nextLine();
-                            if (indice < 1 || indice > restaurante.quantidadeReservas()) {
+                            if (indice < 1 || indice > restaurante.quantidadeAtendimentos()) {
                                 System.out.print("\nValor inválido! Digite um valor válido: ");
                             }
-                        } while (indice < 1 || indice > restaurante.quantidadeReservas());
+                        } while (indice < 1 || indice > restaurante.quantidadeAtendimentos());
 
-                        Atendimento reservaEscolhida = restaurante.getReservas().get(indice - 1);
+                        Atendimento reservaEscolhida = restaurante.getAtendimentos().get(indice - 1);
                         reservaEscolhida.setDataHoraSaida(LocalDateTime.now());
                         restaurante.removeReserva(reservaEscolhida);
                     }
