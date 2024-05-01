@@ -36,7 +36,6 @@ public class Restaurante {
     }
 
     public void adicionaFilaDeEspera(Atendimento atendimento) {
-        System.out.println(1);
         filaDeEspera.add(atendimento);
     }
 
