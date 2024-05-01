@@ -44,8 +44,11 @@ public class Restaurante {
     }
     
     public void removeReserva(Atendimento atendimento) {
+        System.out.println("\nHora de entrada: " + atendimento.getDataHoraEntrada().getHour() + ":" + atendimento.getDataHoraEntrada().getMinute());
+        System.out.println("Hora de saída: " + atendimento.getDataHoraSaida().getHour() + ":" + atendimento.getDataHoraSaida().getMinute());
         atendimento.getMesa().setOcupada(false);
         atendimentos.remove(atendimento);
+        verificaFilaDeEspera();
     }
 
     public int quantidadeAtendimentos() {
@@ -60,6 +63,7 @@ public class Restaurante {
     public boolean verificaFilaDeEspera() {
         for (Atendimento atendimento : filaDeEspera) {
             if (fazReservaDeMesa(atendimento)) {
+                System.out.println("\nFila de espera andou! Atendimento do cliente " + atendimento.getCliente().getNome() + " foi realizado!");
                 return true;
             }
         }
@@ -70,9 +74,10 @@ public class Restaurante {
         for (Mesa mesa : this.mesas) {
             if (!mesa.isOcupada()) {
                 if (mesa.getQuantCadeiras() >= atendimento.getQuantPessoas()) {
+                    atendimentos.add(atendimento);
                     atendimento.setMesa(mesa);
                     mesa.setOcupada(true);
-                    filaDeEspera.remove(atendimento);
+                    removeFilaDeEspera(atendimento);
                     return true;
                 }
             }

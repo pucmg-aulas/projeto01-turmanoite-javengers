@@ -109,7 +109,6 @@ public class RestauranteMain {
                     Atendimento atendimento = new Atendimento(cliente, quantPessoas, LocalDateTime.now());
 
                     if (restaurante.fazReservaDeMesa(atendimento)) {
-                        restaurante.getAtendimentos().add(atendimento);
                         System.out.println(
                                 "Há uma mesa disponível!");
                     } else {
