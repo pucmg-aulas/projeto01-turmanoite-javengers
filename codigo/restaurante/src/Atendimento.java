@@ -5,13 +5,15 @@ public class Atendimento {
     private Cliente cliente;
     private int quantPessoas;
     private Mesa mesa;
+    private Comanda comanda;
     private LocalDateTime dataHoraEntrada;
     private LocalDateTime dataHoraSaida;
-    
-    public Atendimento(Cliente cliente, int quantPessoas, LocalDateTime dataHoraEntrada){
+
+    public Atendimento(Cliente cliente, int quantPessoas, LocalDateTime dataHoraEntrada) {
         this.cliente = cliente;
         this.quantPessoas = quantPessoas;
         this.dataHoraEntrada = dataHoraEntrada;
+        this.comanda = new Comanda();
     }
 
     public Cliente getCliente() {
@@ -44,6 +46,14 @@ public class Atendimento {
 
     public void setDataHoraSaida(LocalDateTime dataHoraSaida) {
         this.dataHoraSaida = dataHoraSaida;
+    }
+
+    public Comanda getComanda() {
+        return comanda;
+    }
+
+    public void setComanda(Comanda comanda) {
+        this.comanda = comanda;
     }
 
 }

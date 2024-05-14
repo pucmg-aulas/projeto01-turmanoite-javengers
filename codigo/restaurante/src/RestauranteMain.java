@@ -41,8 +41,39 @@ public class RestauranteMain {
         return formatado;
     }
 
+    public static ArrayList<Alimento> montaCardapio() {
+        ArrayList<Alimento> cardapio = new ArrayList<>();
+
+        Bebida agua = new Bebida(500, "Água mineral", "Água mineral", 2.00);
+        Bebida sucoLaranja = new Bebida(200, "Suco de laranja", "Suco de laranja", 5.50);
+        Bebida refrigeranteCola = new Bebida(250, "Refrigerante de cola", "Refrigerante de cola", 3.50);
+        Bebida cervejaPilsen = new Bebida(350, "Cerveja Pilsen", "Cerveja Pilsen", 4.00);
+        Bebida vinhoTinto = new Bebida(150, "Vinho tinto seco", "Vinho tinto seco", 8.00);
+        Prato moquecaTilápia = new Prato(1, "Moqueca de Tilápia", "Moqueca de Tilápia", 45.00);
+        Prato falafelAssado = new Prato(2, "Falafel Assado", "Falafel Assado", 30.00);
+        Prato saladaPrimavera = new Prato(1, "Salada Primavera com Macarrão Konjac",
+                "Salada Primavera com Macarrão Konjac", 28.00);
+        Prato escondidinhoFrango = new Prato(2, "Escondidinho de Frango", "Escondidinho de Frango", 35.00);
+        Prato strogonoff = new Prato(2, "Strogonoff de Carne", "Strogonoff de Carne", 40.00);
+        Prato caçarolaCarneLegumes = new Prato(4, "Caçarola de Carne com Legumes", "Caçarola de Carne com Legumes",
+                42.00);
+
+        cardapio.add(agua);
+        cardapio.add(sucoLaranja);
+        cardapio.add(refrigeranteCola);
+        cardapio.add(cervejaPilsen);
+        cardapio.add(vinhoTinto);
+        cardapio.add(moquecaTilápia);
+        cardapio.add(falafelAssado);
+        cardapio.add(saladaPrimavera);
+        cardapio.add(escondidinhoFrango);
+        cardapio.add(strogonoff);
+        cardapio.add(caçarolaCarneLegumes);
+
+        return cardapio;
+    }
+
     public static void main(String[] args) throws Exception {
-        clear();
         ArrayList<Mesa> mesas = new ArrayList<Mesa>();
 
         for (int i = 0; i < 4; i++) {
@@ -60,33 +91,34 @@ public class RestauranteMain {
             mesas.add(mesa);
         }
 
-        Restaurante restaurante = new Restaurante(mesas);
+        Restaurante restaurante = new Restaurante(mesas, montaCardapio());
 
         Scanner leitor = new Scanner(System.in);
-        String escolha;
+        int escolha;
 
         System.out.println("Gerenciamento do restaurante À La Classe");
 
         do {
             System.out.println("\nOpções:");
             System.out.println(
-                    "\n1) Iniciar atendimento\n\n2) Encerrar atendimento\n\n3) Exibir mesas disponíveis\n\n4) Exibir lista de espera\n\n5) Remover atendimento da lista de espera\n\n0) Sair");
+                    "\n1) Iniciar atendimento\n\n2) Encerrar atendimento\n\n3) Exibir mesas disponíveis\n\n4) Exibir lista de espera\n\n5) Remover atendimento da lista de espera\n\n6) Exibir cardápio\n\n7) Fazer pedido\n\n8) Exibir comanda do cliente\n\n0) Sair");
             System.out.print("\nPor favor, selecione uma opção: ");
-            escolha = leitor.nextLine();
-            clear();
+            escolha = leitor.nextInt();
             switch (escolha) {
-                case "1":
+                case 1:
+                    String nome;
                     do {
                         System.out.print("\nInforme o nome do cliente: ");
-                        escolha = leitor.nextLine();
+                        leitor.nextLine();
+                        nome = leitor.nextLine();
 
-                        if (!nomeValido(escolha)) {
+                        if (!nomeValido(nome)) {
 
                             System.out.println("Nome inválido. Por favor, tente novamente.");
                         }
-                    } while (!nomeValido(escolha));
+                    } while (!nomeValido(nome));
 
-                    Cliente cliente = new Cliente(formatarNome(escolha));
+                    Cliente cliente = new Cliente(formatarNome(nome));
 
                     System.out.println("Cadastro realizado com sucesso.");
                     clear();
@@ -117,7 +149,7 @@ public class RestauranteMain {
                                 "Não há mesas disponíveis no momento - o cliente foi adicionado à fila de espera.");
                     }
                     break;
-                case "2":
+                case 2:
                     restaurante.exibeAtendimentos();
 
                     if (restaurante.quantidadeAtendimentos() > 0) {
@@ -137,13 +169,13 @@ public class RestauranteMain {
                         restaurante.removeReserva(reservaEscolhida);
                     }
                     break;
-                case "3":
+                case 3:
                     restaurante.exibeMesasDisponiveis();
                     break;
-                case "4":
+                case 4:
                     restaurante.exibeFilaDeEspera();
                     break;
-                case "5":
+                case 5:
                     restaurante.exibeFilaDeEspera();
 
                     if (restaurante.quantidadeFilaDeEspera() > 0) {
@@ -162,7 +194,59 @@ public class RestauranteMain {
                         restaurante.removeFilaDeEspera(reservaEscolhida);
                     }
                     break;
-                case "0":
+                case 6:
+                    restaurante.exibeCardapio();
+                    break;
+                case 7:
+                    restaurante.exibeAtendimentos();
+
+                    if (restaurante.quantidadeAtendimentos() > 0) {
+                        System.out.print("Qual cliente deseja fazer um pedido: ");
+
+                        int indice;
+
+                        do {
+                            indice = leitor.nextInt();
+                            leitor.nextLine();
+                            if (indice < 1 || indice > restaurante.quantidadeAtendimentos()) {
+                                System.out.print("\nValor inválido! Digite um valor válido: ");
+                            }
+                        } while (indice < 1 || indice > restaurante.quantidadeAtendimentos());
+
+                        Atendimento reservaEscolhida = restaurante.getAtendimentos().get(indice - 1);
+
+                        restaurante.exibeCardapio();
+
+                        System.out.print("\nQual é o pedido do cliente: ");
+                        indice = leitor.nextInt();
+
+                        Alimento pedido = restaurante.getCardapio().get(indice - 1);
+
+                        reservaEscolhida.getComanda().getListaAlimentos().add(pedido);
+                    }
+                    break;
+                case 8:
+                restaurante.exibeAtendimentos();
+
+                if (restaurante.quantidadeAtendimentos() > 0) {
+                    System.out.print("Qual cliente deseja ver a comanda: ");
+
+                    int indice;
+
+                    do {
+                        indice = leitor.nextInt();
+                        leitor.nextLine();
+                        if (indice < 1 || indice > restaurante.quantidadeAtendimentos()) {
+                            System.out.print("\nValor inválido! Digite um valor válido: ");
+                        }
+                    } while (indice < 1 || indice > restaurante.quantidadeAtendimentos());
+
+                    Atendimento reservaEscolhida = restaurante.getAtendimentos().get(indice - 1);
+
+                    reservaEscolhida.getComanda().imprimeComanda();
+                }
+                break;
+                case 0:
                     System.out.println("Obrigado por utilizar nossos serviços!");
                     leitor.close();
                     System.exit(0);
@@ -171,6 +255,6 @@ public class RestauranteMain {
                     System.out.print("Entrada inválida!");
                     break;
             }
-        } while (!escolha.equals("0"));
+        } while (escolha != 0);
     }
 }

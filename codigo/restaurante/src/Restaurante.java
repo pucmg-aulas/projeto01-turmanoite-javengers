@@ -4,12 +4,18 @@ public class Restaurante {
     private ArrayList<Mesa> mesas = new ArrayList<>();
     private ArrayList<Atendimento> filaDeEspera = new ArrayList<>();
     private ArrayList<Atendimento> atendimentos = new ArrayList<>();
+    private ArrayList<Alimento> cardapio = new ArrayList<>();
 
     public Restaurante() {
     }
 
     public Restaurante(ArrayList<Mesa> mesas) {
         this.mesas = mesas;
+    }
+
+    public Restaurante(ArrayList<Mesa> mesas, ArrayList<Alimento> cardapio) {
+        this.mesas = mesas;
+        this.cardapio = cardapio;
     }
 
     public Restaurante(ArrayList<Mesa> mesas, ArrayList<Atendimento> filaDeEspera,
@@ -42,10 +48,17 @@ public class Restaurante {
     public void removeFilaDeEspera(Atendimento atendimento) {
         filaDeEspera.remove(atendimento);
     }
-    
+
+
+    public ArrayList<Alimento> getCardapio() {
+        return cardapio;
+    }
+
     public void removeReserva(Atendimento atendimento) {
-        System.out.println("\nHora de entrada: " + atendimento.getDataHoraEntrada().getHour() + ":" + atendimento.getDataHoraEntrada().getMinute());
-        System.out.println("Hora de saída: " + atendimento.getDataHoraSaida().getHour() + ":" + atendimento.getDataHoraSaida().getMinute());
+        System.out.println("\nHora de entrada: " + atendimento.getDataHoraEntrada().getHour() + ":"
+                + atendimento.getDataHoraEntrada().getMinute());
+        System.out.println("Hora de saída: " + atendimento.getDataHoraSaida().getHour() + ":"
+                + atendimento.getDataHoraSaida().getMinute());
         atendimento.getMesa().setOcupada(false);
         atendimentos.remove(atendimento);
         verificaFilaDeEspera();
@@ -59,11 +72,11 @@ public class Restaurante {
         return filaDeEspera.size();
     }
 
-    
     public boolean verificaFilaDeEspera() {
         for (Atendimento atendimento : filaDeEspera) {
             if (fazReservaDeMesa(atendimento)) {
-                System.out.println("\nFila de espera andou! Atendimento do cliente " + atendimento.getCliente().getNome() + " foi realizado!");
+                System.out.println("\nFila de espera andou! Atendimento do cliente "
+                        + atendimento.getCliente().getNome() + " foi realizado!");
                 return true;
             }
         }
@@ -133,6 +146,17 @@ public class Restaurante {
             indice++;
         }
         System.out.println();
+    }
+
+    public void exibeCardapio() {
+        int indice = 1;
+
+        System.out.println("Cardápio: \n");
+
+        for (Alimento alimento : cardapio) {
+            System.out.println(indice + ": " + alimento.toString());
+            indice++;
+        }
     }
 
 }
