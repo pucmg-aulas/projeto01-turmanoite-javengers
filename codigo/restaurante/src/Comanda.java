@@ -3,9 +3,13 @@ import java.util.ArrayList;
 public class Comanda {
     private double valor;
     final static double TAXA = 10;
-    private ArrayList<Alimento> alimentos = new ArrayList<>();
+    private ArrayList<Alimento> listaAlimentos = new ArrayList<>();
     
     public double calculaValor(){
+        for(Alimento alimento : listaAlimentos)
+        {
+            valor += alimento.getValor();
+        }
         return valor;
     }
 
