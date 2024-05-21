@@ -55,6 +55,7 @@ public class Restaurante {
     }
 
     public void removeReserva(Atendimento atendimento) {
+        System.out.println("\nValor total da conta: R$" + atendimento.getComanda().calculaValor());
         System.out.println("\nHora de entrada: " + atendimento.getDataHoraEntrada().getHour() + ":"
                 + atendimento.getDataHoraEntrada().getMinute());
         System.out.println("Hora de saída: " + atendimento.getDataHoraSaida().getHour() + ":"
