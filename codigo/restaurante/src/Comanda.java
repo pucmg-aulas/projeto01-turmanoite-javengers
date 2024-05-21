@@ -1,42 +1,27 @@
 import java.util.ArrayList;
 
 public class Comanda {
-    private double valor = 0;
+    private ArrayList<Pedido> pedidos = new ArrayList<>();
     final static double TAXA = 10;
-    private ArrayList<Alimento> listaAlimentos = new ArrayList<>();
+
+    public void adicionaPedido(Pedido pedido) {
+        pedidos.add(pedido);
+    }
 
     public double calculaValor() {
-        for (Alimento alimento : listaAlimentos) {
-            valor += alimento.getValor();
+        double valor = 0;
+        for (Pedido pedido : pedidos) {
+            valor += pedido.getValorTotal();
         }
         valor += valor * TAXA / 100;
-        return valor;
-    }
-
-    public double getValor() {
-        return valor;
-    }
-
-    public void setValor(double valor) {
-        this.valor = valor;
-    }
-
-    public ArrayList<Alimento> getListaAlimentos() {
-        return listaAlimentos;
-    }
-
-    public void setListaAlimentos(ArrayList<Alimento> listaAlimentos) {
-        this.listaAlimentos = listaAlimentos;
+        return Math.round(valor * 100.0) / 100.0; // Truncando valores monetários para 2 casas decimais
     }
 
     public void imprimeComanda() {
         System.out.println("\nComanda:\n");
-
-        for (Alimento alimento : listaAlimentos) {
-            System.out.println(alimento.toString());
+        for (Pedido pedido : pedidos) {
+            System.out.println(pedido.toString());
         }
-
         System.out.println("\nValor total com taxa: R$" + calculaValor());
     }
-
 }

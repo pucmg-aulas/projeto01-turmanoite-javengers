@@ -101,7 +101,7 @@ public class Restaurante {
     public void exibeMesasDisponiveis() {
         int indice = 1;
 
-        System.out.println("Mesas disponíveis: \n");
+        System.out.println("\nMesas disponíveis: \n");
 
         for (Mesa mesa : this.mesas) {
             if (!mesa.isOcupada()) {
@@ -116,11 +116,11 @@ public class Restaurante {
         int indice = 1;
 
         if (atendimentos.size() == 0) {
-            System.out.println("Não há clientes no momento.");
+            System.out.println("\nNão há clientes no momento.\n");
             return;
         }
 
-        System.out.println("Clientes: \n");
+        System.out.println("\nClientes: \n");
 
         for (Atendimento atendimento : atendimentos) {
             System.out.println(indice + ": " + atendimento.getCliente().getNome() + " com "
@@ -134,11 +134,11 @@ public class Restaurante {
         int indice = 1;
 
         if (filaDeEspera.size() == 0) {
-            System.out.println("Não há clientes na fila de espera no momento.");
+            System.out.println("\nNão há clientes na fila de espera no momento.");
             return;
         }
 
-        System.out.println("Clientes na fila de espera: \n");
+        System.out.println("\nClientes na fila de espera: \n");
 
         for (Atendimento atendimento : filaDeEspera) {
             System.out.println(indice + ": " + atendimento.getCliente().getNome() + " com "
@@ -151,7 +151,7 @@ public class Restaurante {
     public void exibeCardapio() {
         int indice = 1;
 
-        System.out.println("Cardápio: \n");
+        System.out.println("\nCardápio: \n");
 
         for (Alimento alimento : cardapio) {
             System.out.println(indice + ": " + alimento.toString());

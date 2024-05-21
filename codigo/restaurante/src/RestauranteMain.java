@@ -119,14 +119,13 @@ public class RestauranteMain {
                     } while (!nomeValido(nome));
 
                     Cliente cliente = new Cliente(formatarNome(nome));
-
-                    System.out.println("Cadastro realizado com sucesso.");
                     clear();
+                    System.out.println("Cadastro realizado com sucesso.");
 
                     int quantPessoas = 0;
 
                     do {
-                        System.out.print("\nInforme a quantidade de pessoas da atendimento: ");
+                        System.out.print("\nInforme a quantidade de pessoas do atendimento: ");
                         quantPessoas = leitor.nextInt();
                         leitor.nextLine();
 
@@ -138,18 +137,19 @@ public class RestauranteMain {
                         }
                     } while (quantPessoas < 1);
 
-                    Atendimento atendimento = new Atendimento(cliente, quantPessoas, LocalDateTime.now());
+                    Atendimento novoAtendimento = new Atendimento(cliente, quantPessoas, LocalDateTime.now());
 
-                    if (restaurante.fazReservaDeMesa(atendimento)) {
+                    if (restaurante.fazReservaDeMesa(novoAtendimento)) {
                         System.out.println(
                                 "Há uma mesa disponível!");
                     } else {
-                        restaurante.adicionaFilaDeEspera(atendimento);
+                        restaurante.adicionaFilaDeEspera(novoAtendimento);
                         System.out.println(
                                 "Não há mesas disponíveis no momento - o cliente foi adicionado à fila de espera.");
                     }
                     break;
                 case 2:
+                    clear();
                     restaurante.exibeAtendimentos();
 
                     if (restaurante.quantidadeAtendimentos() > 0) {
@@ -170,12 +170,15 @@ public class RestauranteMain {
                     }
                     break;
                 case 3:
+                    clear();
                     restaurante.exibeMesasDisponiveis();
                     break;
                 case 4:
+                    clear();
                     restaurante.exibeFilaDeEspera();
                     break;
                 case 5:
+                    clear();
                     restaurante.exibeFilaDeEspera();
 
                     if (restaurante.quantidadeFilaDeEspera() > 0) {
@@ -195,13 +198,51 @@ public class RestauranteMain {
                     }
                     break;
                 case 6:
+                    clear();
                     restaurante.exibeCardapio();
                     break;
                 case 7:
+                    clear();
                     restaurante.exibeAtendimentos();
 
                     if (restaurante.quantidadeAtendimentos() > 0) {
                         System.out.print("Qual cliente deseja fazer um pedido: ");
+                        int indice = leitor.nextInt();
+
+                        Atendimento atendimento = restaurante.getAtendimentos().get(indice - 1);
+                        Comanda comanda = atendimento.getComanda();
+
+                        do {
+                            restaurante.exibeCardapio();
+
+                            System.out.print("Escolha um item do cardápio (0 para finalizar): ");
+                            int escolhaItem = leitor.nextInt();
+
+                            if (escolhaItem == 0)
+                                break;
+
+                            Alimento alimento = restaurante.getCardapio().get(escolhaItem - 1);
+                            System.out.print("Quantidade: ");
+                            int quantidade = leitor.nextInt();
+
+                            Pedido pedido = new Pedido(alimento, quantidade);
+                            comanda.adicionaPedido(pedido);
+                            System.out.println("Pedido adicionado com sucesso!");
+
+                            System.out.print("Deseja fazer mais um pedido? (1 para sim, 0 para não): ");
+                            escolhaItem = leitor.nextInt();
+                            if (escolhaItem == 0)
+                                break;
+
+                        } while (true);
+                    }
+                    break;
+                case 8:
+                    clear();
+                    restaurante.exibeAtendimentos();
+
+                    if (restaurante.quantidadeAtendimentos() > 0) {
+                        System.out.print("Qual cliente deseja ver a comanda: ");
 
                         int indice;
 
@@ -215,39 +256,11 @@ public class RestauranteMain {
 
                         Atendimento reservaEscolhida = restaurante.getAtendimentos().get(indice - 1);
 
-                        restaurante.exibeCardapio();
-
-                        System.out.print("\nQual é o pedido do cliente: ");
-                        indice = leitor.nextInt();
-
-                        Alimento pedido = restaurante.getCardapio().get(indice - 1);
-
-                        reservaEscolhida.getComanda().getListaAlimentos().add(pedido);
+                        reservaEscolhida.getComanda().imprimeComanda();
                     }
                     break;
-                case 8:
-                restaurante.exibeAtendimentos();
-
-                if (restaurante.quantidadeAtendimentos() > 0) {
-                    System.out.print("Qual cliente deseja ver a comanda: ");
-
-                    int indice;
-
-                    do {
-                        indice = leitor.nextInt();
-                        leitor.nextLine();
-                        if (indice < 1 || indice > restaurante.quantidadeAtendimentos()) {
-                            System.out.print("\nValor inválido! Digite um valor válido: ");
-                        }
-                    } while (indice < 1 || indice > restaurante.quantidadeAtendimentos());
-
-                    Atendimento reservaEscolhida = restaurante.getAtendimentos().get(indice - 1);
-
-                    reservaEscolhida.getComanda().imprimeComanda();
-                }
-                break;
                 case 0:
-                    System.out.println("Obrigado por utilizar nossos serviços!");
+                    System.out.println("\nObrigado por utilizar nossos serviços!\n");
                     leitor.close();
                     System.exit(0);
                     break;
