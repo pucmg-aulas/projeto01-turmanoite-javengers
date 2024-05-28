@@ -1,3 +1,5 @@
+package main.java.model;
+
 public class Cliente {
 
     private String nome;

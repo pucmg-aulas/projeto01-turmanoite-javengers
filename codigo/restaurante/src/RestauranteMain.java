@@ -1,6 +1,16 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+
+import main.java.model.Alimento;
+import main.java.model.Atendimento;
+import main.java.model.Bebida;
+import main.java.model.Cliente;
+import main.java.model.Comanda;
+import main.java.model.Mesa;
+import main.java.model.Pedido;
+import main.java.model.Prato;
+
 import java.time.LocalDateTime;
 
 public class RestauranteMain {

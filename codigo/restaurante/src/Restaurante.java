@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+import main.java.model.Alimento;
+import main.java.model.Atendimento;
+import main.java.model.Mesa;
+
 public class Restaurante {
     private ArrayList<Mesa> mesas = new ArrayList<>();
     private ArrayList<Atendimento> filaDeEspera = new ArrayList<>();

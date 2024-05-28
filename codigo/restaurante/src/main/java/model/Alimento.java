@@ -1,4 +1,9 @@
-public class Alimento {
+package main.java.model;
+
+import java.io.Serializable;
+
+public class Alimento implements Serializable {
+
     private String nome;
     private String descricao;
     private double valor;

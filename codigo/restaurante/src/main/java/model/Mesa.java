@@ -1,3 +1,5 @@
+package main.java.model;
+
 public class Mesa {
     private int quantCadeiras;
     private boolean ocupada;

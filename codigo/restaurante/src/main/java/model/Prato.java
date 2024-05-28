@@ -1,3 +1,5 @@
+package main.java.model;
+
 public class Prato extends Alimento{
     private int quantidade;
 

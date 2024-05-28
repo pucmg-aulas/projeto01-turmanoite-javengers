@@ -1,3 +1,5 @@
+package main.java.model;
+
 public class Bebida extends Alimento {
     private int tamanho;
 

@@ -1,3 +1,5 @@
+package main.java.model;
+
 public class Pedido {
     private Alimento alimento;
     private int quantidade;
