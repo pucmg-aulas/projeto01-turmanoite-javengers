@@ -4,9 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import main.java.model.Alimento;
-
 import java.awt.BorderLayout;
-
 import java.util.List;
 
 public class CardapioView extends JFrame {

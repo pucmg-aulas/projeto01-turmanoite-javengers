@@ -26,4 +26,10 @@ public class Comanda {
         }
         System.out.println("\nValor total com taxa: R$" + calculaValor());
     }
+
+
+    public ArrayList<Pedido> getPedidos() {
+        return this.pedidos;
+    }
+    
 }
