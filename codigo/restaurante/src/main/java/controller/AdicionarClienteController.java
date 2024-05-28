@@ -1,4 +1,4 @@
-package main.controller;
+package main.java.controller;
 
 import javax.swing.JOptionPane;
 
@@ -10,7 +10,7 @@ public class AdicionarClienteController {
     private AdicionarClienteView view;
     private Clientes clientes;
 
-    public IncluirClienteController() {
+    public AdicionarClienteController() {
         this.clientes = Clientes.getInstance();
         this.view = new AdicionarClienteView();
 

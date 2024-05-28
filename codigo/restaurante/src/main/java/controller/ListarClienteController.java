@@ -1,4 +1,4 @@
-package main.controller;
+package main.java.controller;
 
 import java.util.Iterator;
 import javax.swing.JOptionPane;
@@ -33,7 +33,6 @@ public class ListarClienteController {
         });
 
         this.view.setVisible(true);
-        
     }
 
     private void sair() {
@@ -41,7 +40,7 @@ public class ListarClienteController {
     }
 
     private void carregaTabela(){
-        Object colunas[] = {"Nome"};
+        Object colunas[] = {"Nome", "CPF"};
         DefaultTableModel tm = new DefaultTableModel(colunas, 0);
 
         tm.setNumRows(0);
@@ -50,31 +49,25 @@ public class ListarClienteController {
             Cliente c = it.next();
             String cliente = c.toString();
             String linha[] = cliente.split("%");
-            tm.addRow(new Object[]{linha[0]});
+            tm.addRow(new Object[]{linha[0], linha[1]});
         }
         view.getTbClientes().setModel(tm);
     }
 
     private void excluirCliente(){
-
         if(view.getTbClientes().getSelectedRow() != -1){
-
             int linha = this.view.getTbClientes().getSelectedRow();
-            String nome = (String) this.view.getTbClientes().getValueAt(linha, 0);
+            String cpf = (String) this.view.getTbClientes().getValueAt(linha, 1);
 
-            int op = JOptionPane.showConfirmDialog(view, "Deseja excluir o cliente com nome " + nome + "?");
+            int op = JOptionPane.showConfirmDialog(view, "Deseja excluir o cliente com CPF " + cpf + "?");
             if(op == JOptionPane.YES_OPTION){
-                Cliente cliente = clientes.buscarClientePorNome(nome);
-                clientes.excluirCliente(cliente);
-                JOptionPane.showMessageDialog(view, "Cliente com nome " + nome + " excluído com sucesso!");
-                carregaTabela();
+            Cliente cliente = clientes.buscarClientePorCpf(cpf);
+            clientes.excluirCliente(cliente);
+            JOptionPane.showMessageDialog(view, "Cliente com CPF " + cpf + " excluído com sucesso!");
+            carregaTabela();
             }
-
         }
-        else{
-            JOptionPane.showMessageDialog(view, "Selecione uma linha primeiro!");
-        }
-
+        else JOptionPane.showMessageDialog(view, "Selecione uma linha primeiro!");
     }
 
     private void editar() {

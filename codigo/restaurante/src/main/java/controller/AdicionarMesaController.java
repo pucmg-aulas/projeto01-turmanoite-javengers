@@ -1,4 +1,4 @@
-package main.controller;
+package main.java.controller;
 
 import javax.swing.JOptionPane;
 
@@ -10,7 +10,7 @@ public class AdicionarMesaController {
     private AdicionarMesaView view;
     private Mesas mesas;
 
-    public IncluirMesaController() {
+    public AdicionarMesaController() {
         this.mesas = Mesas.getInstance();
         this.view = new AdicionarMesaView();
 
@@ -27,8 +27,8 @@ public class AdicionarMesaController {
     }
 
     public void addMesa(){
-        int numero = Integer.parseInt(view.getTxtNumeroMesa().getText());
-        Mesa m = new Mesa(numero);
+        int quantCadeiras = Integer.parseInt(view.getTxtQuantCadeirasMesa().getText());
+        Mesa m = new Mesa(quantCadeiras);
         mesas.addMesa(m);
         JOptionPane.showMessageDialog(view, "Mesa salva com sucesso!");
         limparTela();
@@ -39,6 +39,6 @@ public class AdicionarMesaController {
     }
 
     private void limparTela(){
-        this.view.getTxtNumeroMesa().setText("");
+        this.view.getTxtQuantCadeirasMesa().setText("");
     }
 }

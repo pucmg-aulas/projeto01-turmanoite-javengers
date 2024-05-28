@@ -1,4 +1,4 @@
-package main.controller;
+package main.java.controller;
 
 import java.util.Iterator;
 import javax.swing.JOptionPane;

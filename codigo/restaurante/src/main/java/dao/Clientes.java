@@ -11,7 +11,7 @@ public class Clientes extends AbstractDao implements Serializable {
 
     private List<Cliente> clientes;
     private static Clientes instance;
-    
+
     private final String localArquivo = "./src/main/java/data/Clientes.dat";
 
     private Clientes() {
@@ -23,7 +23,7 @@ public class Clientes extends AbstractDao implements Serializable {
         if (instance == null) instance = new Clientes();
         return instance;
     }
-    
+
     public void addCliente(Cliente cliente){
         this.clientes.add(cliente);
         grava();
@@ -40,19 +40,26 @@ public class Clientes extends AbstractDao implements Serializable {
     public List<Cliente> getClientes() {
         return clientes;
     }
-    
+
     public void excluirCliente(Cliente cliente){
         clientes.remove(cliente);
         grava();
     }
-    
+
     public Cliente buscarClientePorNome(String nome){
         for (Cliente cliente : clientes) {
             if (cliente.getNome().equals(nome)) return cliente;
         }
         return null;
     }
-    
+
+    public Cliente buscarClientePorCpf(String cpf){
+        for (Cliente cliente : clientes) {
+            if (cliente.getCpf().equals(cpf)) return cliente;
+        }
+        return null;
+    }
+
     public boolean altera(Cliente clienteExistente, String nomeAnterior){
         try {
             ArrayList<Cliente> listaTemp = new ArrayList<Cliente>();
