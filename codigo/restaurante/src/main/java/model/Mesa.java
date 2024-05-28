@@ -1,6 +1,9 @@
 package main.java.model;
 
-public class Mesa {
+import java.io.Serializable;
+
+public class Mesa implements Serializable {
+
     private int quantCadeiras;
     private boolean ocupada;
 
