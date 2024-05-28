@@ -8,10 +8,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author danil
- */
 public abstract class AbstractDao {
 
     public void grava(String local, List lista) {

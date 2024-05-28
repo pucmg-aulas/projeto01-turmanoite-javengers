@@ -1,8 +1,9 @@
 package main.java.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Atendimento {
+public class Atendimento implements Serializable {
 
     private Cliente cliente;
     private int quantPessoas;
