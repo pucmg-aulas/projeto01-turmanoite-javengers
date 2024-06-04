@@ -27,7 +27,7 @@ public class ListarCardapioController {
         DefaultTableModel tm = new DefaultTableModel(colunas, 0);
 
         tm.setNumRows(0);
-        Iterator<Alimento> it = alimentos.getCarros().iterator();
+        Iterator<Alimento> it = alimentos.getAlimentos().iterator();
         while (it.hasNext()) {
             Alimento m = it.next();
             String mesa = m.toString();

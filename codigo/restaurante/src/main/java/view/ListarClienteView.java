@@ -14,9 +14,6 @@ import javax.swing.JToggleButton;
  */
 public class ListarClienteView extends javax.swing.JFrame {
 
-        /**
-         * Creates new form ListarCarroView
-         */
         public ListarClienteView() {
                 initComponents();
         }

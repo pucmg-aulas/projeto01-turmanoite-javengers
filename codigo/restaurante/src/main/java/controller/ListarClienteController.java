@@ -91,6 +91,6 @@ public class ListarClienteController {
         String cpf = (String) this.view.getTbClientes().getValueAt(linha, 1);
         Cliente cliente = clientes.buscarClientePorCpf(cpf);
         Atendimento atendimento = atendimentos.buscarAtendimentoPorCliente(cliente);
-        new ComandaController(atendimento);
+        new ListarComandaController(atendimento);
     }
 }
