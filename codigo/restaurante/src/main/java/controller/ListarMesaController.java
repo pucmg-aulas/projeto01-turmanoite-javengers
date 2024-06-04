@@ -50,7 +50,7 @@ public class ListarMesaController {
             Mesa m = it.next();
             String mesa = m.toString();
             String linha[] = mesa.split("%");
-            tm.addRow(new Object[] { linha[1], linha[2], linha[3] });
+            tm.addRow(new Object[] { linha[0], linha[1], linha[2] });
         }
         view.getTbMesas().setModel(tm);
     }
