@@ -4,24 +4,21 @@ import java.io.Serializable;
 
 public class Mesa implements Serializable {
 
-    private static int proxNumero;
     private int numero;
     private int quantCadeiras;
     private boolean ocupada;
 
-    static{
-        proxNumero = 1;
-    }
-
     public Mesa(int quantCadeiras) {
-        this.numero = proxNumero;
         this.quantCadeiras = quantCadeiras;
         this.ocupada = false;
-        proxNumero++;
     }
 
     public int getNumero() {
         return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
     public int getQuantCadeiras() {
@@ -38,6 +35,6 @@ public class Mesa implements Serializable {
 
     @Override
     public String toString() {
-        return proxNumero + "%" + numero + "%" + quantCadeiras + "%" + ocupada;
+        return numero + "%" + quantCadeiras + "%" + ocupada;
     }
 }
