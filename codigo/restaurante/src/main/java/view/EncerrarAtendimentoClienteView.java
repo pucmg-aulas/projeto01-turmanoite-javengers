@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
@@ -170,7 +170,6 @@ public class EncerrarAtendimentoClienteView extends javax.swing.JFrame {
         });
 
         txtNomeCliente.setEditable(false);
-        txtNomeCliente.setText("Gustavo");
         txtNomeCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomeClienteActionPerformed(evt);
@@ -184,7 +183,6 @@ public class EncerrarAtendimentoClienteView extends javax.swing.JFrame {
         jLabel5.setText("Quantidade Pessoas:");
 
         numQuantidadePessoas.setEditable(false);
-        numQuantidadePessoas.setText("5");
         numQuantidadePessoas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 numQuantidadePessoasActionPerformed(evt);
