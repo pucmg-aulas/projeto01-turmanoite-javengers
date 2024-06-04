@@ -18,7 +18,7 @@ public class AdicionarClienteController {
             addCliente();
         });
 
-        this.view.getBtnCancelar().addActionListener((e) -> {
+        this.view.getBtnVoltar().addActionListener((e) -> {
             cancelar();
         });
 
@@ -27,8 +27,8 @@ public class AdicionarClienteController {
     }
 
     public void addCliente(){
-        String nome = view.getTxtNomeCliente().getText();
-        String cpf = view.getTxtCpfCliente().getText();
+        String nome = view.getTxtNomeCLiente().getText();
+        String cpf = view.getNumCPFCliente().getText();
         Cliente c = new Cliente(nome, cpf);
         clientes.addCliente(c);
         JOptionPane.showMessageDialog(view, "Cliente salvo com sucesso!");
@@ -40,7 +40,7 @@ public class AdicionarClienteController {
     }
 
     private void limparTela(){
-        this.view.getTxtNomeCliente().setText("");
-        this.view.getTxtCpfCliente().setText("");
+        this.view.getTxtNomeCLiente().setText("");
+        this.view.getNumCPFCliente().setText("");
     }
 }
