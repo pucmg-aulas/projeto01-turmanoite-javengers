@@ -53,7 +53,6 @@ public class Restaurante {
         filaDeEspera.remove(atendimento);
     }
 
-
     public ArrayList<Alimento> getCardapio() {
         return cardapio;
     }

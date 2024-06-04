@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.java.model.Atendimento;
+import main.java.model.Cliente;
 
 public class Atendimentos extends AbstractDao implements Serializable {
 
@@ -45,5 +46,13 @@ public class Atendimentos extends AbstractDao implements Serializable {
     public void excluirAtendimento(Atendimento atendimento) {
         atendimentos.remove(atendimento);
         grava();
+    }
+
+    public Atendimento buscarAtendimentoPorCliente(Cliente cliente) {
+        for (Atendimento atendimento : atendimentos) {
+            if (atendimento.getCliente().equals(cliente))
+                return atendimento;
+        }
+        return null;
     }
 }

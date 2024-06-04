@@ -1,6 +1,9 @@
 package main.java.view;
 
 import javax.swing.*;
+
+import main.java.model.Alimento;
+
 import java.awt.*;
 
 public class FazerPedidoView extends JFrame {
@@ -19,7 +22,7 @@ public class FazerPedidoView extends JFrame {
         JPanel selecaoItemPanel = new JPanel();
         selecaoItemPanel.setLayout(new FlowLayout());
 
-        itemComboBox = new JComboBox();
+        itemComboBox = new JComboBox<Alimento[]>();
         selecaoItemPanel.add(itemComboBox);
 
         JPanel quantidadeEBotaoPanel = new JPanel();

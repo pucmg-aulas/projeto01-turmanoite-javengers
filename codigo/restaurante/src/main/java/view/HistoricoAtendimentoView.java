@@ -9,15 +9,15 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.table.DefaultTableModel;
 
-public class HistoricoAtendimentoView extends JFrame{
+public class HistoricoAtendimentoView extends JFrame {
     private JTable tabelaAtendimentos;
     private JScrollPane scrollPane;
     private JTextField campoPesquisa;
     private JButton botaoPesquisar;
     private JTable tabelaHistorico;
     private DefaultTableModel tableModel;
-    
-    public HistoricoAtendimentoView () {
+
+    public HistoricoAtendimentoView() {
         setTitle("Histórico de Atendimentos");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

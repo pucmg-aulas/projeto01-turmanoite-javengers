@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.java.model.Alimento;
-import main.java.model.Bebida;
-import main.java.model.Prato;
 
 public class Alimentos extends AbstractDao implements Serializable {
 

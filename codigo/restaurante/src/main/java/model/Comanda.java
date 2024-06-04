@@ -1,8 +1,9 @@
 package main.java.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Comanda {
+public class Comanda implements Serializable {
     final static double TAXA = 10;
     private ArrayList<Pedido> pedidos;
 
@@ -24,6 +25,10 @@ public class Comanda {
 
     public void setPedidos(ArrayList<Pedido> pedidos) {
         this.pedidos = pedidos;
+    }
+
+    public void addPedidos(Pedido pedido) {
+        this.pedidos.add(pedido);
     }
 
     @Override

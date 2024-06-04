@@ -1,6 +1,8 @@
 package main.java.model;
 
-public class Pedido {
+import java.io.Serializable;
+
+public class Pedido implements Serializable {
     private Alimento alimento;
     private int quantidade;
     private double valorTotal;
@@ -8,6 +10,12 @@ public class Pedido {
     public Pedido(Alimento alimento, int quantidade) {
         this.alimento = alimento;
         this.quantidade = quantidade;
+    }
+
+    public Pedido(Alimento alimento, int quantidade, double valorTotal) {
+        this.alimento = alimento;
+        this.quantidade = quantidade;
+        this.valorTotal = valorTotal;
     }
 
     public Alimento getAlimento() {
@@ -33,6 +41,6 @@ public class Pedido {
 
     @Override
     public String toString() {
-        return quantidade + "%" + alimento + " %" + valorTotal;
+        return alimento + "%" + quantidade + " %" + getValorTotal();
     }
 }

@@ -4,7 +4,9 @@ import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import main.java.dao.Atendimentos;
 import main.java.dao.Clientes;
+import main.java.model.Atendimento;
 import main.java.model.Cliente;
 import main.java.view.ListarClienteView;
 
@@ -12,10 +14,12 @@ public class ListarClienteController {
 
     private ListarClienteView view;
     private Clientes clientes;
+    private Atendimentos atendimentos;
 
     public ListarClienteController() {
 
         this.clientes = Clientes.getInstance();
+        this.atendimentos = Atendimentos.getInstance();
         this.view = new ListarClienteView();
 
         carregaTabela();
@@ -24,12 +28,16 @@ public class ListarClienteController {
             excluirCliente();
         });
 
-        this.view.getBtnVoltar().addActionListener((e) -> {
-            sair();
+        this.view.getBtnFazerPedido().addActionListener((e) -> {
+            fazerPedido();
         });
 
         this.view.getBtnEditar().addActionListener((e) -> {
-            editar();
+            encerrarAtendimento();
+        });
+
+        this.view.getBtnVoltar().addActionListener((e) -> {
+            sair();
         });
 
         this.view.setVisible(true);
@@ -70,7 +78,19 @@ public class ListarClienteController {
             JOptionPane.showMessageDialog(view, "Selecione uma linha primeiro!");
     }
 
-    private void editar() {
-        JOptionPane.showInternalMessageDialog(view, "Não implementado ainda!");
+    private void fazerPedido() {
+        int linha = this.view.getTbClientes().getSelectedRow();
+        String cpf = (String) this.view.getTbClientes().getValueAt(linha, 1);
+        Cliente cliente = clientes.buscarClientePorCpf(cpf);
+        Atendimento atendimento = atendimentos.buscarAtendimentoPorCliente(cliente);
+        new FazerPedidoController(atendimento);
+    }
+
+    private void encerrarAtendimento() {
+        int linha = this.view.getTbClientes().getSelectedRow();
+        String cpf = (String) this.view.getTbClientes().getValueAt(linha, 1);
+        Cliente cliente = clientes.buscarClientePorCpf(cpf);
+        Atendimento atendimento = atendimentos.buscarAtendimentoPorCliente(cliente);
+        new ComandaController(atendimento);
     }
 }
