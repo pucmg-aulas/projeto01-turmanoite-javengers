@@ -4,7 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import java.awt.GridLayout;
 
-public class InicialView extends JFrame{
+public class InicialView extends JFrame {
 
     private JButton iniciarAtendimentoButton;
     private JButton encerrarAtendimentoButton;
@@ -24,7 +24,7 @@ public class InicialView extends JFrame{
 
         iniciarAtendimentoButton = new JButton("Iniciar Atendimento");
         encerrarAtendimentoButton = new JButton("Encerrar Atendimento");
-        exibirMesasButton = new JButton("Exibir Mesas Disponíveis");
+        exibirMesasButton = new JButton("Exibir Mesas");
         exibirListaEsperaButton = new JButton("Lista de Espera");
         removerAtendimentoButton = new JButton("Remover da Espera");
         exibirCardapioButton = new JButton("Cardápio");
@@ -42,7 +42,6 @@ public class InicialView extends JFrame{
         add(exibirComandaButton);
         add(sairButton);
     }
-
 
     public JButton getIniciarAtendimentoButton() {
         return this.iniciarAtendimentoButton;
