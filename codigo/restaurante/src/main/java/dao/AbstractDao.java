@@ -12,7 +12,9 @@ public abstract class AbstractDao {
 
     public void grava(String local, List lista) {
         try {
-            FileOutputStream fo = new FileOutputStream(local);
+            File file = new File(local);
+            file.createNewFile();
+            FileOutputStream fo = new FileOutputStream(file);
             ObjectOutputStream oo = new ObjectOutputStream(fo);
             oo.writeObject(lista);
             oo.close();

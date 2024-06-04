@@ -12,7 +12,7 @@ public class Mesas extends AbstractDao implements Serializable {
     private List<Mesa> mesas;
     private static Mesas instance;
 
-    private final String localArquivo = "./src/main/java/data/Mesas.dat";
+    private final String localArquivo = "./codigo/restaurante/src/main/java/data/Mesas.dat";
 
     private Mesas() {
         this.mesas = new ArrayList<>();

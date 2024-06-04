@@ -19,6 +19,21 @@ public class Atendimento implements Serializable {
         this.comanda = new Comanda();
     }
 
+    public Atendimento(Cliente cliente, int quantPessoas, Mesa mesa, Comanda comanda, LocalDateTime dataHoraEntrada,
+            LocalDateTime dataHoraSaida) {
+        this.cliente = cliente;
+        this.quantPessoas = quantPessoas;
+        this.mesa = mesa;
+        this.comanda = comanda;
+        this.dataHoraEntrada = dataHoraEntrada;
+        this.dataHoraSaida = dataHoraSaida;
+    }
+
+    @Override
+    public String toString() {
+        return cliente + "%" + quantPessoas + "%" + mesa + "%" + comanda + "%" + dataHoraEntrada + "%" + dataHoraSaida;
+    }
+
     public Cliente getCliente() {
         return cliente;
     }

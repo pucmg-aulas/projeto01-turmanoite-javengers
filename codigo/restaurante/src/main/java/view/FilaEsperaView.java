@@ -17,7 +17,7 @@ public class FilaEsperaView extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        tableModel = new DefaultTableModel(new Object[]{"Cliente", "Quantidade de Pessoas"}, 0);
+        tableModel = new DefaultTableModel(new Object[] { "Cliente", "Quantidade de Pessoas" }, 0);
         tabelaFilaEspera = new JTable(tableModel);
         tabelaFilaEspera.setFillsViewportHeight(true);
         JScrollPane scrollPane = new JScrollPane(tabelaFilaEspera);
@@ -28,7 +28,7 @@ public class FilaEsperaView extends JFrame {
         tableModel.setRowCount(0);
 
         for (Atendimento atendimento : filaEspera) {
-            Object[] row = {atendimento.getCliente().getNome(), atendimento.getQuantPessoas()};
+            Object[] row = { atendimento.getCliente().getNome(), atendimento.getQuantPessoas() };
             tableModel.addRow(row);
         }
     }

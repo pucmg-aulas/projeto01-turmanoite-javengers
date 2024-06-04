@@ -26,6 +26,11 @@ public class Comanda {
         this.pedidos = pedidos;
     }
 
+    @Override
+    public String toString() {
+        return "" + pedidos;
+    }
+
     // public double calculaValor() {
     // double valor = 0;
     // for (Pedido pedido : pedidos) {

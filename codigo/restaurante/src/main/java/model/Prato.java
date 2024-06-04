@@ -1,6 +1,6 @@
 package main.java.model;
 
-public class Prato extends Alimento{
+public class Prato extends Alimento {
     private int quantidade;
 
     public Prato(int quantidade, String nome, String descricao, double valor) {
@@ -16,7 +16,7 @@ public class Prato extends Alimento{
         this.quantidade = quantidade;
     }
 
-    public String toString(){
-        return this.getNome() + " - " + this.getDescricao() + " - " + this.getQuantidade() + " pessoa(s) - R$" + this.getValor();
+    public String toString() {
+        return this.getQuantidade() + "%" + this.getNome() + "%" + this.getDescricao() + "%" + this.getValor();
     }
 }

@@ -17,7 +17,7 @@ public class Bebida extends Alimento {
     }
 
     public String toString(){
-        return this.getNome() + " - " + this.getDescricao() + " - " + this.getTamanho() + "ml - R$" + this.getValor();
+        return this.getTamanho() + "%" + this.getNome() + "%" + this.getDescricao() + "%" + this.getValor();
     }
 
 }

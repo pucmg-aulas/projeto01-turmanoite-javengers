@@ -5,13 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.java.model.Alimento;
+import main.java.model.Bebida;
+import main.java.model.Prato;
 
 public class Alimentos extends AbstractDao implements Serializable {
 
     private List<Alimento> alimentos;
     private static Alimentos instance;
 
-    private final String localArquivo = "./src/main/java/data/Alimentos.dat";
+    private final String localArquivo = "./codigo/restaurante/src/main/java/data/Alimentos.dat";
 
     private Alimentos() {
         this.alimentos = new ArrayList<>();
@@ -25,7 +27,7 @@ public class Alimentos extends AbstractDao implements Serializable {
         return instance;
     }
 
-    public void addCarro(Alimento alimento) {
+    public void addAlimento(Alimento alimento) {
         this.alimentos.add(alimento);
         grava();
     }

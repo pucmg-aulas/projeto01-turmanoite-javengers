@@ -35,4 +35,9 @@ public class Mesa implements Serializable {
     public void setOcupada(boolean ocupada) { // mudar o status da mesa quando um cliente ocupa/libera
         this.ocupada = ocupada;
     }
+
+    @Override
+    public String toString() {
+        return proxNumero + "%" + numero + "%" + quantCadeiras + "%" + ocupada;
+    }
 }

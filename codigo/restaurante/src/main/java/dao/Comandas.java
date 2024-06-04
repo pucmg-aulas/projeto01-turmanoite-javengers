@@ -11,7 +11,7 @@ public class Comandas extends AbstractDao implements Serializable {
     private List<Comanda> comandas;
     private static Comandas instance;
 
-    private final String localArquivo = "./src/main/java/data/Comandas.dat";
+    private final String localArquivo = "./codigo/restaurante/src/main/java/data/Comandas.dat";
 
     private Comandas() {
         this.comandas = new ArrayList<>();

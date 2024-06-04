@@ -11,8 +11,8 @@ public class Clientes extends AbstractDao implements Serializable {
 
     private List<Cliente> clientes;
     private static Clientes instance;
-
-    private final String localArquivo = "./src/main/java/data/Clientes.dat";
+    
+    private final String localArquivo = "./codigo/restaurante/src/main/java/data/Clientes.dat";
 
     private Clientes() {
         this.clientes = new ArrayList<>();

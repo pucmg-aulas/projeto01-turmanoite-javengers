@@ -3,6 +3,7 @@ package main.java.model;
 public class Pedido {
     private Alimento alimento;
     private int quantidade;
+    private double valorTotal;
 
     public Pedido(Alimento alimento, int quantidade) {
         this.alimento = alimento;
@@ -26,12 +27,12 @@ public class Pedido {
     }
 
     public double getValorTotal() {
-        return alimento.getValor() * quantidade;
+        valorTotal = alimento.getValor() * quantidade;
+        return valorTotal;
     }
 
     @Override
     public String toString() {
-        return quantidade + "x " + alimento.getNome() + " - R$" + getValorTotal();
+        return quantidade + "%" + alimento + " %" + valorTotal;
     }
 }
-

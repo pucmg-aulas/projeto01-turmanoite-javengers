@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class Cliente implements Serializable {
 
     private String cpf;
-
     private String nome;
 
     public Cliente(String cpf, String nome) {
@@ -19,5 +18,10 @@ public class Cliente implements Serializable {
 
     public String getNome() {
         return nome;
+    }
+
+    @Override
+    public String toString() {
+        return cpf + "%" + nome;
     }
 }

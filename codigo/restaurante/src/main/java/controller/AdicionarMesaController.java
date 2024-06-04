@@ -28,6 +28,7 @@ public class AdicionarMesaController {
 
     public void addMesa(){
         int quantCadeiras = Integer.parseInt(view.getTxtQuantCadeirasMesa().getText());
+        System.out.println(quantCadeiras);
         Mesa m = new Mesa(quantCadeiras);
         mesas.addMesa(m);
         JOptionPane.showMessageDialog(view, "Mesa salva com sucesso!");
