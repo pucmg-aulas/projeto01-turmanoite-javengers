@@ -7,7 +7,7 @@ public class Cliente implements Serializable {
     private String cpf;
     private String nome;
 
-    public Cliente(String cpf, String nome) {
+    public Cliente(String nome, String cpf) {
         this.cpf = cpf;
         this.nome = nome;
     }
@@ -22,6 +22,6 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return cpf + "%" + nome;
+        return nome + "%" + cpf;
     }
 }
