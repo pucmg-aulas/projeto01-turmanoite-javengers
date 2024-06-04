@@ -38,11 +38,11 @@ public class Alimentos extends AbstractDao implements Serializable {
         super.grava(localArquivo, alimentos);
     }
 
-    public List<Alimento> getCarros() {
+    public List<Alimento> getAlimentos() {
         return alimentos;
     }
 
-    public void excluirCarro(Alimento alimento) {
+    public void excluirAlimento(Alimento alimento) {
         alimentos.remove(alimento);
         grava();
     }

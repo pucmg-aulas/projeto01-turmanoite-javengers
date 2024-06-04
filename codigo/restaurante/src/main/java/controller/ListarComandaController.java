@@ -7,11 +7,11 @@ import main.java.model.Atendimento;
 import main.java.model.Pedido;
 import main.java.view.ComandaView;
 
-public class ComandaController {
+public class ListarComandaController {
 
     private ComandaView view;
 
-    public ComandaController(Atendimento atendimento) {
+    public ListarComandaController(Atendimento atendimento) {
 
         this.view = new ComandaView();
 

@@ -13,10 +13,6 @@ import javax.swing.JToggleButton;
  */
 public class AdicionarClienteView extends javax.swing.JFrame {
 
-        /**
-         * Creates new form AddCarroView
-         */
-
         public AdicionarClienteView() {
                 initComponents();
         }
@@ -39,10 +35,6 @@ public class AdicionarClienteView extends javax.swing.JFrame {
 
         public JTextField getNumCPFCliente() {
                 return numCPFCliente;
-        }
-
-        public void setTxtMarcaCarro(JTextField numCPFCliente) {
-                this.numCPFCliente = numCPFCliente;
         }
 
         public JTextField getTxtNomeCLiente() {

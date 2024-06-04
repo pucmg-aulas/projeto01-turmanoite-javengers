@@ -47,7 +47,7 @@ public class FazerPedidoController {
 
     @SuppressWarnings("unchecked")
     private void carregaComboBox() {
-        Iterator<Alimento> it = alimentos.getCarros().iterator();
+        Iterator<Alimento> it = alimentos.getAlimentos().iterator();
         while (it.hasNext()) {
             Alimento alimento = it.next();
             this.view.getItemComboBox().addItem(alimento);
