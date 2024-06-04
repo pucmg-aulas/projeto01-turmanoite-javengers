@@ -12,6 +12,7 @@ public class CardapioView extends JFrame {
     private JTable table;
     private DefaultTableModel tableModel;
 
+
     public CardapioView() {
         setTitle("Cardápio");
         setSize(400, 600);

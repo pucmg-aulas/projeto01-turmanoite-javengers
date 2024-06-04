@@ -11,7 +11,7 @@ public class ComandaView extends JFrame {
     private JTable tabelaPedidos;
     private DefaultTableModel tableModel;
 
-    public ComandaView(Comanda comanda) {
+    public ComandaView() {
         setTitle("Comanda do Cliente");
         setSize(400, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -21,11 +21,14 @@ public class ComandaView extends JFrame {
         tabelaPedidos = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(tabelaPedidos);
         add(scrollPane, BorderLayout.CENTER);
+    }
+
+    public void setComanda(Comanda comanda) {
+        tableModel.setRowCount(0); // limpa a tela
 
         for (Pedido pedido : comanda.getPedidos()) {
             Object[] row = { pedido.getQuantidade(), pedido.getAlimento(), pedido.getValorTotal() };
             tableModel.addRow(row);
         }
     }
-
 }
