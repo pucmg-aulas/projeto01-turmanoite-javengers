@@ -32,8 +32,12 @@ public class ListarClienteController {
             fazerPedido();
         });
 
-        this.view.getBtnEditar().addActionListener((e) -> {
-            encerrarAtendimento();
+        this.view.getBtnComanda().addActionListener((e) -> {
+            listarComanda();
+        });
+
+        this.view.getBtnEncerrar().addActionListener((e) -> {
+            fecharComanda();
         });
 
         this.view.getBtnVoltar().addActionListener((e) -> {
@@ -71,6 +75,8 @@ public class ListarClienteController {
             if (op == JOptionPane.YES_OPTION) {
                 Cliente cliente = clientes.buscarClientePorCpf(cpf);
                 clientes.excluirCliente(cliente);
+                Atendimento atendimento = atendimentos.buscarAtendimentoPorCpf(cpf);
+                atendimentos.excluirAtendimento(atendimento);
                 JOptionPane.showMessageDialog(view, "Cliente com CPF " + cpf + " excluído com sucesso!");
                 carregaTabela();
             }
@@ -81,16 +87,21 @@ public class ListarClienteController {
     private void fazerPedido() {
         int linha = this.view.getTbClientes().getSelectedRow();
         String cpf = (String) this.view.getTbClientes().getValueAt(linha, 1);
-        Cliente cliente = clientes.buscarClientePorCpf(cpf);
-        Atendimento atendimento = atendimentos.buscarAtendimentoPorCliente(cliente);
+        Atendimento atendimento = atendimentos.buscarAtendimentoPorCpf(cpf);
         new FazerPedidoController(atendimento);
     }
 
-    private void encerrarAtendimento() {
+    private void listarComanda() {
         int linha = this.view.getTbClientes().getSelectedRow();
         String cpf = (String) this.view.getTbClientes().getValueAt(linha, 1);
-        Cliente cliente = clientes.buscarClientePorCpf(cpf);
-        Atendimento atendimento = atendimentos.buscarAtendimentoPorCliente(cliente);
+        Atendimento atendimento = atendimentos.buscarAtendimentoPorCpf(cpf);
         new ListarComandaController(atendimento);
+    }
+
+    private void fecharComanda() {
+        int linha = this.view.getTbClientes().getSelectedRow();
+        String cpf = (String) this.view.getTbClientes().getValueAt(linha, 1);
+        Atendimento atendimento = atendimentos.buscarAtendimentoPorCpf(cpf);
+        new EncerrarAtendimentoController(atendimento);
     }
 }

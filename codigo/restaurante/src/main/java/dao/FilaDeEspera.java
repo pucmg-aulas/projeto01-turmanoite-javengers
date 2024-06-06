@@ -7,49 +7,49 @@ import java.util.List;
 
 import main.java.model.Atendimento;
 
-public class Atendimentos extends AbstractDao implements Serializable {
+public class FilaDeEspera extends AbstractDao implements Serializable {
 
-    private List<Atendimento> atendimentos;
-    private static Atendimentos instance;
+    private List<Atendimento> filaDeEspera;
+    private static FilaDeEspera instance;
 
-    private final String localArquivo = "./codigo/restaurante/src/main/java/data/Atendimentos.dat";
+    private final String localArquivo = "./codigo/restaurante/src/main/java/data/FilaDeEspera.dat";
 
-    private Atendimentos() {
-        this.atendimentos = new ArrayList<>();
+    private FilaDeEspera() {
+        this.filaDeEspera = new ArrayList<>();
         carregaAtendimentos();
     }
 
-    public static Atendimentos getInstance() {
+    public static FilaDeEspera getInstance() {
         if (instance == null) {
-            instance = new Atendimentos();
+            instance = new FilaDeEspera();
         }
         return instance;
     }
 
     public void addAtendimento(Atendimento atendimento) {
-        this.atendimentos.add(atendimento);
+        this.filaDeEspera.add(atendimento);
         grava();
     }
 
     private void carregaAtendimentos() {
-        this.atendimentos = super.leitura(localArquivo);
+        this.filaDeEspera = super.leitura(localArquivo);
     }
 
     private void grava() {
-        super.grava(localArquivo, atendimentos);
+        super.grava(localArquivo, filaDeEspera);
     }
 
     public List<Atendimento> getAtendimentos() {
-        return atendimentos;
+        return filaDeEspera;
     }
 
     public void excluirAtendimento(Atendimento atendimento) {
-        atendimentos.remove(atendimento);
+        filaDeEspera.remove(atendimento);
         grava();
     }
 
     public Atendimento buscarAtendimentoPorCpf(String cpf) {
-        for (Atendimento atendimento : atendimentos) {
+        for (Atendimento atendimento : filaDeEspera) {
             if (atendimento.getCliente().getCpf().equals(cpf))
                 return atendimento;
         }
@@ -60,7 +60,7 @@ public class Atendimentos extends AbstractDao implements Serializable {
         try {
             ArrayList<Atendimento> listaTemp = new ArrayList<Atendimento>();
 
-            for (Iterator<Atendimento> it = atendimentos.iterator(); it.hasNext();) {
+            for (Iterator<Atendimento> it = filaDeEspera.iterator(); it.hasNext();) {
                 Atendimento atendimento = it.next();
                 if (!atendimento.getCliente().getCpf().equals(cpf))
                     listaTemp.add(atendimento);
@@ -68,8 +68,8 @@ public class Atendimentos extends AbstractDao implements Serializable {
                     listaTemp.add(atendimentoExistente);
             }
 
-            atendimentos.removeAll(atendimentos);
-            atendimentos.addAll(listaTemp);
+            filaDeEspera.removeAll(filaDeEspera);
+            filaDeEspera.addAll(listaTemp);
             grava();
 
             return true;

@@ -68,13 +68,13 @@ public class Mesas extends AbstractDao implements Serializable {
         return null;
     }
 
-    public boolean altera(Mesa mesaExistente, int quantCadeirasAnterior) {
+    public boolean altera(Mesa mesaExistente, int numero) {
         try {
             ArrayList<Mesa> listaTemp = new ArrayList<Mesa>();
 
             for (Iterator<Mesa> it = mesas.iterator(); it.hasNext();) {
                 Mesa mesa = it.next();
-                if (mesa.getQuantCadeiras() != quantCadeirasAnterior)
+                if (mesa.getNumero() != numero)
                     listaTemp.add(mesa);
                 else
                     listaTemp.add(mesaExistente);

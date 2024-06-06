@@ -29,6 +29,7 @@ public class Comanda implements Serializable {
 
     public void addPedidos(Pedido pedido) {
         this.pedidos.add(pedido);
+
     }
 
     @Override
@@ -36,15 +37,14 @@ public class Comanda implements Serializable {
         return "" + pedidos;
     }
 
-    // public double calculaValor() {
-    // double valor = 0;
-    // for (Pedido pedido : pedidos) {
-    // valor += pedido.getValorTotal();
-    // }
-    // valor += valor * TAXA / 100;
-    // return Math.round(valor * 100.0) / 100.0; // Truncando valores monetários
-    // para 2 casas decimais
-    // }
+    public double calculaValor() {
+        double valor = 0;
+        for (Pedido pedido : pedidos) {
+            valor += pedido.getValorTotal();
+        }
+        valor += valor * TAXA / 100;
+        return Math.round(valor * 100.0) / 100.0;
+    }
 
     // public void imprimeComanda() {
     // System.out.println("\nComanda:\n");

@@ -6,7 +6,6 @@ package main.java.view;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
-import javax.swing.JToggleButton;
 
 /**
  *
@@ -18,16 +17,12 @@ public class ListarClienteView extends javax.swing.JFrame {
                 initComponents();
         }
 
-        public JButton getBtnEditar() {
-                return btnEditar;
+        public JButton getBtnComanda() {
+                return btnComanda;
         }
 
-        public JToggleButton getBtnFazerPedido() {
+        public JButton getBtnFazerPedido() {
                 return btnFazerPedido;
-        }
-
-        public void setBtnFazerPedido(JToggleButton btnFazerPedido) {
-                this.btnFazerPedido = btnFazerPedido;
         }
 
         public JButton getBtnExcluir() {
@@ -36,6 +31,10 @@ public class ListarClienteView extends javax.swing.JFrame {
 
         public JButton getBtnVoltar() {
                 return btnVoltar;
+        }
+
+        public JButton getBtnEncerrar() {
+                return btnEncerrar;
         }
 
         public JTable getTbClientes() {
@@ -57,11 +56,12 @@ public class ListarClienteView extends javax.swing.JFrame {
                 jScrollPane2 = new javax.swing.JScrollPane();
                 jTable1 = new javax.swing.JTable();
                 btnVoltar = new javax.swing.JButton();
-                btnEditar = new javax.swing.JButton();
+                btnEncerrar = new javax.swing.JButton();
+                btnComanda = new javax.swing.JButton();
                 btnExcluir = new javax.swing.JButton();
                 jScrollPane1 = new javax.swing.JScrollPane();
                 tbClientes = new javax.swing.JTable();
-                btnFazerPedido = new javax.swing.JToggleButton();
+                btnFazerPedido = new javax.swing.JButton();
 
                 jTable1.setModel(new javax.swing.table.DefaultTableModel(
                                 new Object[][] {
@@ -79,7 +79,7 @@ public class ListarClienteView extends javax.swing.JFrame {
 
                 btnVoltar.setText("Voltar");
 
-                btnEditar.setText("Encerrar Atendimento");
+                btnComanda.setText("Visualizar Comanda");
 
                 btnExcluir.setText("Excluir");
 
@@ -96,6 +96,8 @@ public class ListarClienteView extends javax.swing.JFrame {
                 jScrollPane1.setViewportView(tbClientes);
 
                 btnFazerPedido.setText("Fazer Pedido");
+
+                btnEncerrar.setText("Fechar Comanda");
 
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
                 getContentPane().setLayout(layout);
@@ -118,7 +120,10 @@ public class ListarClienteView extends javax.swing.JFrame {
                                                                                                 .addComponent(btnExcluir)
                                                                                                 .addPreferredGap(
                                                                                                                 javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                                .addComponent(btnEditar)
+                                                                                                .addComponent(btnComanda)
+                                                                                                .addPreferredGap(
+                                                                                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                                                .addComponent(btnEncerrar)
                                                                                                 .addPreferredGap(
                                                                                                                 javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                                                 .addComponent(btnVoltar)))
@@ -139,7 +144,8 @@ public class ListarClienteView extends javax.swing.JFrame {
                                                                 .addGroup(layout.createParallelGroup(
                                                                                 javax.swing.GroupLayout.Alignment.BASELINE)
                                                                                 .addComponent(btnVoltar)
-                                                                                .addComponent(btnEditar)
+                                                                                .addComponent(btnEncerrar)
+                                                                                .addComponent(btnComanda)
                                                                                 .addComponent(btnExcluir)
                                                                                 .addComponent(btnFazerPedido))
                                                                 .addContainerGap()));
@@ -152,10 +158,11 @@ public class ListarClienteView extends javax.swing.JFrame {
          */
 
         // Variables declaration - do not modify
-        private javax.swing.JButton btnEditar;
+        private javax.swing.JButton btnComanda;
         private javax.swing.JButton btnExcluir;
-        private javax.swing.JToggleButton btnFazerPedido;
+        private javax.swing.JButton btnFazerPedido;
         private javax.swing.JButton btnVoltar;
+        private javax.swing.JButton btnEncerrar;
         private javax.swing.JScrollPane jScrollPane1;
         private javax.swing.JScrollPane jScrollPane2;
         private javax.swing.JTable jTable1;

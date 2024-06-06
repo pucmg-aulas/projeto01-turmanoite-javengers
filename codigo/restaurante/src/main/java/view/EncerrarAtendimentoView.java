@@ -14,12 +14,12 @@ import javax.swing.JToggleButton;
  *
  * @author delfi
  */
-public class EncerrarAtendimentoClienteView extends javax.swing.JFrame {
+public class EncerrarAtendimentoView extends javax.swing.JFrame {
 
     /**
      * Creates new form EncerrarAtendimentoCliente
      */
-    public EncerrarAtendimentoClienteView() {
+    public EncerrarAtendimentoView() {
         initComponents();
 
     }
@@ -331,16 +331,16 @@ public class EncerrarAtendimentoClienteView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EncerrarAtendimentoClienteView.class.getName())
+            java.util.logging.Logger.getLogger(EncerrarAtendimentoView.class.getName())
                     .log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EncerrarAtendimentoClienteView.class.getName())
+            java.util.logging.Logger.getLogger(EncerrarAtendimentoView.class.getName())
                     .log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EncerrarAtendimentoClienteView.class.getName())
+            java.util.logging.Logger.getLogger(EncerrarAtendimentoView.class.getName())
                     .log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EncerrarAtendimentoClienteView.class.getName())
+            java.util.logging.Logger.getLogger(EncerrarAtendimentoView.class.getName())
                     .log(java.util.logging.Level.SEVERE, null, ex);
         }
         // </editor-fold>
@@ -348,7 +348,7 @@ public class EncerrarAtendimentoClienteView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EncerrarAtendimentoClienteView().setVisible(true);
+                new EncerrarAtendimentoView().setVisible(true);
             }
         });
     }

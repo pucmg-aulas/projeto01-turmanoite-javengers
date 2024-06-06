@@ -28,10 +28,6 @@ public class ListarMesaController {
             sair();
         });
 
-        this.view.getBtnEditar().addActionListener((e) -> {
-            editar();
-        });
-
         this.view.setVisible(true);
 
     }
@@ -74,9 +70,5 @@ public class ListarMesaController {
             JOptionPane.showMessageDialog(view, "Selecione uma linha primeiro!");
         }
 
-    }
-
-    private void editar() {
-        JOptionPane.showInternalMessageDialog(view, "Não implementado ainda!");
     }
 }

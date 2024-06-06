@@ -22,7 +22,7 @@ public class ListarComandaController {
 
     private void carregaTabela(Atendimento atendimento) {
         view.setTitle("Comanda do Cliente " + atendimento.getCliente().getNome());
-        Object colunas[] = { "Quantidade", "Item", "Valor", "Quantidade" };
+        Object colunas[] = { "Quantidade", "Item", "Valor", "Quantidade", "Valor Total" };
         DefaultTableModel tm = new DefaultTableModel(colunas, 0);
 
         tm.setNumRows(0);
@@ -31,7 +31,7 @@ public class ListarComandaController {
             Pedido p = it.next();
             String pedido = p.toString();
             String linha[] = pedido.split("%");
-            tm.addRow(new Object[] { linha[1], linha[2], linha[3], linha[4] });
+            tm.addRow(new Object[] { linha[1], linha[2], linha[3], linha[4], linha[5] });
         }
         view.getTabelaPedidos().setModel(tm);
 

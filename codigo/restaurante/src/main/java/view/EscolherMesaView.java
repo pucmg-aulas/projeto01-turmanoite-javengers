@@ -3,14 +3,14 @@ package main.java.view;
 import javax.swing.JButton;
 import javax.swing.JTable;
 
-public class ListarMesaView extends javax.swing.JFrame {
+public class EscolherMesaView extends javax.swing.JFrame {
 
-        public ListarMesaView() {
+        public EscolherMesaView() {
                 initComponents();
         }
 
-        public JButton getBtnExcluir() {
-                return btnExcluir;
+        public JButton getBtnEscolher() {
+                return btnEscolher;
         }
 
         public JButton getBtnVoltar() {
@@ -28,15 +28,14 @@ public class ListarMesaView extends javax.swing.JFrame {
         private void initComponents() {
 
                 btnVoltar = new javax.swing.JButton();
-                btnExcluir = new javax.swing.JButton();
+                btnEscolher = new javax.swing.JButton();
                 jScrollPane1 = new javax.swing.JScrollPane();
                 tbMesas = new javax.swing.JTable();
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
                 btnVoltar.setText("Voltar");
-
-                btnExcluir.setText("Excluir");
+                btnEscolher.setText("Escolher");
 
                 tbMesas.setModel(new javax.swing.table.DefaultTableModel(
                                 new Object[][] {
@@ -65,7 +64,7 @@ public class ListarMesaView extends javax.swing.JFrame {
                                                                                                 Short.MAX_VALUE)
                                                                                 .addGroup(layout.createSequentialGroup()
                                                                                                 .addGap(0, 123, Short.MAX_VALUE)
-                                                                                                .addComponent(btnExcluir)
+                                                                                                .addComponent(btnEscolher)
                                                                                                 .addPreferredGap(
                                                                                                                 javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                                                                 .addComponent(btnVoltar)))
@@ -85,14 +84,14 @@ public class ListarMesaView extends javax.swing.JFrame {
                                                                                 Short.MAX_VALUE)
                                                                 .addGroup(layout.createParallelGroup(
                                                                                 javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                .addComponent(btnVoltar)
-                                                                                .addComponent(btnExcluir))
+                                                                                .addComponent(btnEscolher)
+                                                                                .addComponent(btnVoltar))
                                                                 .addContainerGap()));
 
                 pack();
         }
 
-        private javax.swing.JButton btnExcluir;
+        private javax.swing.JButton btnEscolher;
         private javax.swing.JButton btnVoltar;
         private javax.swing.JScrollPane jScrollPane1;
         private javax.swing.JTable tbMesas;

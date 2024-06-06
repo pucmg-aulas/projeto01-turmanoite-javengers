@@ -26,9 +26,8 @@ public class AdicionarMesaController {
         this.view.setVisible(true);
     }
 
-    public void addMesa(){
+    public void addMesa() {
         int quantCadeiras = Integer.parseInt(view.getTxtQuantCadeirasMesa().getText());
-        System.out.println(quantCadeiras);
         Mesa m = new Mesa(quantCadeiras);
         mesas.addMesa(m);
         JOptionPane.showMessageDialog(view, "Mesa salva com sucesso!");
@@ -39,7 +38,7 @@ public class AdicionarMesaController {
         this.view.dispose();
     }
 
-    private void limparTela(){
+    private void limparTela() {
         this.view.getTxtQuantCadeirasMesa().setText("");
     }
 }

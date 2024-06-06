@@ -17,6 +17,8 @@ public class Atendimento implements Serializable {
         this.quantPessoas = quantPessoas;
         this.dataHoraEntrada = dataHoraEntrada;
         this.comanda = new Comanda();
+        this.mesa = null;
+        this.dataHoraSaida = null;
     }
 
     public Atendimento(Cliente cliente, int quantPessoas, Mesa mesa, Comanda comanda, LocalDateTime dataHoraEntrada,
