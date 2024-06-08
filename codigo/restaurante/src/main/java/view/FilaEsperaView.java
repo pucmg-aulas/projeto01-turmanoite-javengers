@@ -2,7 +2,8 @@ package main.java.view;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.BorderLayout;
+import javax.swing.table.JTableHeader;
+import java.awt.*;
 
 public class FilaEsperaView extends JFrame {
     private JTable tabelaFilaEspera;
@@ -22,10 +23,25 @@ public class FilaEsperaView extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        tableModel = new DefaultTableModel(new Object[] { "Cliente", "Quantidade de Pessoas" }, 0);
+        tableModel = new DefaultTableModel(new Object[]{"Cliente", "Qtd de Pessoas"}, 0);
         tabelaFilaEspera = new JTable(tableModel);
-        tabelaFilaEspera.setFillsViewportHeight(true);
         JScrollPane scrollPane = new JScrollPane(tabelaFilaEspera);
-        add(scrollPane, BorderLayout.CENTER);
+
+        tabelaFilaEspera.setFillsViewportHeight(true);
+        tabelaFilaEspera.setFont(new Font("Arial", Font.PLAIN, 14));
+        tabelaFilaEspera.setRowHeight(30);
+
+        JTableHeader header = tabelaFilaEspera.getTableHeader();
+        header.setFont(new Font("Arial", Font.BOLD, 16));
+        header.setBackground(Color.LIGHT_GRAY);
+
+        JPanel tablePanel = new JPanel(new BorderLayout());
+        tablePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        tablePanel.add(scrollPane, BorderLayout.CENTER);
+
+        add(tablePanel, BorderLayout.CENTER);
+
+        setBackground(Color.WHITE);
+        getContentPane().setBackground(Color.WHITE);
     }
 }

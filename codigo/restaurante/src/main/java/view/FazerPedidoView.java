@@ -1,44 +1,61 @@
 package main.java.view;
 
 import javax.swing.*;
-
 import main.java.model.Alimento;
-
 import java.awt.*;
 
 public class FazerPedidoView extends JFrame {
-
-    private JComboBox itemComboBox;
+    private JComboBox<Alimento> itemComboBox;
     private JTextField quantidadeTextField;
-    private JButton salvarPedidoButton;;
+    private JButton salvarPedidoButton;
 
     public FazerPedidoView() {
-
         setTitle("Fazer Pedido");
-        setSize(400, 600);
+        setSize(400, 200);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        JPanel selecaoItemPanel = new JPanel();
-        selecaoItemPanel.setLayout(new FlowLayout());
+        // seção do "formulário"
+        JPanel itemQuantidadePanel = new JPanel(new GridBagLayout());
+        itemQuantidadePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        itemComboBox = new JComboBox<Alimento[]>();
-        selecaoItemPanel.add(itemComboBox);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        itemQuantidadePanel.add(new JLabel("Item:"), gbc);
 
-        JPanel quantidadeEBotaoPanel = new JPanel();
-        quantidadeEBotaoPanel.setLayout(new FlowLayout());
+        gbc.gridx = 1;
+        itemComboBox = new JComboBox<>();
+        itemComboBox.setPreferredSize(new Dimension(200, 30));
+        itemQuantidadePanel.add(itemComboBox, gbc);
 
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        itemQuantidadePanel.add(new JLabel("Quantidade:"), gbc);
+
+        gbc.gridx = 1;
         quantidadeTextField = new JTextField(10);
-        quantidadeEBotaoPanel.add(quantidadeTextField);
+        quantidadeTextField.setPreferredSize(new Dimension(100, 30));
+        itemQuantidadePanel.add(quantidadeTextField, gbc);
 
+        // seção do botão
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         salvarPedidoButton = new JButton("Salvar Pedido");
-        quantidadeEBotaoPanel.add(salvarPedidoButton);
+        salvarPedidoButton.setFont(new Font("Arial", Font.BOLD, 14));
+        salvarPedidoButton.setPreferredSize(new Dimension(150, 30));
+        buttonPanel.add(salvarPedidoButton);
 
-        add(selecaoItemPanel, BorderLayout.NORTH);
-        add(quantidadeEBotaoPanel, BorderLayout.CENTER);
+        add(itemQuantidadePanel, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
+
+        // cor do fundo
+        setBackground(Color.WHITE);
+        getContentPane().setBackground(Color.WHITE);
     }
 
-    public JComboBox getItemComboBox() {
+    public JComboBox<Alimento> getItemComboBox() {
         return this.itemComboBox;
     }
 
@@ -53,4 +70,5 @@ public class FazerPedidoView extends JFrame {
     public void setQuantidade(int quantidade) {
         quantidadeTextField.setText(String.valueOf(quantidade));
     }
+
 }

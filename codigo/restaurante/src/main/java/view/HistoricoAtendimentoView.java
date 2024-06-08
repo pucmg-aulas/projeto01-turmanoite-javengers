@@ -1,21 +1,15 @@
 package main.java.view;
 
-import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.JToolBar;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import java.awt.*;
 
 public class HistoricoAtendimentoView extends JFrame {
-    private JTable tabelaAtendimentos;
-    private JScrollPane scrollPane;
-    private JTextField campoPesquisa;
-    private JButton botaoPesquisar;
     private JTable tabelaHistorico;
     private DefaultTableModel tableModel;
+    private JTextField campoPesquisa;
+    private JButton botaoPesquisar;
 
     public HistoricoAtendimentoView() {
         setTitle("Histórico de Atendimentos");
@@ -23,28 +17,52 @@ public class HistoricoAtendimentoView extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        tabelaAtendimentos = new JTable();
-        scrollPane = new JScrollPane(tabelaAtendimentos);
-        add(scrollPane, BorderLayout.CENTER);
-
+        // barra com a pesquisa
         JToolBar barraFerramentas = new JToolBar();
+        barraFerramentas.setFloatable(false);
         campoPesquisa = new JTextField(20);
         botaoPesquisar = new JButton("Pesquisar");
+        botaoPesquisar.setFont(new Font("Arial", Font.BOLD, 14));
         barraFerramentas.add(campoPesquisa);
         barraFerramentas.add(botaoPesquisar);
         add(barraFerramentas, BorderLayout.NORTH);
 
-        tableModel = new DefaultTableModel(new Object[] { "CPF", "Nome", "Data" }, 0);
+        tableModel = new DefaultTableModel(new Object[]{"CPF", "Nome", "Data"}, 0);
         tabelaHistorico = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(tabelaHistorico);
-        add(scrollPane, BorderLayout.CENTER);
+
+        // "css" da tabela
+        tabelaHistorico.setFillsViewportHeight(true);
+        tabelaHistorico.setFont(new Font("Arial", Font.PLAIN, 14));
+        tabelaHistorico.setRowHeight(30);
+
+        JTableHeader header = tabelaHistorico.getTableHeader();
+        header.setFont(new Font("Arial", Font.BOLD, 16));
+        header.setBackground(Color.LIGHT_GRAY);
+
+        JPanel tablePanel = new JPanel(new BorderLayout());
+        tablePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        tablePanel.add(scrollPane, BorderLayout.CENTER);
+
+        add(tablePanel, BorderLayout.CENTER);
+
+        setBackground(Color.WHITE);
+        getContentPane().setBackground(Color.WHITE);
     }
 
-    public static void main(String[] args) {
-        // Crie uma instância da view
-        HistoricoAtendimentoView view = new HistoricoAtendimentoView(); // Crie um controller mock para teste
+    public JTable getTabelaHistorico() {
+        return tabelaHistorico;
+    }
 
-        // Defina a view como visível
-        view.setVisible(true);
+    public JTextField getCampoPesquisa() {
+        return campoPesquisa;
+    }
+
+    public JButton getBotaoPesquisar() {
+        return botaoPesquisar;
+    }
+
+    public DefaultTableModel getTableModel() {
+        return tableModel;
     }
 }
