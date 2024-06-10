@@ -7,6 +7,7 @@ import main.java.controller.AdicionarMesaController;
 import main.java.controller.FilaDeEsperaController;
 import main.java.controller.ListarCardapioController;
 import main.java.controller.ListarClienteController;
+import main.java.controller.ListarHistoricoController;
 import main.java.controller.ListarMesaController;
 
 /*
@@ -260,7 +261,7 @@ public class Main extends javax.swing.JFrame {
 
     private void exibirHistoricoBtnActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        // new ListarHistoricoController();
+        new ListarHistoricoController();
     }
 
     private void ExibirListaDeEsperaMenuBtnActionPerformed(java.awt.event.ActionEvent evt) {

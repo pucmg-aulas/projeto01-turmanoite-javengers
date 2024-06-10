@@ -51,6 +51,8 @@ public class EscolherMesaController {
         mesa.setOcupada(true);
         mesas.altera(mesa, numero);
         atendimento.setMesa(mesa);
+        System.out.println(mesa.toString());
+        System.out.println(atendimento.getMesa().toString());
         atendimentos.addAtendimento(atendimento);
         this.view.dispose();
     }

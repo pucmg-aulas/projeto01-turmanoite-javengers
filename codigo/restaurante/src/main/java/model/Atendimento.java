@@ -1,7 +1,9 @@
 package main.java.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 
 public class Atendimento implements Serializable {
 
@@ -9,31 +11,33 @@ public class Atendimento implements Serializable {
     private int quantPessoas;
     private Mesa mesa;
     private Comanda comanda;
-    private LocalDateTime dataHoraEntrada;
-    private LocalDateTime dataHoraSaida;
+    private LocalDate data;
+    private LocalTime horaEntrada;
+    private LocalTime horaSaida;
 
-    public Atendimento(Cliente cliente, int quantPessoas, LocalDateTime dataHoraEntrada) {
+    public Atendimento(Cliente cliente, int quantPessoas) {
         this.cliente = cliente;
         this.quantPessoas = quantPessoas;
-        this.dataHoraEntrada = dataHoraEntrada;
+        this.data = LocalDate.now();
+        this.horaEntrada = LocalTime.now();
         this.comanda = new Comanda();
         this.mesa = null;
-        this.dataHoraSaida = null;
     }
 
-    public Atendimento(Cliente cliente, int quantPessoas, Mesa mesa, Comanda comanda, LocalDateTime dataHoraEntrada,
-            LocalDateTime dataHoraSaida) {
+    public Atendimento(Cliente cliente, int quantPessoas, Mesa mesa, Comanda comanda, LocalDate data,
+    LocalTime horaEntrada, LocalTime horaSaida) {
         this.cliente = cliente;
         this.quantPessoas = quantPessoas;
         this.mesa = mesa;
         this.comanda = comanda;
-        this.dataHoraEntrada = dataHoraEntrada;
-        this.dataHoraSaida = dataHoraSaida;
+        this.data = data;
+        this.horaEntrada = horaEntrada;
+        this.horaSaida = horaSaida;
     }
 
     @Override
     public String toString() {
-        return cliente + "%" + quantPessoas + "%" + mesa + "%" + comanda + "%" + dataHoraEntrada + "%" + dataHoraSaida;
+        return cliente + "%" + quantPessoas + "%" + mesa + "%" + comanda + "%" + data + "%" + horaEntrada + "%" + horaSaida;
     }
 
     public Cliente getCliente() {
@@ -52,20 +56,36 @@ public class Atendimento implements Serializable {
         this.mesa = mesa;
     }
 
-    public LocalDateTime getDataHoraEntrada() {
-        return dataHoraEntrada;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public void setDataHoraEntrada(LocalDateTime dataHoraEntrada) {
-        this.dataHoraEntrada = dataHoraEntrada;
+    public void setQuantPessoas(int quantPessoas) {
+        this.quantPessoas = quantPessoas;
     }
 
-    public LocalDateTime getDataHoraSaida() {
-        return dataHoraSaida;
+    public LocalDate getData() {
+        return data;
     }
 
-    public void setDataHoraSaida(LocalDateTime dataHoraSaida) {
-        this.dataHoraSaida = dataHoraSaida;
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
+
+    public LocalTime getHoraEntrada() {
+        return horaEntrada;
+    }
+
+    public void setHoraEntrada(LocalTime horaEntrada) {
+        this.horaEntrada = horaEntrada;
+    }
+
+    public LocalTime getHoraSaida() {
+        return horaSaida;
+    }
+
+    public void setHoraSaida(LocalTime horaSaida) {
+        this.horaSaida = horaSaida;
     }
 
     public Comanda getComanda() {

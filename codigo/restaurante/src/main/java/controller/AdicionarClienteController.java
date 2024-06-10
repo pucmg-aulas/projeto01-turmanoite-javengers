@@ -1,6 +1,5 @@
 package main.java.controller;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -52,7 +51,7 @@ public class AdicionarClienteController {
 
     public void addAtendimento(Cliente c) {
         int quantidade = (Integer) view.getNumQuantidadePessoas().getValue();
-        Atendimento atendimento = new Atendimento(c, quantidade, LocalDateTime.now());
+        Atendimento atendimento = new Atendimento(c, quantidade);
         List<Mesa> mesasDisponiveis = mesasDisponiveis(quantidade);
         if (mesasDisponiveis.size() > 0) {
             atendimentos.addAtendimento(atendimento);

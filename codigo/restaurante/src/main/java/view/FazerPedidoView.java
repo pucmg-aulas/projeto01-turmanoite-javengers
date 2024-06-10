@@ -1,11 +1,10 @@
 package main.java.view;
 
 import javax.swing.*;
-import main.java.model.Alimento;
 import java.awt.*;
 
 public class FazerPedidoView extends JFrame {
-    private JComboBox<Alimento> itemComboBox;
+    private JComboBox<String> itemComboBox;
     private JTextField quantidadeTextField;
     private JButton salvarPedidoButton;
 
@@ -55,7 +54,7 @@ public class FazerPedidoView extends JFrame {
         getContentPane().setBackground(Color.WHITE);
     }
 
-    public JComboBox<Alimento> getItemComboBox() {
+    public JComboBox<String> getItemComboBox() {
         return this.itemComboBox;
     }
 
