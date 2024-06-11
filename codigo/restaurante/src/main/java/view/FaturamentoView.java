@@ -22,28 +22,28 @@ public class FaturamentoView extends JFrame {
         setLayout(new BorderLayout());
 
         // barra de pesquisa
-        JToolBar toolBar = new JToolBar();
-        toolBar.setFloatable(false);
+        JToolBar barraFerramentas = new JToolBar();
+        barraFerramentas.setFloatable(false);
 
         // adicionar uma máscara para evitar erros ao adicionar uma data
         try {
-            dateField = new JFormattedTextField(new javax.swing.text.MaskFormatter("##-##-####"));
+            dateField = new JFormattedTextField(new javax.swing.text.MaskFormatter("##/##/####"));
             dateField.setColumns(10);
             dateField.setFont(new Font("Arial", Font.PLAIN, 14));
-            dateField.setToolTipText("Digite a data no formato dd-MM-yyyy");
+            dateField.setToolTipText("Digite a data no formato dd/MM/yyyy");
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        JLabel dateLabel = new JLabel("Data (dd-MM-yyyy): ");
+        JLabel dateLabel = new JLabel("Data (dd/MM/yyyy): ");
         dateLabel.setFont(new Font("Arial", Font.PLAIN, 14));
 
         btnPesquisa = new JButton("Pesquisar");
         btnPesquisa.setFont(new Font("Arial", Font.BOLD, 14));
-        toolBar.add(dateLabel);
-        toolBar.add(dateField);
-        toolBar.add(btnPesquisa);
-        add(toolBar, BorderLayout.NORTH);
+        barraFerramentas.add(dateLabel);
+        barraFerramentas.add(dateField);
+        barraFerramentas.add(btnPesquisa);
+        add(barraFerramentas, BorderLayout.NORTH);
 
         tableModel = new DefaultTableModel(new Object[]{"Data", "Faturamento"}, 0);
         table = new JTable(tableModel);
@@ -70,7 +70,7 @@ public class FaturamentoView extends JFrame {
 
     public Date getSelectedDate() {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/0yyyy", Locale.getDefault());
             return sdf.parse(dateField.getText());
         } catch (ParseException e) {
             e.printStackTrace();

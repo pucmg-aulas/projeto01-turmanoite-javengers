@@ -4,12 +4,16 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class HistoricoAtendimentoView extends JFrame {
     private JTable tabelaHistorico;
     private DefaultTableModel tableModel;
-    private JTextField campoPesquisa;
-    private JButton botaoPesquisar;
+    private JFormattedTextField campoPesquisa;
+    private JButton btnPesquisa;
 
     public HistoricoAtendimentoView() {
         setTitle("Histórico de Atendimentos");
@@ -20,11 +24,23 @@ public class HistoricoAtendimentoView extends JFrame {
         // barra com a pesquisa
         JToolBar barraFerramentas = new JToolBar();
         barraFerramentas.setFloatable(false);
-        campoPesquisa = new JTextField(20);
-        botaoPesquisar = new JButton("Pesquisar");
-        botaoPesquisar.setFont(new Font("Arial", Font.BOLD, 14));
+        try {
+            campoPesquisa = new JFormattedTextField(new javax.swing.text.MaskFormatter("##/##/####"));
+            campoPesquisa.setColumns(20);
+            campoPesquisa.setFont(new Font("Arial", Font.PLAIN, 14));
+            campoPesquisa.setToolTipText("Digite a data no formato dd/MM/yyyy");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        JLabel dateLabel = new JLabel("Data (dd/MM/yyyy): ");
+        dateLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        btnPesquisa = new JButton("Pesquisar");
+        btnPesquisa.setFont(new Font("Arial", Font.BOLD, 14));
+        barraFerramentas.add(dateLabel);
         barraFerramentas.add(campoPesquisa);
-        barraFerramentas.add(botaoPesquisar);
+        barraFerramentas.add(btnPesquisa);
         add(barraFerramentas, BorderLayout.NORTH);
 
         tableModel = new DefaultTableModel(new Object[]{"CPF", "Nome", "Data"}, 0);
@@ -54,15 +70,42 @@ public class HistoricoAtendimentoView extends JFrame {
         return tabelaHistorico;
     }
 
-    public JTextField getCampoPesquisa() {
+    public JFormattedTextField getCampoPesquisa() {
         return campoPesquisa;
     }
 
     public JButton getBotaoPesquisar() {
-        return botaoPesquisar;
+        return btnPesquisa;
     }
 
     public DefaultTableModel getTableModel() {
         return tableModel;
+    }
+
+    public Date getSelectedDate() {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            return sdf.parse(campoPesquisa.getText());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void setTableData(Object[][] data) {
+        tableModel.setRowCount(0);
+        for (Object[] row : data) {
+            tableModel.addRow(row);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                HistoricoAtendimentoView view = new HistoricoAtendimentoView();
+                view.setVisible(true);
+            }
+        });
     }
 }
