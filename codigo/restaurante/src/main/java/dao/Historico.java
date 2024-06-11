@@ -1,6 +1,7 @@
 package main.java.dao;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -51,6 +52,14 @@ public class Historico extends AbstractDao implements Serializable {
     public Atendimento buscarAtendimentoPorCpf(String cpf) {
         for (Atendimento atendimento : historico) {
             if (atendimento.getCliente().getCpf().equals(cpf))
+                return atendimento;
+        }
+        return null;
+    }
+
+    public Atendimento buscarPagamentoPorData(LocalDate data) {
+        for (Atendimento atendimento : historico) {
+            if (atendimento.getData().equals(data))
                 return atendimento;
         }
         return null;

@@ -5,9 +5,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class HistoricoAtendimentoView extends JFrame {
     private JTable tabelaHistorico;
@@ -25,15 +22,15 @@ public class HistoricoAtendimentoView extends JFrame {
         JToolBar barraFerramentas = new JToolBar();
         barraFerramentas.setFloatable(false);
         try {
-            campoPesquisa = new JFormattedTextField(new javax.swing.text.MaskFormatter("##/##/####"));
+            campoPesquisa = new JFormattedTextField(new javax.swing.text.MaskFormatter("####-##-##"));
             campoPesquisa.setColumns(20);
             campoPesquisa.setFont(new Font("Arial", Font.PLAIN, 14));
-            campoPesquisa.setToolTipText("Digite a data no formato dd/MM/yyyy");
+            campoPesquisa.setToolTipText("Digite a data no formato yyyy-mm-dd");
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        JLabel dateLabel = new JLabel("Data (dd/MM/yyyy): ");
+        JLabel dateLabel = new JLabel("Data (yyyy-mm-dd): ");
         dateLabel.setFont(new Font("Arial", Font.PLAIN, 14));
 
         btnPesquisa = new JButton("Pesquisar");
@@ -80,16 +77,6 @@ public class HistoricoAtendimentoView extends JFrame {
 
     public DefaultTableModel getTableModel() {
         return tableModel;
-    }
-
-    public Date getSelectedDate() {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-            return sdf.parse(campoPesquisa.getText());
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     public void setTableData(Object[][] data) {
