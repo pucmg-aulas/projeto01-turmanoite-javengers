@@ -5,11 +5,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.Locale;
 
 public class FaturamentoView extends JFrame {
     private JTable table;
@@ -24,8 +19,8 @@ public class FaturamentoView extends JFrame {
         setLayout(new BorderLayout());
 
         // barra de pesquisa
-        JToolBar toolBar = new JToolBar();
-        toolBar.setFloatable(false);
+        JToolBar barraFerramentas = new JToolBar();
+        barraFerramentas.setFloatable(false);
 
         // adicionar uma máscara para evitar erros ao adicionar uma data
         try {
@@ -42,10 +37,10 @@ public class FaturamentoView extends JFrame {
 
         btnPesquisa = new JButton("Pesquisar");
         btnPesquisa.setFont(new Font("Arial", Font.BOLD, 14));
-        toolBar.add(dateLabel);
-        toolBar.add(dateField);
-        toolBar.add(btnPesquisa);
-        add(toolBar, BorderLayout.NORTH);
+        barraFerramentas.add(dateLabel);
+        barraFerramentas.add(dateField);
+        barraFerramentas.add(btnPesquisa);
+        add(barraFerramentas, BorderLayout.NORTH);
 
         tableModel = new DefaultTableModel(new Object[] { "Data", "Faturamento" }, 0);
         table = new JTable(tableModel);
