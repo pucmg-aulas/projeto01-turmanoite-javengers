@@ -31,11 +31,13 @@ public class ListarMesaController {
         DefaultTableModel model = new DefaultTableModel(
                 new Object[] { "Número", "Cadeiras", "Ocupada" }, 0);
 
-        mesas.getMesas().forEach(mesa -> model.addRow(new Object[] {
-                mesa.getNumero(),
-                mesa.getQuantCadeiras(),
-                mesa.isOcupada() ? "Sim" : "Não" // Convert boolean to string
-        }));
+        for (Mesa mesa : mesas.getMesas()) {
+            model.addRow(new Object[] {
+                    mesa.getNumero(),
+                    mesa.getQuantCadeiras(),
+                    mesa.isOcupada() ? "Sim" : "Não" // Convert boolean to string
+            });
+        }
 
         view.getTbMesas().setModel(model);
     }

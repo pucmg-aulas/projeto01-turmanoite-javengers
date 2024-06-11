@@ -6,7 +6,6 @@ import main.java.model.Alimento;
 import main.java.model.Atendimento;
 import main.java.model.Pedido;
 import main.java.view.FazerPedidoView;
-
 import javax.swing.*;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class FazerPedidoController {
 
             String nomeAlimento = (String) view.getItemComboBox().getSelectedItem();
             Alimento alimento = alimentos.buscarAlimentoPorNome(nomeAlimento);
-            if (alimento != null) { // Check if the food item exists
+            if (alimento != null) {
                 Pedido pedido = new Pedido(alimento, quantidade);
                 atendimento.getComanda().addPedidos(pedido);
                 atendimentos.altera(atendimento, atendimento.getCliente().getCpf());

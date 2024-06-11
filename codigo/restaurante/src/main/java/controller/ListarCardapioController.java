@@ -1,6 +1,7 @@
 package main.java.controller;
 
 import main.java.dao.Alimentos;
+import main.java.model.Alimento;
 import main.java.view.CardapioView;
 
 import javax.swing.table.DefaultTableModel;
@@ -20,11 +21,13 @@ public class ListarCardapioController {
         DefaultTableModel model = new DefaultTableModel(
                 new Object[] { "Nome", "Descrição", "Valor" }, 0);
 
-        alimentos.getAlimentos().forEach(alimento -> model.addRow(new Object[] {
-                alimento.getNome(),
-                alimento.getDescricao(),
-                alimento.getValor()
-        }));
+        for (Alimento alimento : alimentos.getAlimentos()) {
+            model.addRow(new Object[] {
+                    alimento.getNome(),
+                    alimento.getDescricao(),
+                    alimento.getValor()
+            });
+        }
 
         view.getTable().setModel(model);
     }

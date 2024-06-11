@@ -3,6 +3,7 @@ package main.java.controller;
 import main.java.dao.Atendimentos;
 import main.java.dao.Clientes;
 import main.java.model.Atendimento;
+import main.java.model.Cliente;
 import main.java.view.ListarClienteView;
 
 import javax.swing.*;
@@ -36,7 +37,10 @@ public class ListarClienteController {
     private void carregaTabela() {
         DefaultTableModel model = new DefaultTableModel(new Object[] { "Nome", "CPF" }, 0);
 
-        clientes.getClientes().forEach(cliente -> model.addRow(new Object[] { cliente.getNome(), cliente.getCpf() }));
+        for (Cliente cliente : clientes.getClientes()) {
+            model.addRow(new Object[] { cliente.getNome(), cliente.getCpf() });
+        }
+        
         view.getTbClientes().setModel(model);
     }
 

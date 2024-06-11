@@ -1,6 +1,7 @@
 package main.java.controller;
 
 import main.java.model.Atendimento;
+import main.java.model.Pedido;
 import main.java.view.ComandaView;
 
 import javax.swing.table.DefaultTableModel;
@@ -23,13 +24,15 @@ public class ListarComandaController {
         DefaultTableModel model = new DefaultTableModel(
                 new Object[] { "Quantidade", "Item", "Valor Unitário", "Quantidade", "Valor Total" }, 0);
 
-        atendimento.getComanda().getPedidos().forEach(pedido -> model.addRow(new Object[] {
+        for (Pedido pedido : atendimento.getComanda().getPedidos()) {
+            model.addRow(new Object[] {
                 pedido.getQuantidade(),
                 pedido.getAlimento().getNome(),
                 pedido.getAlimento().getValor(),
                 pedido.getQuantidade(),
                 pedido.getValorTotal()
-        }));
+            });
+        }
 
         view.getTabelaPedidos().setModel(model);
     }

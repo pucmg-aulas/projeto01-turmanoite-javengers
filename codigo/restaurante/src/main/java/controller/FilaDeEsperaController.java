@@ -1,6 +1,7 @@
 package main.java.controller;
 
 import main.java.dao.FilaDeEspera;
+import main.java.model.Atendimento;
 import main.java.view.FilaEsperaView;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,11 +22,13 @@ public class FilaDeEsperaController {
         DefaultTableModel model = new DefaultTableModel(
                 new Object[] { "Nome", "CPF", "Quantidade de Pessoas" }, 0);
 
-        filaDeEspera.getAtendimentos().forEach(atendimento -> model.addRow(new Object[] {
-                atendimento.getCliente().getNome(),
-                atendimento.getCliente().getCpf(),
-                atendimento.getQuantPessoas()
-        }));
+        for (Atendimento atendimento : filaDeEspera.getAtendimentos()) {
+            model.addRow(new Object[] {
+                    atendimento.getCliente().getNome(),
+                    atendimento.getCliente().getCpf(),
+                    atendimento.getQuantPessoas()
+            });
+        }
 
         view.getTabelaFilaEspera().setModel(model);
     }

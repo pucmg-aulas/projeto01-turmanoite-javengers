@@ -9,7 +9,7 @@ import main.java.controller.ListarCardapioController;
 import main.java.controller.ListarClienteController;
 import main.java.controller.ListarHistoricoController;
 import main.java.controller.ListarMesaController;
-import main.java.controller.ListarPagamentosController;
+import main.java.controller.ListarFaturamentoController;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -286,7 +286,7 @@ public class Main extends javax.swing.JFrame {
 
     private void exibirPagamentosBtnActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        new ListarPagamentosController();
+        new ListarFaturamentoController();
     }
 
     private void ExibirListaDeEsperaMenuBtnActionPerformed(java.awt.event.ActionEvent evt) {

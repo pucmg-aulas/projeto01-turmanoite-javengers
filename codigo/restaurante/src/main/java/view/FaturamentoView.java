@@ -6,6 +6,8 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Locale;
 
@@ -16,7 +18,7 @@ public class FaturamentoView extends JFrame {
     private JFormattedTextField dateField;
 
     public FaturamentoView() {
-        setTitle("Faturamento Diário");
+        setTitle("Faturamento");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -27,15 +29,15 @@ public class FaturamentoView extends JFrame {
 
         // adicionar uma máscara para evitar erros ao adicionar uma data
         try {
-            dateField = new JFormattedTextField(new javax.swing.text.MaskFormatter("##-##-####"));
+            dateField = new JFormattedTextField(new javax.swing.text.MaskFormatter("####-##-##"));
             dateField.setColumns(10);
             dateField.setFont(new Font("Arial", Font.PLAIN, 14));
-            dateField.setToolTipText("Digite a data no formato dd-MM-yyyy");
+            dateField.setToolTipText("Digite a data no formato yyyy-mm-dd");
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        JLabel dateLabel = new JLabel("Data (dd-MM-yyyy): ");
+        JLabel dateLabel = new JLabel("Data (yyyy-mm-dd): ");
         dateLabel.setFont(new Font("Arial", Font.PLAIN, 14));
 
         btnPesquisa = new JButton("Pesquisar");
@@ -45,7 +47,7 @@ public class FaturamentoView extends JFrame {
         toolBar.add(btnPesquisa);
         add(toolBar, BorderLayout.NORTH);
 
-        tableModel = new DefaultTableModel(new Object[]{"Data", "Faturamento"}, 0);
+        tableModel = new DefaultTableModel(new Object[] { "Data", "Faturamento" }, 0);
         table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
 
@@ -68,14 +70,16 @@ public class FaturamentoView extends JFrame {
         getContentPane().setBackground(Color.WHITE);
     }
 
-    public Date getSelectedDate() {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-            return sdf.parse(dateField.getText());
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public JTable getTable() {
+        return this.table;
+    }
+
+    public JButton getBtnPesquisa() {
+        return this.btnPesquisa;
+    }
+
+    public JFormattedTextField getDateField() {
+        return dateField;
     }
 
     public void setTableData(Object[][] data) {

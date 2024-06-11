@@ -1,6 +1,7 @@
 package main.java.controller;
 
 import main.java.dao.Historico;
+import main.java.model.Atendimento;
 import main.java.view.HistoricoAtendimentoView;
 
 import javax.swing.table.DefaultTableModel;
@@ -20,16 +21,14 @@ public class ListarHistoricoController {
         DefaultTableModel model = new DefaultTableModel(
                 new Object[] { "Nome", "CPF", "Data" }, 0);
 
-        historico.getAtendimentos().forEach(atendimento -> model.addRow(new Object[] {
+        for (Atendimento atendimento : historico.getAtendimentos()) {
+            model.addRow(new Object[] {
                 atendimento.getCliente().getNome(),
                 atendimento.getCliente().getCpf(),
                 atendimento.getData()
-        }));
+            });
+        }
 
         view.getTabelaHistorico().setModel(model);
-    }
-
-    private void sair() {
-        this.view.dispose();
     }
 }

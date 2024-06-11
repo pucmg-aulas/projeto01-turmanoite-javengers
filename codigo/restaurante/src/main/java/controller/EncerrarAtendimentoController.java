@@ -3,7 +3,6 @@ package main.java.controller;
 import main.java.dao.*;
 import main.java.model.*;
 import main.java.view.EncerrarAtendimentoView;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
@@ -39,9 +38,8 @@ public class EncerrarAtendimentoController {
     private void carregaTela() {
         view.getTxtNomeCliente().setText(atendimento.getCliente().getNome());
         view.getNumQuantidadePessoas().setText(String.valueOf(atendimento.getQuantPessoas()));
-        view.getNumValorTotal().setText(String.format("%.2f", atendimento.getComanda().calculaValor())); // Format with
-                                                                                                         // 2 decimal
-                                                                                                         // places
+        view.getNumValorTotal().setText(String.format("%.2f", atendimento.getComanda().calculaValor()));
+
         carregaComanda();
     }
 
@@ -49,17 +47,17 @@ public class EncerrarAtendimentoController {
         DefaultTableModel model = new DefaultTableModel(
                 new Object[] { "Quantidade", "Item", "Valor Unitário", "Quantidade", "Valor Total" }, 0);
 
-        atendimento.getComanda().getPedidos().forEach(p -> {
+        for (Pedido p : atendimento.getComanda().getPedidos()) {
             String[] linha = p.toString().split("%");
             model.addRow(new Object[] { linha[1], linha[2], linha[3], linha[4], linha[5] });
-        });
+        }
 
         view.getTableContaCliente().setModel(model);
     }
 
     private void excluirItem() {
         int linha = view.getTableContaCliente().getSelectedRow();
-        if (linha >= 0) { // Check if a row is selected
+        if (linha >= 0) {
             atendimento.getComanda().getPedidos().remove(linha);
             atendimentos.altera(atendimento, atendimento.getCliente().getCpf());
             carregaTela();
@@ -85,20 +83,21 @@ public class EncerrarAtendimentoController {
             pagamentos.addPagamento(new Pagamento(valorFinal, LocalDate.now()));
 
             JOptionPane.showMessageDialog(view, "Atendimento do cliente " + nome + " encerrado com sucesso!");
-            cancelar(); // Close the view after ending the service
+            
+            cancelar();
         }
     }
 
     private MetodoPagamento getMetodoPagamento() {
         String pagamento = (String) this.view.getSelectPagamento().getSelectedItem();
         switch (pagamento) {
-            case ("Dinheiro"):
+            case "Dinheiro":
                 return new Dinheiro();
-            case ("Pix"):
+            case "Pix":
                 return new Pix();
-            case ("Crédito"):
+            case "Crédito":
                 return new Credito();
-            case ("Débito"):
+            case "Débito":
                 return new Debito();
             default:
                 return new Dinheiro();
