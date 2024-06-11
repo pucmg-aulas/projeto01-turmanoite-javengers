@@ -13,6 +13,7 @@ public class Atendimento implements Serializable {
     private LocalDate data;
     private LocalTime horaEntrada;
     private LocalTime horaSaida;
+    private MetodoPagamento metodoPagamento;
 
     public Atendimento(Cliente cliente, int quantPessoas) {
         this.cliente = cliente;
@@ -24,7 +25,7 @@ public class Atendimento implements Serializable {
     }
 
     public Atendimento(Cliente cliente, int quantPessoas, Mesa mesa, Comanda comanda, LocalDate data,
-            LocalTime horaEntrada, LocalTime horaSaida, MetodoPagamento metodoPagamento) {
+    LocalTime horaEntrada, LocalTime horaSaida, MetodoPagamento metodoPagamento) {
         this.cliente = cliente;
         this.quantPessoas = quantPessoas;
         this.mesa = mesa;
@@ -32,12 +33,12 @@ public class Atendimento implements Serializable {
         this.data = data;
         this.horaEntrada = horaEntrada;
         this.horaSaida = horaSaida;
+        this.metodoPagamento = metodoPagamento;
     }
 
     @Override
     public String toString() {
-        return cliente + "%" + quantPessoas + "%" + mesa + "%" + comanda + "%" + data + "%" + horaEntrada + "%"
-                + horaSaida;
+        return cliente + "%" + quantPessoas + "%" + mesa + "%" + comanda + "%" + data + "%" + horaEntrada + "%" + horaSaida + "%" + metodoPagamento;
     }
 
     public Cliente getCliente() {
@@ -94,6 +95,14 @@ public class Atendimento implements Serializable {
 
     public void setComanda(Comanda comanda) {
         this.comanda = comanda;
+    }
+
+    public MetodoPagamento getMetodoPagamento() {
+        return metodoPagamento;
+    }
+
+    public void setMetodoPagamento(MetodoPagamento metodoPagamento) {
+        this.metodoPagamento = metodoPagamento;
     }
 
 }

@@ -9,6 +9,7 @@ import main.java.controller.ListarCardapioController;
 import main.java.controller.ListarClienteController;
 import main.java.controller.ListarHistoricoController;
 import main.java.controller.ListarMesaController;
+import main.java.controller.ListarPagamentosController;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -45,6 +46,14 @@ public class Main extends javax.swing.JFrame {
 
     public void setExibirHistoricoBtn(JMenuItem exibirHistoricoBtn) {
         this.exibirHistoricoBtn = exibirHistoricoBtn;
+    }
+
+    public JMenuItem getExibirPagamentosBtn() {
+        return exibirPagamentosBtn;
+    }
+
+    public void setExibirPagamentosBtn(JMenuItem exibirPagamentosBtn) {
+        this.exibirPagamentosBtn = exibirPagamentosBtn;
     }
 
     public JMenuItem getExibirListaDeEsperaMenuBtn() {
@@ -118,6 +127,7 @@ public class Main extends javax.swing.JFrame {
         exibirMesasDisponiveisMenuBtn = new javax.swing.JMenuItem();
         exibirCardapioMenuBtn = new javax.swing.JMenuItem();
         exibirHistoricoBtn = new javax.swing.JMenuItem();
+        exibirPagamentosBtn = new javax.swing.JMenuItem();
         AcoesMenuBtn = new javax.swing.JMenu();
         adicionarMesaMenuBtn = new javax.swing.JMenuItem();
 
@@ -193,7 +203,17 @@ public class Main extends javax.swing.JFrame {
                 exibirHistoricoBtnActionPerformed(evt);
             }
         });
+
+        exibirPagamentosBtn.setText("Exibir Pagamentos");
+        exibirPagamentosBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exibirPagamentosBtnActionPerformed(evt);
+            }
+        });
+
         jMenu3.add(exibirHistoricoBtn);
+
+        jMenu3.add(exibirPagamentosBtn);
 
         jMenuBar1.add(jMenu3);
 
@@ -264,6 +284,11 @@ public class Main extends javax.swing.JFrame {
         new ListarHistoricoController();
     }
 
+    private void exibirPagamentosBtnActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+        new ListarPagamentosController();
+    }
+
     private void ExibirListaDeEsperaMenuBtnActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         new FilaDeEsperaController();
@@ -317,6 +342,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu atendimentoMenuBtn;
     private javax.swing.JMenuItem exibirCardapioMenuBtn;
     private javax.swing.JMenuItem exibirHistoricoBtn;
+    private javax.swing.JMenuItem exibirPagamentosBtn;
     private javax.swing.JMenuItem exibirMesasDisponiveisMenuBtn;
     private javax.swing.JMenuItem exitMenuBtn;
     private javax.swing.JMenuItem iniciarAtendimentoMenuBtn;

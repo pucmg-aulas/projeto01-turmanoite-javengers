@@ -1,39 +1,36 @@
 package main.java.controller;
 
-import java.util.Iterator;
-import javax.swing.table.DefaultTableModel;
-
 import main.java.model.Atendimento;
-import main.java.model.Pedido;
 import main.java.view.ComandaView;
 
-public class ListarComandaController {
+import javax.swing.table.DefaultTableModel;
 
-    private ComandaView view;
+public class ListarComandaController {
+    private final ComandaView view;
+    private final Atendimento atendimento;
 
     public ListarComandaController(Atendimento atendimento) {
-
         this.view = new ComandaView();
+        this.atendimento = atendimento;
 
-        carregaTabela(atendimento);
+        carregaTabela();
 
+        this.view.setTitle("Comanda do Cliente " + atendimento.getCliente().getNome());
         this.view.setVisible(true);
     }
 
-    private void carregaTabela(Atendimento atendimento) {
-        view.setTitle("Comanda do Cliente " + atendimento.getCliente().getNome());
-        Object colunas[] = { "Quantidade", "Item", "Valor", "Quantidade", "Valor Total" };
-        DefaultTableModel tm = new DefaultTableModel(colunas, 0);
+    private void carregaTabela() {
+        DefaultTableModel model = new DefaultTableModel(
+                new Object[] { "Quantidade", "Item", "Valor Unitário", "Quantidade", "Valor Total" }, 0);
 
-        tm.setNumRows(0);
-        Iterator<Pedido> it = atendimento.getComanda().getPedidos().iterator();
-        while (it.hasNext()) {
-            Pedido p = it.next();
-            String pedido = p.toString();
-            String linha[] = pedido.split("%");
-            tm.addRow(new Object[] { linha[1], linha[2], linha[3], linha[4], linha[5] });
-        }
-        view.getTabelaPedidos().setModel(tm);
+        atendimento.getComanda().getPedidos().forEach(pedido -> model.addRow(new Object[] {
+                pedido.getQuantidade(),
+                pedido.getAlimento().getNome(),
+                pedido.getAlimento().getValor(),
+                pedido.getQuantidade(),
+                pedido.getValorTotal()
+        }));
 
+        view.getTabelaPedidos().setModel(model);
     }
 }

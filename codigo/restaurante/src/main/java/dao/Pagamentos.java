@@ -28,10 +28,12 @@ public class Pagamentos extends AbstractDao implements Serializable {
     public void addPagamento(Pagamento pagamento) {
         Pagamento pagamentoPorData = buscarPagamentoPorData(pagamento.getData());
         if (pagamentoPorData != null) {
-            pagamentoPorData.setValor(pagamento.getValor());
+            double valorAtual = pagamentoPorData.getValor() + pagamento.getValor();
+            pagamentoPorData.setValor(valorAtual);
         } else {
             pagamentos.add(pagamento);
         }
+        grava();
     }
 
     private void carregaMesas() {
@@ -53,10 +55,14 @@ public class Pagamentos extends AbstractDao implements Serializable {
 
     public Pagamento buscarPagamentoPorData(LocalDate data) {
         for (Pagamento pagamento : pagamentos) {
-            if (pagamento.getData() == data)
+            if (pagamento.getData().equals(data));
                 return pagamento;
         }
         return null;
+    }
+
+    public List<Pagamento> getPagamentos() {
+        return pagamentos;
     }
 
 }

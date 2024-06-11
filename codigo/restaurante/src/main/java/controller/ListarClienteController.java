@@ -1,48 +1,30 @@
 package main.java.controller;
 
-import java.util.Iterator;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-
 import main.java.dao.Atendimentos;
 import main.java.dao.Clientes;
 import main.java.model.Atendimento;
-import main.java.model.Cliente;
 import main.java.view.ListarClienteView;
 
-public class ListarClienteController {
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
-    private ListarClienteView view;
-    private Clientes clientes;
-    private Atendimentos atendimentos;
+public class ListarClienteController {
+    private final ListarClienteView view;
+    private final Clientes clientes;
+    private final Atendimentos atendimentos;
 
     public ListarClienteController() {
-
         this.clientes = Clientes.getInstance();
         this.atendimentos = Atendimentos.getInstance();
         this.view = new ListarClienteView();
 
         carregaTabela();
 
-        this.view.getBtnExcluir().addActionListener((e) -> {
-            excluirCliente();
-        });
-
-        this.view.getBtnFazerPedido().addActionListener((e) -> {
-            fazerPedido();
-        });
-
-        this.view.getBtnComanda().addActionListener((e) -> {
-            listarComanda();
-        });
-
-        this.view.getBtnEncerrar().addActionListener((e) -> {
-            fecharComanda();
-        });
-
-        this.view.getBtnVoltar().addActionListener((e) -> {
-            sair();
-        });
+        this.view.getBtnExcluir().addActionListener(e -> excluirCliente());
+        this.view.getBtnFazerPedido().addActionListener(e -> fazerPedido());
+        this.view.getBtnComanda().addActionListener(e -> listarComanda());
+        this.view.getBtnEncerrar().addActionListener(e -> fecharComanda());
+        this.view.getBtnVoltar().addActionListener(e -> sair());
 
         this.view.setVisible(true);
     }
@@ -52,36 +34,31 @@ public class ListarClienteController {
     }
 
     private void carregaTabela() {
-        Object colunas[] = { "Nome", "CPF" };
-        DefaultTableModel tm = new DefaultTableModel(colunas, 0);
+        DefaultTableModel model = new DefaultTableModel(new Object[] { "Nome", "CPF" }, 0);
 
-        tm.setNumRows(0);
-        Iterator<Cliente> it = clientes.getClientes().iterator();
-        while (it.hasNext()) {
-            Cliente c = it.next();
-            String cliente = c.toString();
-            String linha[] = cliente.split("%");
-            tm.addRow(new Object[] { linha[0], linha[1] });
-        }
-        view.getTbClientes().setModel(tm);
+        clientes.getClientes().forEach(cliente -> model.addRow(new Object[] { cliente.getNome(), cliente.getCpf() }));
+        view.getTbClientes().setModel(model);
     }
 
     private void excluirCliente() {
-        if (view.getTbClientes().getSelectedRow() != -1) {
-            int linha = this.view.getTbClientes().getSelectedRow();
-            String cpf = (String) this.view.getTbClientes().getValueAt(linha, 1);
+        int selectedRow = view.getTbClientes().getSelectedRow();
 
-            int op = JOptionPane.showConfirmDialog(view, "Deseja excluir o cliente com CPF " + cpf + "?");
-            if (op == JOptionPane.YES_OPTION) {
-                Cliente cliente = clientes.buscarClientePorCpf(cpf);
-                clientes.excluirCliente(cliente);
+        if (selectedRow >= 0) {
+            String cpf = (String) view.getTbClientes().getValueAt(selectedRow, 1);
+            int option = JOptionPane.showConfirmDialog(view, "Deseja excluir o cliente com CPF " + cpf + "?");
+
+            if (option == JOptionPane.YES_OPTION) {
+                clientes.excluirCliente(clientes.buscarClientePorCpf(cpf));
                 Atendimento atendimento = atendimentos.buscarAtendimentoPorCpf(cpf);
-                atendimentos.excluirAtendimento(atendimento);
+                if (atendimento != null) { // Check if the client has an ongoing service
+                    atendimentos.excluirAtendimento(atendimento);
+                }
                 JOptionPane.showMessageDialog(view, "Cliente com CPF " + cpf + " excluído com sucesso!");
                 carregaTabela();
             }
-        } else
+        } else {
             JOptionPane.showMessageDialog(view, "Selecione uma linha primeiro!");
+        }
     }
 
     private void fazerPedido() {

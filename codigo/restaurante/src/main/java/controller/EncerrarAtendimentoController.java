@@ -1,149 +1,112 @@
 package main.java.controller;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Iterator;
-
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-
-import main.java.dao.Atendimentos;
-import main.java.dao.Clientes;
-import main.java.dao.Historico;
-import main.java.dao.Mesas;
-import main.java.dao.Pagamentos;
-import main.java.model.Atendimento;
-import main.java.model.Cliente;
-import main.java.model.Comanda;
-import main.java.model.Credito;
-import main.java.model.Debito;
-import main.java.model.Dinheiro;
-import main.java.model.Mesa;
-import main.java.model.MetodoPagamento;
-import main.java.model.Pagamento;
-import main.java.model.Pedido;
-import main.java.model.Pix;
+import main.java.dao.*;
+import main.java.model.*;
 import main.java.view.EncerrarAtendimentoView;
 
-public class EncerrarAtendimentoController {
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-    private EncerrarAtendimentoView view;
-    private Atendimento atendimento;
-    private Atendimentos atendimentos;
-    private Historico historico;
-    private Clientes clientes;
-    private Mesas mesas;
-    private Pagamentos pagamentos;
+public class EncerrarAtendimentoController {
+    private final EncerrarAtendimentoView view;
+    private final Atendimento atendimento;
+    private final Atendimentos atendimentos;
+    private final Historico historico;
+    private final Clientes clientes;
+    private final Mesas mesas;
+    private final Pagamentos pagamentos;
 
     public EncerrarAtendimentoController(Atendimento atendimento) {
         this.atendimento = atendimento;
+        this.view = new EncerrarAtendimentoView();
         this.clientes = Clientes.getInstance();
         this.atendimentos = Atendimentos.getInstance();
         this.mesas = Mesas.getInstance();
         this.historico = Historico.getInstance();
         this.pagamentos = Pagamentos.getInstance();
-        this.view = new EncerrarAtendimentoView();
 
-        this.view.getBtnFinalizarAtendimento().addActionListener((e) -> {
-            encerrarAtendimento();
-        });
-
-        this.view.getBtnVoltar().addActionListener((e) -> {
-            cancelar();
-        });
-
-        this.view.getBtnExcluirItemComanda().addActionListener((e) -> {
-            excluirItem();
-        });
-
-        this.view.getBtnCalcularValor().addActionListener((e) -> {
-            getMetodoPagemento();
-        });
+        this.view.getBtnFinalizarAtendimento().addActionListener(e -> encerrarAtendimento());
+        this.view.getBtnVoltar().addActionListener(e -> cancelar());
+        this.view.getBtnExcluirItemComanda().addActionListener(e -> excluirItem());
+        this.view.getBtnCalcularValor().addActionListener(e -> calcularValorTotal());
 
         carregaTela();
-
         this.view.setVisible(true);
-
     }
 
     private void carregaTela() {
-        this.view.getTxtNomeCliente().setText(atendimento.getCliente().getNome());
-        this.view.getNumQuantidadePessoas().setText(String.valueOf(atendimento.getQuantPessoas()));
-        this.view.getNumValorTotal().setText(String.valueOf(atendimento.getComanda().calculaValor()));
-
+        view.getTxtNomeCliente().setText(atendimento.getCliente().getNome());
+        view.getNumQuantidadePessoas().setText(String.valueOf(atendimento.getQuantPessoas()));
+        view.getNumValorTotal().setText(String.format("%.2f", atendimento.getComanda().calculaValor())); // Format with
+                                                                                                         // 2 decimal
+                                                                                                         // places
         carregaComanda();
     }
 
     private void carregaComanda() {
-        Object colunas[] = { "Quantidade", "Item", "Valor", "Quantidade", "Valor Total" };
-        DefaultTableModel tm = new DefaultTableModel(colunas, 0);
+        DefaultTableModel model = new DefaultTableModel(
+                new Object[] { "Quantidade", "Item", "Valor Unitário", "Quantidade", "Valor Total" }, 0);
 
-        tm.setNumRows(0);
-        Iterator<Pedido> it = atendimento.getComanda().getPedidos().iterator();
-        while (it.hasNext()) {
-            Pedido p = it.next();
-            String pedido = p.toString();
-            String linha[] = pedido.split("%");
-            tm.addRow(new Object[] { linha[1], linha[2], linha[3], linha[4], linha[5] });
-        }
-        view.getTableContaCliente().setModel(tm);
+        atendimento.getComanda().getPedidos().forEach(p -> {
+            String[] linha = p.toString().split("%");
+            model.addRow(new Object[] { linha[1], linha[2], linha[3], linha[4], linha[5] });
+        });
+
+        view.getTableContaCliente().setModel(model);
     }
 
     private void excluirItem() {
-        int linha = this.view.getTableContaCliente().getSelectedRow();
-        Comanda comanda = atendimento.getComanda();
-        comanda.getPedidos().remove(linha);
-        String cpf = atendimento.getCliente().getCpf();
-        atendimentos.altera(atendimento, cpf);
-
-        carregaTela();
-    }
-
-    private void encerrarAtendimento() {
-        String nome = atendimento.getCliente().getNome();
-
-        int op = JOptionPane.showConfirmDialog(view, "Deseja encerrar o atendimento do cliente " + nome + "?");
-        if (op == JOptionPane.YES_OPTION) {
-            String cpf = atendimento.getCliente().getCpf();
-            Cliente cliente = clientes.buscarClientePorCpf(cpf);
-            clientes.excluirCliente(cliente);
-
-            Atendimento atendimento = atendimentos.buscarAtendimentoPorCpf(cpf);
-
-            int numero = atendimento.getMesa().getNumero();
-            Mesa mesa = mesas.buscarMesaPorNumero(numero);
-            mesa.setOcupada(false);
-            mesas.altera(mesa, numero);
-
-            atendimentos.excluirAtendimento(atendimento);
-
-            atendimento.setHoraSaida(LocalTime.now());
-            historico.addAtendimento(atendimento);
-            
-            Pagamento pagamento = new Pagamento(10, LocalDate.now());
-            pagamentos.addPagamento(pagamento);
-
-            JOptionPane.showMessageDialog(view, "Atendimento do cliente " + nome + " encerrado com sucesso!");
+        int linha = view.getTableContaCliente().getSelectedRow();
+        if (linha >= 0) { // Check if a row is selected
+            atendimento.getComanda().getPedidos().remove(linha);
+            atendimentos.altera(atendimento, atendimento.getCliente().getCpf());
             carregaTela();
         }
     }
 
-    private void getMetodoPagemento() {
+    private void encerrarAtendimento() {
+        String nome = atendimento.getCliente().getNome();
+        int option = JOptionPane.showConfirmDialog(view, "Deseja encerrar o atendimento do cliente " + nome + "?");
+
+        if (option == JOptionPane.YES_OPTION) {
+            String cpf = atendimento.getCliente().getCpf();
+            clientes.excluirCliente(clientes.buscarClientePorCpf(cpf));
+            mesas.buscarMesaPorNumero(atendimento.getMesa().getNumero()).setOcupada(false);
+            atendimentos.excluirAtendimento(atendimento);
+
+            atendimento.setHoraSaida(LocalTime.now());
+            atendimento.setMetodoPagamento(getMetodoPagamento());
+            historico.addAtendimento(atendimento);
+
+            double valorFinal = atendimento.getComanda().calculaValor() -
+                    atendimento.getMetodoPagamento().calcularDesconto(atendimento.getComanda().calculaValor());
+            pagamentos.addPagamento(new Pagamento(valorFinal, LocalDate.now()));
+
+            JOptionPane.showMessageDialog(view, "Atendimento do cliente " + nome + " encerrado com sucesso!");
+            cancelar(); // Close the view after ending the service
+        }
+    }
+
+    private MetodoPagamento getMetodoPagamento() {
         String pagamento = (String) this.view.getSelectPagamento().getSelectedItem();
         switch (pagamento) {
             case ("Dinheiro"):
-                atendimento.getComanda().setMetodoPagamento(new Dinheiro());
-                break;
+                return new Dinheiro();
             case ("Pix"):
-                atendimento.getComanda().setMetodoPagamento(new Pix());
-                break;
+                return new Pix();
             case ("Crédito"):
-                atendimento.getComanda().setMetodoPagamento(new Credito());
-                break;
+                return new Credito();
             case ("Débito"):
-                atendimento.getComanda().setMetodoPagamento(new Debito());
-                break;
+                return new Debito();
+            default:
+                return new Dinheiro();
         }
+    }
+
+    private void calcularValorTotal() {
+        this.view.getNumValorTotal().setText(String.valueOf(atendimento.getComanda().calculaValor()));
     }
 
     private void cancelar() {

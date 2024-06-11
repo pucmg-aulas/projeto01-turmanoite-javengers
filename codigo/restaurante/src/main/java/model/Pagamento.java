@@ -1,8 +1,9 @@
 package main.java.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Pagamento {
+public class Pagamento implements Serializable {
     private double valor;
     private LocalDate data;
 
@@ -29,7 +30,7 @@ public class Pagamento {
 
     @Override
     public String toString() {
-        return +valor + "%" + data;
+        return valor + "%" + data;
     }
 
 }

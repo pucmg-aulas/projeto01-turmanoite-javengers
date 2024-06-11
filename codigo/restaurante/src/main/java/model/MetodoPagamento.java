@@ -1,6 +1,8 @@
 package main.java.model;
 
-public abstract class MetodoPagamento {
+import java.io.Serializable;
+
+public abstract class MetodoPagamento implements Serializable {
     protected int prazoDias;
     protected double descontoPercentual;
 

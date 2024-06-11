@@ -1,19 +1,14 @@
 package main.java.controller;
 
-import java.util.Iterator;
+import main.java.dao.FilaDeEspera;
+import main.java.view.FilaEsperaView;
 import javax.swing.table.DefaultTableModel;
 
-import main.java.dao.FilaDeEspera;
-import main.java.model.Atendimento;
-import main.java.view.FilaEsperaView;
-
 public class FilaDeEsperaController {
-
-    private FilaEsperaView view;
-    private FilaDeEspera filaDeEspera;
+    private final FilaEsperaView view;
+    private final FilaDeEspera filaDeEspera;
 
     public FilaDeEsperaController() {
-
         this.filaDeEspera = FilaDeEspera.getInstance();
         this.view = new FilaEsperaView();
 
@@ -23,17 +18,15 @@ public class FilaDeEsperaController {
     }
 
     private void carregaTabela() {
-        Object colunas[] = { "Nome", "CPF", "Quantidade de pessoas" };
-        DefaultTableModel tm = new DefaultTableModel(colunas, 0);
+        DefaultTableModel model = new DefaultTableModel(
+                new Object[] { "Nome", "CPF", "Quantidade de Pessoas" }, 0);
 
-        tm.setNumRows(0);
-        Iterator<Atendimento> it = filaDeEspera.getAtendimentos().iterator();
-        while (it.hasNext()) {
-            Atendimento atendimento = it.next();
-            String atendimentoString = atendimento.toString();
-            String linha[] = atendimentoString.split("%");
-            tm.addRow(new Object[] { linha[0], linha[1], linha[2] });
-        }
-        view.getTabelaFilaEspera().setModel(tm);
+        filaDeEspera.getAtendimentos().forEach(atendimento -> model.addRow(new Object[] {
+                atendimento.getCliente().getNome(),
+                atendimento.getCliente().getCpf(),
+                atendimento.getQuantPessoas()
+        }));
+
+        view.getTabelaFilaEspera().setModel(model);
     }
 }
