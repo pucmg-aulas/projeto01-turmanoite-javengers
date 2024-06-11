@@ -12,7 +12,7 @@ import java.util.Locale;
 public class FaturamentoView extends JFrame {
     private JTable table;
     private DefaultTableModel tableModel;
-    private JButton searchButton;
+    private JButton btnPesquisa;
     private JFormattedTextField dateField;
 
     public FaturamentoView() {
@@ -38,11 +38,11 @@ public class FaturamentoView extends JFrame {
         JLabel dateLabel = new JLabel("Data (dd-MM-yyyy): ");
         dateLabel.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        searchButton = new JButton("Pesquisar");
-        searchButton.setFont(new Font("Arial", Font.BOLD, 14));
+        btnPesquisa = new JButton("Pesquisar");
+        btnPesquisa.setFont(new Font("Arial", Font.BOLD, 14));
         toolBar.add(dateLabel);
         toolBar.add(dateField);
-        toolBar.add(searchButton);
+        toolBar.add(btnPesquisa);
         add(toolBar, BorderLayout.NORTH);
 
         tableModel = new DefaultTableModel(new Object[]{"Data", "Faturamento"}, 0);
@@ -79,7 +79,7 @@ public class FaturamentoView extends JFrame {
     }
 
     public void setTableData(Object[][] data) {
-        tableModel.setRowCount(0); // Clear existing data
+        tableModel.setRowCount(0);
         for (Object[] row : data) {
             tableModel.addRow(row);
         }
