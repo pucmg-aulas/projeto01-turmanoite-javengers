@@ -36,7 +36,7 @@ public class ListarHistoricoController {
             Atendimento a = it.next();
             String atendimento = a.toString();
             String linha[] = atendimento.split("%");
-            tm.addRow(new Object[] { linha[0], linha[1], linha[7] });
+            tm.addRow(new Object[] { linha[0], linha[1], a.getData() });
         }
         view.getTabelaHistorico().setModel(tm);
     }

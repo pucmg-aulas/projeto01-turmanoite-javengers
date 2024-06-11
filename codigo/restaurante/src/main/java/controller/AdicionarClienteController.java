@@ -61,16 +61,11 @@ public class AdicionarClienteController {
             JOptionPane.showMessageDialog(view,
                     "Nenhuma mesa disponível no momento. Cliente adicionado a fila de espera!");
         }
-        limparTela();
+        cancelar();
     }
 
     private void cancelar() {
         this.view.dispose();
-    }
-
-    private void limparTela() {
-        this.view.getTxtNomeCLiente().setText("");
-        this.view.getNumCPFCliente().setText("");
     }
 
     private List<Mesa> mesasDisponiveis(int quantidade) {

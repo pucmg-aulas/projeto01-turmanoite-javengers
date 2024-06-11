@@ -3,7 +3,6 @@ package main.java.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 
 public class Atendimento implements Serializable {
 
@@ -25,7 +24,7 @@ public class Atendimento implements Serializable {
     }
 
     public Atendimento(Cliente cliente, int quantPessoas, Mesa mesa, Comanda comanda, LocalDate data,
-    LocalTime horaEntrada, LocalTime horaSaida) {
+            LocalTime horaEntrada, LocalTime horaSaida, MetodoPagamento metodoPagamento) {
         this.cliente = cliente;
         this.quantPessoas = quantPessoas;
         this.mesa = mesa;
@@ -37,7 +36,8 @@ public class Atendimento implements Serializable {
 
     @Override
     public String toString() {
-        return cliente + "%" + quantPessoas + "%" + mesa + "%" + comanda + "%" + data + "%" + horaEntrada + "%" + horaSaida;
+        return cliente + "%" + quantPessoas + "%" + mesa + "%" + comanda + "%" + data + "%" + horaEntrada + "%"
+                + horaSaida;
     }
 
     public Cliente getCliente() {

@@ -44,6 +44,10 @@ public class EncerrarAtendimentoView extends javax.swing.JFrame {
         return btnFinalizarAtendimento;
     }
 
+    public JButton getBtnVoltar() {
+        return btnVoltar;
+    }
+
     public void setBtnFinalizarAtendimento(JButton btnFinalizarAtendimento) {
         this.btnFinalizarAtendimento = btnFinalizarAtendimento;
     }
@@ -80,12 +84,12 @@ public class EncerrarAtendimentoView extends javax.swing.JFrame {
         this.selectPagamento = selectPagamento;
     }
 
-    public JTable getTableContaCliete() {
-        return tableContaCliete;
+    public JTable getTableContaCliente() {
+        return tableContaCliente;
     }
 
-    public void setTableContaCliete(JTable tableContaCliete) {
-        this.tableContaCliete = tableContaCliete;
+    public void setTableContaCliente(JTable tableContaCliete) {
+        this.tableContaCliente = tableContaCliete;
     }
 
     public JTextField getTxtNomeCliente() {
@@ -105,7 +109,7 @@ public class EncerrarAtendimentoView extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableContaCliete = new javax.swing.JTable();
+        tableContaCliente = new javax.swing.JTable();
         selectPagamento = new javax.swing.JComboBox<>();
         btnFinalizarAtendimento = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
@@ -123,7 +127,7 @@ public class EncerrarAtendimentoView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tableContaCliete.setModel(new javax.swing.table.DefaultTableModel(
+        tableContaCliente.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][] {
                         { null, null, null, null },
                         { null, null, null, null },
@@ -133,7 +137,7 @@ public class EncerrarAtendimentoView extends javax.swing.JFrame {
                 new String[] {
                         "Title 1", "Title 2", "Title 3", "Title 4"
                 }));
-        jScrollPane1.setViewportView(tableContaCliete);
+        jScrollPane1.setViewportView(tableContaCliente);
 
         selectPagamento.setModel(
                 new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Pix", "Débito", "Crédito" }));
@@ -368,7 +372,7 @@ public class EncerrarAtendimentoView extends javax.swing.JFrame {
     private javax.swing.JTextField numValorPessoa;
     private javax.swing.JTextField numValorTotal;
     private javax.swing.JComboBox<String> selectPagamento;
-    private javax.swing.JTable tableContaCliete;
+    private javax.swing.JTable tableContaCliente;
     private javax.swing.JTextField txtNomeCliente;
     // End of variables declaration
 }

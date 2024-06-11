@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Comanda implements Serializable {
     final static double TAXA = 10;
     private ArrayList<Pedido> pedidos;
+    private MetodoPagamento metodoPagamento;
 
     public Comanda() {
         this.pedidos = new ArrayList<>();
@@ -32,9 +33,17 @@ public class Comanda implements Serializable {
 
     }
 
+    public MetodoPagamento getMetodoPagamento() {
+        return metodoPagamento;
+    }
+
+    public void setMetodoPagamento(MetodoPagamento metodoPagamento) {
+        this.metodoPagamento = metodoPagamento;
+    }
+
     @Override
     public String toString() {
-        return "" + pedidos;
+        return "" + pedidos + "%" + metodoPagamento;
     }
 
     public double calculaValor() {
@@ -46,11 +55,4 @@ public class Comanda implements Serializable {
         return Math.round(valor * 100.0) / 100.0;
     }
 
-    // public void imprimeComanda() {
-    // System.out.println("\nComanda:\n");
-    // for (Pedido pedido : pedidos) {
-    // System.out.println(pedido.toString());
-    // }
-    // System.out.println("\nValor total com taxa: R$" + calculaValor());
-    // }
 }

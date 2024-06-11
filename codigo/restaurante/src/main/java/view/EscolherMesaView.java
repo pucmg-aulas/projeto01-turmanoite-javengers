@@ -64,10 +64,10 @@ public class EscolherMesaView extends javax.swing.JFrame {
                                                                                                 Short.MAX_VALUE)
                                                                                 .addGroup(layout.createSequentialGroup()
                                                                                                 .addGap(0, 123, Short.MAX_VALUE)
-                                                                                                .addComponent(btnEscolher)
+                                                                                                .addComponent(btnVoltar)
                                                                                                 .addPreferredGap(
                                                                                                                 javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                                .addComponent(btnVoltar)))
+                                                                                                .addComponent(btnEscolher)))
                                                                 .addContainerGap()));
                 layout.setVerticalGroup(
                                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -84,8 +84,8 @@ public class EscolherMesaView extends javax.swing.JFrame {
                                                                                 Short.MAX_VALUE)
                                                                 .addGroup(layout.createParallelGroup(
                                                                                 javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                                .addComponent(btnEscolher)
-                                                                                .addComponent(btnVoltar))
+                                                                                .addComponent(btnVoltar)
+                                                                                .addComponent(btnEscolher))
                                                                 .addContainerGap()));
 
                 pack();
