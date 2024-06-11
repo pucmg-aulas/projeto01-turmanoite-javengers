@@ -2,6 +2,7 @@ package main.java.controller;
 
 import main.java.dao.Atendimentos;
 import main.java.dao.Clientes;
+import main.java.dao.Mesas;
 import main.java.model.Atendimento;
 import main.java.model.Cliente;
 import main.java.view.ListarClienteView;
@@ -13,10 +14,12 @@ public class ListarClienteController {
     private final ListarClienteView view;
     private final Clientes clientes;
     private final Atendimentos atendimentos;
+    private final Mesas mesas;
 
     public ListarClienteController() {
         this.clientes = Clientes.getInstance();
         this.atendimentos = Atendimentos.getInstance();
+        this.mesas = Mesas.getInstance();
         this.view = new ListarClienteView();
 
         carregaTabela();
@@ -40,7 +43,7 @@ public class ListarClienteController {
         for (Cliente cliente : clientes.getClientes()) {
             model.addRow(new Object[] { cliente.getNome(), cliente.getCpf() });
         }
-        
+
         view.getTbClientes().setModel(model);
     }
 
@@ -54,7 +57,8 @@ public class ListarClienteController {
             if (option == JOptionPane.YES_OPTION) {
                 clientes.excluirCliente(clientes.buscarClientePorCpf(cpf));
                 Atendimento atendimento = atendimentos.buscarAtendimentoPorCpf(cpf);
-                if (atendimento != null) { // Check if the client has an ongoing service
+                if (atendimento != null) {
+                    mesas.buscarMesaPorNumero(atendimento.getMesa().getNumero()).setOcupada(false);
                     atendimentos.excluirAtendimento(atendimento);
                 }
                 JOptionPane.showMessageDialog(view, "Cliente com CPF " + cpf + " excluído com sucesso!");
@@ -84,5 +88,6 @@ public class ListarClienteController {
         String cpf = (String) this.view.getTbClientes().getValueAt(linha, 1);
         Atendimento atendimento = atendimentos.buscarAtendimentoPorCpf(cpf);
         new EncerrarAtendimentoController(atendimento);
+        this.view.dispose();
     }
 }

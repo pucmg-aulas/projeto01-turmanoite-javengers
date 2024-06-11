@@ -12,4 +12,9 @@ public abstract class MetodoPagamento implements Serializable {
     }
 
     public abstract double calcularDesconto(double valorOriginal);
+
+    public int getPrazoDias() {
+        return prazoDias;
+    }
+
 }

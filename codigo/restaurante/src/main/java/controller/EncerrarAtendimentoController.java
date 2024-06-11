@@ -80,10 +80,12 @@ public class EncerrarAtendimentoController {
 
             double valorFinal = atendimento.getComanda().calculaValor() -
                     atendimento.getMetodoPagamento().calcularDesconto(atendimento.getComanda().calculaValor());
-            pagamentos.addPagamento(new Pagamento(valorFinal, LocalDate.now()));
+            LocalDate dataVencimento = LocalDate.now().plusDays(atendimento.getMetodoPagamento().getPrazoDias());
+            
+            pagamentos.addPagamento(new Pagamento(valorFinal, dataVencimento));
 
             JOptionPane.showMessageDialog(view, "Atendimento do cliente " + nome + " encerrado com sucesso!");
-            
+
             cancelar();
         }
     }

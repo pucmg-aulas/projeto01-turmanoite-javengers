@@ -38,7 +38,7 @@ public class AdicionarItemView extends JFrame {
         formPanel.add(valorField);
 
         formPanel.add(new JLabel("Tipo:"));
-        tipoComboBox = new JComboBox<>(new String[]{"Tipo Alimento", "Prato", "Bebida"});
+        tipoComboBox = new JComboBox<>(new String[]{"Prato", "Bebida"});
         formPanel.add(tipoComboBox);
 
         quantidadeLabel = new JLabel("Quantidade/Tamanho:");

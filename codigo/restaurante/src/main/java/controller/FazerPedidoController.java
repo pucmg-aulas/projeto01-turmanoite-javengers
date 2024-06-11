@@ -42,7 +42,8 @@ public class FazerPedidoController {
                 atendimento.getComanda().addPedidos(pedido);
                 atendimentos.altera(atendimento, atendimento.getCliente().getCpf());
                 JOptionPane.showMessageDialog(view, "Pedido salvo com sucesso!");
-                limparTela();
+
+                this.view.dispose();
             } else {
                 JOptionPane.showMessageDialog(view, "Alimento não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
@@ -57,9 +58,5 @@ public class FazerPedidoController {
         for (Alimento alimento : alimentosList) {
             this.view.getItemComboBox().addItem(alimento.getNome());
         }
-    }
-
-    private void limparTela() {
-        this.view.getQuantidadeTextField().setText("");
     }
 }

@@ -1,6 +1,7 @@
 package main.java.controller;
 
 import main.java.dao.Atendimentos;
+import main.java.dao.Clientes;
 import main.java.dao.Mesas;
 import main.java.model.Atendimento;
 import main.java.model.Mesa;
@@ -13,6 +14,7 @@ public class EscolherMesaController {
     private final EscolherMesaView view;
     private final Atendimento atendimento;
     private final Atendimentos atendimentos;
+    private final Clientes clientes;
     private final List<Mesa> mesasDisponiveis;
     private final Mesas mesas;
 
@@ -22,6 +24,7 @@ public class EscolherMesaController {
         this.atendimentos = Atendimentos.getInstance();
         this.mesasDisponiveis = mesasDisponiveis;
         this.mesas = Mesas.getInstance();
+        this.clientes = Clientes.getInstance();
 
         carregaTabela();
 
@@ -36,8 +39,10 @@ public class EscolherMesaController {
     }
 
     private void escolherMesa() {
+        clientes.addCliente(atendimento.getCliente());
+        atendimentos.addAtendimento(atendimento);
         int linha = this.view.getTbMesas().getSelectedRow();
-        System.out.println(linha);
+        
         if (linha >= 0) {
             int numero = (Integer) this.view.getTbMesas().getValueAt(linha, 0);
             Mesa mesa = mesas.buscarMesaPorNumero(numero);

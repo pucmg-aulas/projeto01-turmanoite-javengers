@@ -11,14 +11,12 @@ import java.util.stream.Collectors;
 public class AdicionarClienteController {
     private final AdicionarClienteView view;
     private final Clientes clientes;
-    private final Atendimentos atendimentos;
     private final FilaDeEspera filaDeEspera;
     private final Mesas mesas;
 
     public AdicionarClienteController() {
         this.view = new AdicionarClienteView();
         this.clientes = Clientes.getInstance();
-        this.atendimentos = Atendimentos.getInstance();
         this.mesas = Mesas.getInstance();
         this.filaDeEspera = FilaDeEspera.getInstance();
 
@@ -33,7 +31,7 @@ public class AdicionarClienteController {
         String nome = view.getTxtNomeCLiente().getText();
         String cpf = view.getNumCPFCliente().getText();
         Cliente cliente = new Cliente(nome, cpf);
-        clientes.addCliente(cliente);
+
         addAtendimento(cliente);
     }
 
@@ -43,9 +41,9 @@ public class AdicionarClienteController {
 
         List<Mesa> mesasDisponiveis = mesasDisponiveis(quantidade);
         if (!mesasDisponiveis.isEmpty()) {
-            atendimentos.addAtendimento(atendimento);
             new EscolherMesaController(atendimento, mesasDisponiveis);
         } else {
+            clientes.addCliente(cliente);
             filaDeEspera.addAtendimento(atendimento);
             JOptionPane.showMessageDialog(view, "Nenhuma mesa disponível. Cliente na fila de espera!");
         }

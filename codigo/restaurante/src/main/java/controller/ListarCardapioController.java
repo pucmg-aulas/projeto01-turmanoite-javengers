@@ -13,6 +13,9 @@ public class ListarCardapioController {
     public ListarCardapioController() {
         this.alimentos = Alimentos.getInstance();
         this.view = new CardapioView();
+
+        this.view.getAddButton().addActionListener(e -> adicionarItem());
+
         carregaTabela();
         this.view.setVisible(true);
     }
@@ -30,5 +33,10 @@ public class ListarCardapioController {
         }
 
         view.getTable().setModel(model);
+    }
+
+    private void adicionarItem() {
+        new AdicionarItemController();
+        this.view.dispose();
     }
 }

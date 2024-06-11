@@ -34,7 +34,7 @@ public class EscolherMesaView extends javax.swing.JFrame {
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-                btnVoltar.setText("Voltar");
+                btnVoltar.setText("Cancelar");
                 btnEscolher.setText("Escolher");
 
                 tbMesas.setModel(new javax.swing.table.DefaultTableModel(
