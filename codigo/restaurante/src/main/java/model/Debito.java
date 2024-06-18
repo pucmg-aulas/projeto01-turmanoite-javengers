@@ -2,7 +2,7 @@ package main.java.model;
 
 public class Debito extends MetodoPagamento {
     public Debito() {
-        super(14, 1.4); // Prazo 14 dias, desconto 1.4%, sem desconto máximo
+        super(14, 1.4);
     }
 
     @Override

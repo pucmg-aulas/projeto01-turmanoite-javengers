@@ -54,11 +54,10 @@ public class Pagamentos extends AbstractDao implements Serializable {
     }
 
     public Pagamento buscarPagamentoPorData(LocalDate data) {
-        for (Pagamento pagamento : pagamentos) {
-            if (pagamento.getData().equals(data));
-                return pagamento;
-        }
-        return null;
+        return pagamentos.stream()
+                .filter(pagamento -> pagamento.getData().equals(data))
+                .findFirst()
+                .orElse(null);
     }
 
     public List<Pagamento> getPagamentos() {
