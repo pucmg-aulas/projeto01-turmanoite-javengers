@@ -54,9 +54,8 @@ public class FazerPedidoController {
     }
 
     private void carregaComboBox() {
-        List<Alimento> alimentosList = alimentos.getAlimentos();
-        for (Alimento alimento : alimentosList) {
-            this.view.getItemComboBox().addItem(alimento.getNome());
-        }
+    alimentos.getAlimentos().stream()
+             .map(Alimento::getNome)
+             .forEach(nome -> this.view.getItemComboBox().addItem(nome));
     }
 }
