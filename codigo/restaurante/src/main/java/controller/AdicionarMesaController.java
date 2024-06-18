@@ -23,9 +23,9 @@ public class AdicionarMesaController {
     private void addMesa() {
         try {
             int quantCadeiras = Integer.parseInt(view.getTxtQuantCadeirasMesa().getText());
-            if (quantCadeiras <= 0) {
-                throw new NumberFormatException("Número de cadeiras deve ser positivo.");
-            }
+
+            if (quantCadeiras <= 0) throw new NumberFormatException("Número de cadeiras deve ser positivo.");
+
             Mesa m = new Mesa(quantCadeiras);
             mesas.addMesa(m);
             JOptionPane.showMessageDialog(view, "Mesa salva com sucesso!");

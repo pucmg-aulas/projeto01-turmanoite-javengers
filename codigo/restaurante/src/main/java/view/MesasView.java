@@ -41,16 +41,10 @@ public class MesasView extends JFrame {
     public void setMesas(ArrayList<Mesa> mesas) {
         tableModel.setRowCount(0);
 
-        for (Mesa mesa : mesas) {
-            String status;
-            if (mesa.isOcupada()) {
-                status = "Ocupado";
-            } else {
-                status = "Disponível";
-            }
+        mesas.forEach(mesa -> {
+            String status = mesa.isOcupada() ? "Ocupado" : "Disponível";
             Object[] row = {mesa.getNumero(), mesa.getQuantCadeiras(), status};
             tableModel.addRow(row);
-        }
+        });
     }
-
 }

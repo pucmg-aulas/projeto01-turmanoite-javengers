@@ -56,11 +56,11 @@ public class EscolherMesaController {
 
     private void carregaTabela() {
         DefaultTableModel model = new DefaultTableModel(
-                new Object[] { "Número", "Cadeiras" }, 0);
+            new Object[] { "Número", "Cadeiras" }, 0);
 
-        for (Mesa m : mesasDisponiveis) {
-            model.addRow(new Object[] { m.getNumero(), m.getQuantCadeiras() });
-        }
+            mesasDisponiveis.stream()
+                .forEach(m -> model.addRow(new Object[] { m.getNumero(), m.getQuantCadeiras() }));
+
         view.getTbMesas().setModel(model);
     }
 }
