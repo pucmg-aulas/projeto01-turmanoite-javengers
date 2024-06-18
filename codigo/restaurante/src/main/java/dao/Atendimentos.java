@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import main.java.model.Atendimento;
 
@@ -48,33 +50,21 @@ public class Atendimentos extends AbstractDao implements Serializable {
         grava();
     }
 
-    public Atendimento buscarAtendimentoPorCpf(String cpf) {
-        for (Atendimento atendimento : atendimentos) {
-            if (atendimento.getCliente().getCpf().equals(cpf))
-                return atendimento;
-        }
-        return null;
+    public Optional<Atendimento> buscarAtendimentoPorCpf(String cpf) {
+        return atendimentos.stream()
+                           .filter(atendimento -> atendimento.getCliente().getCpf().equals(cpf))
+                           .findFirst();
     }
 
     public boolean altera(Atendimento atendimentoExistente, String cpf) {
         try {
-            ArrayList<Atendimento> listaTemp = new ArrayList<Atendimento>();
-
-            for (Iterator<Atendimento> it = atendimentos.iterator(); it.hasNext();) {
-                Atendimento atendimento = it.next();
-                if (!atendimento.getCliente().getCpf().equals(cpf))
-                    listaTemp.add(atendimento);
-                else
-                    listaTemp.add(atendimentoExistente);
-            }
-
-            atendimentos.removeAll(atendimentos);
-            atendimentos.addAll(listaTemp);
+            atendimentos = atendimentos.stream()
+                                       .map(atendimento -> atendimento.getCliente().getCpf().equals(cpf) ? atendimentoExistente : atendimento)
+                                       .collect(Collectors.toList());
             grava();
-
             return true;
-
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

@@ -69,24 +69,28 @@ public class EncerrarAtendimentoController {
         int option = JOptionPane.showConfirmDialog(view, "Deseja encerrar o atendimento do cliente " + nome + "?");
 
         if (option == JOptionPane.YES_OPTION) {
-            String cpf = atendimento.getCliente().getCpf();
-            clientes.excluirCliente(clientes.buscarClientePorCpf(cpf));
-            mesas.buscarMesaPorNumero(atendimento.getMesa().getNumero()).setOcupada(false);
-            atendimentos.excluirAtendimento(atendimento);
+            try {
+                String cpf = atendimento.getCliente().getCpf();
+                clientes.excluirCliente(clientes.buscarClientePorCpf(cpf).orElseThrow(() -> new Exception("Cliente não encontrado")));
+                mesas.buscarMesaPorNumero(atendimento.getMesa().getNumero()).setOcupada(false);
+                atendimentos.excluirAtendimento(atendimento);
 
-            atendimento.setHoraSaida(LocalTime.now());
-            atendimento.setMetodoPagamento(getMetodoPagamento());
-            historico.addAtendimento(atendimento);
+                atendimento.setHoraSaida(LocalTime.now());
+                atendimento.setMetodoPagamento(getMetodoPagamento());
+                historico.addAtendimento(atendimento);
 
-            double valorFinal = atendimento.getComanda().calculaValor() -
-                    atendimento.getMetodoPagamento().calcularDesconto(atendimento.getComanda().calculaValor());
-            LocalDate dataVencimento = LocalDate.now().plusDays(atendimento.getMetodoPagamento().getPrazoDias());
-            
-            pagamentos.addPagamento(new Pagamento(valorFinal, dataVencimento));
+                double valorFinal = atendimento.getComanda().calculaValor() -
+                        atendimento.getMetodoPagamento().calcularDesconto(atendimento.getComanda().calculaValor());
+                LocalDate dataVencimento = LocalDate.now().plusDays(atendimento.getMetodoPagamento().getPrazoDias());
+                
+                pagamentos.addPagamento(new Pagamento(valorFinal, dataVencimento));
 
-            JOptionPane.showMessageDialog(view, "Atendimento do cliente " + nome + " encerrado com sucesso!");
+                JOptionPane.showMessageDialog(view, "Atendimento do cliente " + nome + " encerrado com sucesso!");
 
-            cancelar();
+                cancelar();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(view, "Erro ao encerrar atendimento: " + e.getMessage());
+            }
         }
     }
 

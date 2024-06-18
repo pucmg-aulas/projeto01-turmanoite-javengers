@@ -7,6 +7,9 @@ import main.java.model.Atendimento;
 import main.java.model.Cliente;
 import main.java.view.ListarClienteView;
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -40,9 +43,10 @@ public class ListarClienteController {
     private void carregaTabela() {
         DefaultTableModel model = new DefaultTableModel(new Object[] { "Nome", "CPF" }, 0);
 
-        for (Cliente cliente : clientes.getClientes()) {
-            model.addRow(new Object[] { cliente.getNome(), cliente.getCpf() });
-        }
+        List<Cliente> clienteList = clientes.getClientes();
+        clienteList.stream()
+                .map(cliente -> new Object[] { cliente.getNome(), cliente.getCpf() })
+                .forEach(model::addRow);
 
         view.getTbClientes().setModel(model);
     }
@@ -55,14 +59,22 @@ public class ListarClienteController {
             int option = JOptionPane.showConfirmDialog(view, "Deseja excluir o cliente com CPF " + cpf + "?");
 
             if (option == JOptionPane.YES_OPTION) {
-                clientes.excluirCliente(clientes.buscarClientePorCpf(cpf));
-                Atendimento atendimento = atendimentos.buscarAtendimentoPorCpf(cpf);
-                if (atendimento != null) {
-                    mesas.buscarMesaPorNumero(atendimento.getMesa().getNumero()).setOcupada(false);
-                    atendimentos.excluirAtendimento(atendimento);
+                try {
+                    Cliente cliente = clientes.buscarClientePorCpf(cpf)
+                            .orElseThrow(() -> new Exception("Cliente não encontrado"));
+                    clientes.excluirCliente(cliente);
+
+                    Optional<Atendimento> atendimentoOpt = atendimentos.buscarAtendimentoPorCpf(cpf);
+                    if (atendimentoOpt.isPresent()) {
+                        Atendimento atendimento = atendimentoOpt.get();
+                        mesas.buscarMesaPorNumero(atendimento.getMesa().getNumero()).setOcupada(false);
+                        atendimentos.excluirAtendimento(atendimento);
+                    }
+                    JOptionPane.showMessageDialog(view, "Cliente com CPF " + cpf + " excluído com sucesso!");
+                    carregaTabela();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(view, "Erro ao excluir cliente: " + e.getMessage());
                 }
-                JOptionPane.showMessageDialog(view, "Cliente com CPF " + cpf + " excluído com sucesso!");
-                carregaTabela();
             }
         } else {
             JOptionPane.showMessageDialog(view, "Selecione uma linha primeiro!");
@@ -72,22 +84,34 @@ public class ListarClienteController {
     private void fazerPedido() {
         int linha = this.view.getTbClientes().getSelectedRow();
         String cpf = (String) this.view.getTbClientes().getValueAt(linha, 1);
-        Atendimento atendimento = atendimentos.buscarAtendimentoPorCpf(cpf);
-        new FazerPedidoController(atendimento);
+        Optional<Atendimento> atendimentoOpt = atendimentos.buscarAtendimentoPorCpf(cpf);
+        if (atendimentoOpt.isPresent()) {
+            new FazerPedidoController(atendimentoOpt.get());
+        } else {
+            JOptionPane.showMessageDialog(view, "Atendimento não encontrado para o CPF " + cpf);
+        }
     }
 
     private void listarComanda() {
         int linha = this.view.getTbClientes().getSelectedRow();
         String cpf = (String) this.view.getTbClientes().getValueAt(linha, 1);
-        Atendimento atendimento = atendimentos.buscarAtendimentoPorCpf(cpf);
-        new ListarComandaController(atendimento);
+        Optional<Atendimento> atendimentoOpt = atendimentos.buscarAtendimentoPorCpf(cpf);
+        if (atendimentoOpt.isPresent()) {
+            new ListarComandaController(atendimentoOpt.get());
+        } else {
+            JOptionPane.showMessageDialog(view, "Atendimento não encontrado para o CPF " + cpf);
+        }
     }
 
     private void fecharComanda() {
         int linha = this.view.getTbClientes().getSelectedRow();
         String cpf = (String) this.view.getTbClientes().getValueAt(linha, 1);
-        Atendimento atendimento = atendimentos.buscarAtendimentoPorCpf(cpf);
-        new EncerrarAtendimentoController(atendimento);
-        this.view.dispose();
+        Optional<Atendimento> atendimentoOpt = atendimentos.buscarAtendimentoPorCpf(cpf);
+        if (atendimentoOpt.isPresent()) {
+            new EncerrarAtendimentoController(atendimentoOpt.get());
+            this.view.dispose();
+        } else {
+            JOptionPane.showMessageDialog(view, "Atendimento não encontrado para o CPF " + cpf);
+        }
     }
 }

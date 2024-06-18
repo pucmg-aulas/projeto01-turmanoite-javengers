@@ -2,8 +2,10 @@ package main.java.dao;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
+//import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import main.java.model.Cliente;
 
@@ -47,41 +49,27 @@ public class Clientes extends AbstractDao implements Serializable {
         grava();
     }
 
-    public Cliente buscarClientePorNome(String nome) {
-        for (Cliente cliente : clientes) {
-            if (cliente.getNome().equals(nome))
-                return cliente;
-        }
-        return null;
+    public Optional<Cliente> buscarClientePorNome(String nome) {
+        return clientes.stream()
+                       .filter(cliente -> cliente.getNome().equals(nome)) 
+                       .findFirst();
     }
 
-    public Cliente buscarClientePorCpf(String cpf) {
-        for (Cliente cliente : clientes) {
-            if (cliente.getCpf().equals(cpf))
-                return cliente;
-        }
-        return null;
+    public Optional<Cliente> buscarClientePorCpf(String cpf) {
+        return clientes.stream()
+                       .filter(cliente -> cliente.getCpf().equals(cpf)) 
+                       .findFirst(); 
     }
 
     public boolean altera(Cliente clienteExistente, String nomeAnterior) {
         try {
-            ArrayList<Cliente> listaTemp = new ArrayList<Cliente>();
-
-            for (Iterator<Cliente> it = clientes.iterator(); it.hasNext();) {
-                Cliente cliente = it.next();
-                if (!cliente.getNome().equals(nomeAnterior))
-                    listaTemp.add(cliente);
-                else
-                    listaTemp.add(clienteExistente);
-            }
-
-            clientes.removeAll(clientes);
-            clientes.addAll(listaTemp);
+            clientes = clientes.stream()
+                               .map(cliente -> cliente.getNome().equals(nomeAnterior) ? clienteExistente : cliente) // substitui o cliente de nome anterior por um existente
+                               .collect(Collectors.toList());
             grava();
-
             return true;
-
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
