@@ -48,12 +48,9 @@ public class Alimentos extends AbstractDao implements Serializable {
     }
 
     public Alimento buscarAlimentoPorNome(String nome) {
-
-        for (Alimento alimento : alimentos) {
-            if (alimento.getNome().equals(nome)) {
-                return alimento;
-            }
-        }
-        return null;
+    return alimentos.stream()
+                    .filter(alimento -> alimento.getNome().equals(nome))
+                    .findFirst()
+                    .orElse(null);
     }
 }
