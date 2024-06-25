@@ -2,8 +2,8 @@ package main.java.dao;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import main.java.model.Atendimento;
 
@@ -27,16 +27,28 @@ public class FilaDeEspera extends AbstractDao implements Serializable {
     }
 
     public void addAtendimento(Atendimento atendimento) {
-        this.filaDeEspera.add(atendimento);
-        grava();
+        try {
+            this.filaDeEspera.add(atendimento);
+            grava();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void carregaAtendimentos() {
-        this.filaDeEspera = super.leitura(localArquivo);
+        try {
+            this.filaDeEspera = super.leitura(localArquivo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void grava() {
-        super.grava(localArquivo, filaDeEspera);
+        try {
+            super.grava(localArquivo, filaDeEspera);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Atendimento> getAtendimentos() {
@@ -44,29 +56,34 @@ public class FilaDeEspera extends AbstractDao implements Serializable {
     }
 
     public void excluirAtendimento(Atendimento atendimento) {
-        filaDeEspera.remove(atendimento);
-        grava();
+        try {
+            filaDeEspera.remove(atendimento);
+            grava();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Atendimento buscarAtendimentoPorCpf(String cpf) {
-        for (Atendimento atendimento : filaDeEspera) {
-            if (atendimento.getCliente().getCpf().equals(cpf))
-                return atendimento;
+        try {
+            return filaDeEspera.stream()
+                    .filter(atendimento -> atendimento.getCliente().getCpf().equals(cpf))
+                    .findFirst()
+                    .orElse(null);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
 
     public boolean altera(Atendimento atendimentoExistente, String cpf) {
         try {
-            ArrayList<Atendimento> listaTemp = new ArrayList<Atendimento>();
+            List<Atendimento> listaTemp = new ArrayList<Atendimento>();
 
-            for (Iterator<Atendimento> it = filaDeEspera.iterator(); it.hasNext();) {
-                Atendimento atendimento = it.next();
-                if (!atendimento.getCliente().getCpf().equals(cpf))
-                    listaTemp.add(atendimento);
-                else
-                    listaTemp.add(atendimentoExistente);
-            }
+            listaTemp = filaDeEspera.stream()
+                    .filter(atendimento -> !atendimento.getCliente().getCpf().equals(cpf))
+                    .collect(Collectors.toList());
+            listaTemp.add(atendimentoExistente);
 
             filaDeEspera.removeAll(filaDeEspera);
             filaDeEspera.addAll(listaTemp);
@@ -75,6 +92,7 @@ public class FilaDeEspera extends AbstractDao implements Serializable {
             return true;
 
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

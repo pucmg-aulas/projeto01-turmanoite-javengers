@@ -1,11 +1,10 @@
 package main.java.controller;
 
-import main.java.dao.Historico;
-import main.java.model.Atendimento;
+import main.java.dao.Historico; 
 import main.java.view.HistoricoAtendimentoView;
-
 import java.time.LocalDate;
-
+import java.time.format.DateTimeParseException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class ListarHistoricoController {
@@ -24,13 +23,12 @@ public class ListarHistoricoController {
         DefaultTableModel model = new DefaultTableModel(
                 new Object[] { "Nome", "CPF", "Data" }, 0);
 
-        for (Atendimento atendimento : historico.getAtendimentos()) {
-            model.addRow(new Object[] {
-                    atendimento.getCliente().getNome(),
-                    atendimento.getCliente().getCpf(),
-                    atendimento.getData()
-            });
-        }
+        historico.getAtendimentos().stream()
+                .forEach(atendimento -> model.addRow(new Object[] {
+                        atendimento.getCliente().getNome(),
+                        atendimento.getCliente().getCpf(),
+                        atendimento.getData()
+                }));
 
         view.getTabelaHistorico().setModel(model);
     }
@@ -38,20 +36,24 @@ public class ListarHistoricoController {
     private void pesquisa() {
         String dateString = view.getCampoPesquisa().getText();
 
-        LocalDate data = LocalDate.parse(dateString);
+        LocalDate data;
+        try {
+            data = LocalDate.parse(dateString);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(view, "Data inválida");
+            return;
+        }
 
         DefaultTableModel model = new DefaultTableModel(
                 new Object[] { "Nome", "CPF", "Data" }, 0);
 
-        for (Atendimento atendimento : historico.getAtendimentos()) {
-            if (atendimento.getData().equals(data)) {
-                model.addRow(new Object[] {
+        historico.getAtendimentos().stream()
+                .filter(atendimento -> atendimento.getData().equals(data))
+                .forEach(atendimento -> model.addRow(new Object[] {
                         atendimento.getCliente().getNome(),
                         atendimento.getCliente().getCpf(),
                         atendimento.getData()
-                });
-            }
-        }
+                }));
 
         view.getTabelaHistorico().setModel(model);
     }

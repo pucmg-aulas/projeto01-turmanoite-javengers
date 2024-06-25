@@ -3,8 +3,8 @@ package main.java.dao;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import main.java.model.Atendimento;
 
@@ -28,16 +28,28 @@ public class Historico extends AbstractDao implements Serializable {
     }
 
     public void addAtendimento(Atendimento atendimento) {
-        this.historico.add(atendimento);
-        grava();
+        try {
+            this.historico.add(atendimento);
+            grava();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void carregaAtendimentos() {
-        this.historico = super.leitura(localArquivo);
+        try {
+            this.historico = super.leitura(localArquivo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void grava() {
-        super.grava(localArquivo, historico);
+        try {
+            super.grava(localArquivo, historico);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Atendimento> getAtendimentos() {
@@ -45,22 +57,34 @@ public class Historico extends AbstractDao implements Serializable {
     }
 
     public void excluirAtendimento(Atendimento atendimento) {
-        historico.remove(atendimento);
-        grava();
+        try {
+            historico.remove(atendimento);
+            grava();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Atendimento buscarAtendimentoPorCpf(String cpf) {
-        for (Atendimento atendimento : historico) {
-            if (atendimento.getCliente().getCpf().equals(cpf))
-                return atendimento;
+        try {
+            return historico.stream()
+                    .filter(atendimento -> atendimento.getCliente().getCpf().equals(cpf))
+                    .findFirst()
+                    .orElse(null);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
 
     public Atendimento buscarPagamentoPorData(LocalDate data) {
-        for (Atendimento atendimento : historico) {
-            if (atendimento.getData().equals(data))
-                return atendimento;
+        try {
+            return historico.stream()
+                    .filter(atendimento -> atendimento.getData().equals(data))
+                    .findFirst()
+                    .orElse(null);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -69,13 +93,10 @@ public class Historico extends AbstractDao implements Serializable {
         try {
             ArrayList<Atendimento> listaTemp = new ArrayList<Atendimento>();
 
-            for (Iterator<Atendimento> it = historico.iterator(); it.hasNext();) {
-                Atendimento atendimento = it.next();
-                if (!atendimento.getCliente().getCpf().equals(cpf))
-                    listaTemp.add(atendimento);
-                else
-                    listaTemp.add(atendimentoExistente);
-            }
+            listaTemp = historico.stream()
+                    .filter(atendimento -> !atendimento.getCliente().getCpf().equals(cpf))
+                    .collect(Collectors.toCollection(ArrayList::new));
+            listaTemp.add(atendimentoExistente);
 
             historico.removeAll(historico);
             historico.addAll(listaTemp);
@@ -84,6 +105,7 @@ public class Historico extends AbstractDao implements Serializable {
             return true;
 
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

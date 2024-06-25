@@ -5,6 +5,7 @@ import main.java.dao.Clientes;
 import main.java.dao.Mesas;
 import main.java.model.Atendimento;
 import main.java.model.Cliente;
+import main.java.model.Mesa;
 import main.java.view.ListarClienteView;
 
 import java.util.List;
@@ -67,7 +68,11 @@ public class ListarClienteController {
                     Optional<Atendimento> atendimentoOpt = atendimentos.buscarAtendimentoPorCpf(cpf);
                     if (atendimentoOpt.isPresent()) {
                         Atendimento atendimento = atendimentoOpt.get();
-                        mesas.buscarMesaPorNumero(atendimento.getMesa().getNumero()).setOcupada(false);
+
+                        Mesa mesa = mesas.buscarMesaPorNumero(atendimento.getMesa().getNumero());
+                        mesa.setOcupada(false);
+                        mesas.altera(mesa, atendimento.getMesa().getNumero());
+
                         atendimentos.excluirAtendimento(atendimento);
                     }
                     JOptionPane.showMessageDialog(view, "Cliente com CPF " + cpf + " excluído com sucesso!");

@@ -78,11 +78,4 @@ public class HistoricoAtendimentoView extends JFrame {
     public DefaultTableModel getTableModel() {
         return tableModel;
     }
-
-    public void setTableData(Object[][] data) {
-        tableModel.setRowCount(0);
-        for (Object[] row : data) {
-            tableModel.addRow(row);
-        }
-    }
 }

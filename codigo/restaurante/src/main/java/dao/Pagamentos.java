@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import main.java.model.Pagamento;
 
 public class Pagamentos extends AbstractDao implements Serializable {
@@ -26,22 +25,34 @@ public class Pagamentos extends AbstractDao implements Serializable {
     }
 
     public void addPagamento(Pagamento pagamento) {
-        Pagamento pagamentoPorData = buscarPagamentoPorData(pagamento.getData());
-        if (pagamentoPorData != null) {
-            double valorAtual = pagamentoPorData.getValor() + pagamento.getValor();
-            pagamentoPorData.setValor(valorAtual);
-        } else {
-            pagamentos.add(pagamento);
+        try {
+            Pagamento pagamentoPorData = buscarPagamentoPorData(pagamento.getData());
+            if (pagamentoPorData != null) {
+                double valorAtual = pagamentoPorData.getValor() + pagamento.getValor();
+                pagamentoPorData.setValor(valorAtual);
+            } else {
+                pagamentos.add(pagamento);
+            }
+            grava();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        grava();
     }
 
     private void carregaMesas() {
-        this.pagamentos = super.leitura(localArquivo);
+        try {
+            this.pagamentos = super.leitura(localArquivo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void grava() {
-        super.grava(localArquivo, pagamentos);
+        try {
+            super.grava(localArquivo, pagamentos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Pagamento> getMesas() {
@@ -49,15 +60,24 @@ public class Pagamentos extends AbstractDao implements Serializable {
     }
 
     public void excluirMesa(Pagamento pagamento) {
-        pagamentos.remove(pagamento);
-        grava();
+        try {
+            pagamentos.remove(pagamento);
+            grava();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Pagamento buscarPagamentoPorData(LocalDate data) {
-        return pagamentos.stream()
-                .filter(pagamento -> pagamento.getData().equals(data))
-                .findFirst()
-                .orElse(null);
+        try {
+            return pagamentos.stream()
+                    .filter(pagamento -> pagamento.getData().equals(data))
+                    .findFirst()
+                    .orElse(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public List<Pagamento> getPagamentos() {

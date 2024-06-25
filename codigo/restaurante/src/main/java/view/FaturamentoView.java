@@ -77,10 +77,4 @@ public class FaturamentoView extends JFrame {
         return dateField;
     }
 
-    public void setTableData(Object[][] data) {
-        tableModel.setRowCount(0);
-        for (Object[] row : data) {
-            tableModel.addRow(row);
-        }
-    }
 }

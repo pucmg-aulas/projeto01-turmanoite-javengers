@@ -4,7 +4,9 @@ import main.java.dao.Pagamentos;
 import main.java.view.FaturamentoView;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class ListarFaturamentoController {
@@ -38,7 +40,13 @@ public class ListarFaturamentoController {
     private void pesquisa() {
         String dateString = view.getDateField().getText();
 
-        LocalDate data = LocalDate.parse(dateString);
+        LocalDate data;
+        try {
+            data = LocalDate.parse(dateString);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(view, "Data inválida");
+            return;
+        }
 
         DefaultTableModel model = new DefaultTableModel(
                 new Object[] { "Data", "Valor" }, 0);

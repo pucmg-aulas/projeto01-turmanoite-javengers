@@ -71,8 +71,13 @@ public class EncerrarAtendimentoController {
         if (option == JOptionPane.YES_OPTION) {
             try {
                 String cpf = atendimento.getCliente().getCpf();
-                clientes.excluirCliente(clientes.buscarClientePorCpf(cpf).orElseThrow(() -> new Exception("Cliente não encontrado")));
-                mesas.buscarMesaPorNumero(atendimento.getMesa().getNumero()).setOcupada(false);
+                clientes.excluirCliente(
+                        clientes.buscarClientePorCpf(cpf).orElseThrow(() -> new Exception("Cliente não encontrado")));
+
+                Mesa mesa = mesas.buscarMesaPorNumero(atendimento.getMesa().getNumero());
+                mesa.setOcupada(false);
+                mesas.altera(mesa, atendimento.getMesa().getNumero());
+
                 atendimentos.excluirAtendimento(atendimento);
 
                 atendimento.setHoraSaida(LocalTime.now());
@@ -82,7 +87,7 @@ public class EncerrarAtendimentoController {
                 double valorFinal = atendimento.getComanda().calculaValor() -
                         atendimento.getMetodoPagamento().calcularDesconto(atendimento.getComanda().calculaValor());
                 LocalDate dataVencimento = LocalDate.now().plusDays(atendimento.getMetodoPagamento().getPrazoDias());
-                
+
                 pagamentos.addPagamento(new Pagamento(valorFinal, dataVencimento));
 
                 JOptionPane.showMessageDialog(view, "Atendimento do cliente " + nome + " encerrado com sucesso!");

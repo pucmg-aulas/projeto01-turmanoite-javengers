@@ -39,9 +39,9 @@ public class Comanda implements Serializable {
 
     public double calculaValor() {
         double valor = 0;
-        for (Pedido pedido : pedidos) {
-            valor += pedido.getValorTotal();
-        }
+        valor = pedidos.stream()
+                .mapToDouble(Pedido::getValorTotal)
+                .sum();
         valor += valor * TAXA / 100;
         return Math.round(valor * 100.0) / 100.0;
     }

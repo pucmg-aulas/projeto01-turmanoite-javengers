@@ -39,11 +39,10 @@ public class EscolherMesaController {
     }
 
     private void escolherMesa() {
-        clientes.addCliente(atendimento.getCliente());
-        atendimentos.addAtendimento(atendimento);
         int linha = this.view.getTbMesas().getSelectedRow();
         
         if (linha >= 0) {
+            clientes.addCliente(atendimento.getCliente());
             int numero = (Integer) this.view.getTbMesas().getValueAt(linha, 0);
             Mesa mesa = mesas.buscarMesaPorNumero(numero);
             mesa.setOcupada(true);

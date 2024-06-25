@@ -20,15 +20,15 @@ public class FilaDeEsperaController {
 
     private void carregaTabela() {
         DefaultTableModel model = new DefaultTableModel(
-                new Object[] { "Nome", "CPF", "Quantidade de Pessoas" }, 0);
+            new Object[] { "Nome", "CPF", "Quantidade de Pessoas" }, 0);
 
-        for (Atendimento atendimento : filaDeEspera.getAtendimentos()) {
+        filaDeEspera.getAtendimentos().stream().forEach(atendimento -> {
             model.addRow(new Object[] {
-                    atendimento.getCliente().getNome(),
-                    atendimento.getCliente().getCpf(),
-                    atendimento.getQuantPessoas()
+                atendimento.getCliente().getNome(),
+                atendimento.getCliente().getCpf(),
+                atendimento.getQuantPessoas()
             });
-        }
+        });
 
         view.getTabelaFilaEspera().setModel(model);
     }
