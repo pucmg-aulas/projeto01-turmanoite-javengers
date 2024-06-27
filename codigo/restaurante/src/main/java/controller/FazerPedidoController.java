@@ -7,7 +7,6 @@ import main.java.model.Atendimento;
 import main.java.model.Pedido;
 import main.java.view.FazerPedidoView;
 import javax.swing.*;
-import java.util.List;
 
 public class FazerPedidoController {
     private final FazerPedidoView view;

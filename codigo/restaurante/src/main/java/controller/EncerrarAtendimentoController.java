@@ -39,6 +39,8 @@ public class EncerrarAtendimentoController {
         view.getTxtNomeCliente().setText(atendimento.getCliente().getNome());
         view.getNumQuantidadePessoas().setText(String.valueOf(atendimento.getQuantPessoas()));
         view.getNumValorTotal().setText(String.format("%.2f", atendimento.getComanda().calculaValor()));
+        view.getNumValorPessoa().setText(
+                String.format("%.2f", atendimento.getComanda().calculaValor() / atendimento.getQuantPessoas()));
 
         carregaComanda();
     }

@@ -1,6 +1,6 @@
 package main.java.controller;
 
-import main.java.dao.Historico; 
+import main.java.dao.Historico;
 import main.java.view.HistoricoAtendimentoView;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -21,13 +21,14 @@ public class ListarHistoricoController {
 
     private void carregaTabela() {
         DefaultTableModel model = new DefaultTableModel(
-                new Object[] { "Nome", "CPF", "Data" }, 0);
+                new Object[] { "Nome", "CPF", "Data", "Valor" }, 0);
 
         historico.getAtendimentos().stream()
                 .forEach(atendimento -> model.addRow(new Object[] {
                         atendimento.getCliente().getNome(),
                         atendimento.getCliente().getCpf(),
-                        atendimento.getData()
+                        atendimento.getData(),
+                        String.format("%.2f", atendimento.getComanda().calculaValor())
                 }));
 
         view.getTabelaHistorico().setModel(model);
@@ -45,14 +46,15 @@ public class ListarHistoricoController {
         }
 
         DefaultTableModel model = new DefaultTableModel(
-                new Object[] { "Nome", "CPF", "Data" }, 0);
+                new Object[] { "Nome", "CPF", "Data", "Valor" }, 0);
 
         historico.getAtendimentos().stream()
                 .filter(atendimento -> atendimento.getData().equals(data))
                 .forEach(atendimento -> model.addRow(new Object[] {
                         atendimento.getCliente().getNome(),
                         atendimento.getCliente().getCpf(),
-                        atendimento.getData()
+                        atendimento.getData(),
+                        String.format("%.2f", atendimento.getComanda().calculaValor())
                 }));
 
         view.getTabelaHistorico().setModel(model);

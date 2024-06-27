@@ -1,7 +1,6 @@
 package main.java.controller;
 
 import main.java.dao.FilaDeEspera;
-import main.java.model.Atendimento;
 import main.java.view.FilaEsperaView;
 import javax.swing.table.DefaultTableModel;
 
