@@ -11,6 +11,7 @@ public class HistoricoAtendimentoView extends JFrame {
     private DefaultTableModel tableModel;
     private JFormattedTextField campoPesquisa;
     private JButton btnPesquisa;
+    private JButton btnExportar;
 
     public HistoricoAtendimentoView() {
         setTitle("Histórico de Atendimentos");
@@ -21,9 +22,10 @@ public class HistoricoAtendimentoView extends JFrame {
         // barra com a pesquisa
         JToolBar barraFerramentas = new JToolBar();
         barraFerramentas.setFloatable(false);
+
         try {
             campoPesquisa = new JFormattedTextField(new javax.swing.text.MaskFormatter("####-##-##"));
-            campoPesquisa.setColumns(20);
+            campoPesquisa.setColumns(10);
             campoPesquisa.setFont(new Font("Arial", Font.PLAIN, 14));
             campoPesquisa.setToolTipText("Digite a data no formato yyyy-mm-dd");
         } catch (ParseException e) {
@@ -35,9 +37,23 @@ public class HistoricoAtendimentoView extends JFrame {
 
         btnPesquisa = new JButton("Pesquisar");
         btnPesquisa.setFont(new Font("Arial", Font.BOLD, 14));
-        barraFerramentas.add(dateLabel);
-        barraFerramentas.add(campoPesquisa);
-        barraFerramentas.add(btnPesquisa);
+
+        btnExportar = new JButton("Exportar Historico");
+        btnExportar.setFont(new Font("Arial", Font.BOLD, 14));
+
+        JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        leftPanel.add(dateLabel);
+        leftPanel.add(campoPesquisa);
+        leftPanel.add(btnPesquisa);
+
+        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        rightPanel.add(btnExportar);
+
+        JPanel toolBarPanel = new JPanel(new BorderLayout());
+        toolBarPanel.add(leftPanel, BorderLayout.WEST);
+        toolBarPanel.add(rightPanel, BorderLayout.EAST);
+
+        barraFerramentas.add(toolBarPanel);
         add(barraFerramentas, BorderLayout.NORTH);
 
         tableModel = new DefaultTableModel(new Object[]{"CPF", "Nome", "Data"}, 0);
@@ -73,6 +89,10 @@ public class HistoricoAtendimentoView extends JFrame {
 
     public JButton getBotaoPesquisar() {
         return btnPesquisa;
+    }
+
+    public JButton getBotaoExportar() {
+        return btnExportar;
     }
 
     public DefaultTableModel getTableModel() {
