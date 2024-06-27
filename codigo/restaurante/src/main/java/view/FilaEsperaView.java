@@ -8,6 +8,7 @@ import java.awt.*;
 public class FilaEsperaView extends JFrame {
     private JTable tabelaFilaEspera;
     private DefaultTableModel tableModel;
+    private JButton btnRemove;
 
     public JTable getTabelaFilaEspera() {
         return tabelaFilaEspera;
@@ -15,6 +16,10 @@ public class FilaEsperaView extends JFrame {
 
     public void setTabelaFilaEspera(JTable tabelaFilaEspera) {
         this.tabelaFilaEspera = tabelaFilaEspera;
+    }
+
+    public JButton getRemoverButton() {
+        return btnRemove;
     }
 
     public FilaEsperaView() {
@@ -43,5 +48,14 @@ public class FilaEsperaView extends JFrame {
 
         setBackground(Color.WHITE);
         getContentPane().setBackground(Color.WHITE);
+
+        btnRemove = new JButton("Remover Selecionado");
+        btnRemove.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        buttonPanel.add(btnRemove);
+
+        add(buttonPanel, BorderLayout.SOUTH);
     }
 }
