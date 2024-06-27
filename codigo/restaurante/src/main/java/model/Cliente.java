@@ -8,7 +8,7 @@ public class Cliente implements Serializable {
     private String nome;
 
     public Cliente(String nome, String cpf) {
-        this.cpf = cpf;
+        this.cpf = String.format("%011d", Long.parseLong(cpf));
         this.nome = nome;
     }
 

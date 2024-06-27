@@ -1,5 +1,7 @@
 package main.java.dao;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -82,6 +84,21 @@ public class Pagamentos extends AbstractDao implements Serializable {
 
     public List<Pagamento> getPagamentos() {
         return pagamentos;
+    }
+
+    public void gerarRelatorio() {
+        LocalDate data = LocalDate.now();
+        String local = "./codigo/restaurante/src/main/java/data/Faturamento-" + data + ".txt";
+
+        try (PrintWriter writer = new PrintWriter(local)) {
+            writer.println("Data\t\tValor");
+            for (Pagamento pagamento : pagamentos) {
+                String valor = String.format("R$%.2f", pagamento.getValor());
+                writer.println(pagamento.getData() + "\t" + valor);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }

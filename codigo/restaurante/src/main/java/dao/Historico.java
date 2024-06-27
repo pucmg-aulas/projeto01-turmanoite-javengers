@@ -1,5 +1,7 @@
 package main.java.dao;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -107,6 +109,22 @@ public class Historico extends AbstractDao implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public void gerarRelatorio() {
+        LocalDate data = LocalDate.now();
+        String local = "./codigo/restaurante/src/main/java/data/Historico-" + data + ".txt";
+
+        try (PrintWriter writer = new PrintWriter(local)) {
+            writer.println("Data\t\tCPF\t\t\tValor\t\tNome");
+            for (Atendimento atendimento : historico) {
+                String valor = String.format("R$%.2f", atendimento.getComanda().calculaValor());
+                writer.println(atendimento.getData() + "\t" + atendimento.getCliente().getCpf() + "\t"
+                        + valor + "\t" + atendimento.getCliente().getNome());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
