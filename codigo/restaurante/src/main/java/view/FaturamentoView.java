@@ -10,6 +10,7 @@ public class FaturamentoView extends JFrame {
     private JTable table;
     private DefaultTableModel tableModel;
     private JButton btnPesquisa;
+    private JButton btnExportar;
     private JFormattedTextField dateField;
 
     public FaturamentoView() {
@@ -37,12 +38,26 @@ public class FaturamentoView extends JFrame {
 
         btnPesquisa = new JButton("Pesquisar");
         btnPesquisa.setFont(new Font("Arial", Font.BOLD, 14));
-        barraFerramentas.add(dateLabel);
-        barraFerramentas.add(dateField);
-        barraFerramentas.add(btnPesquisa);
+
+        btnExportar = new JButton("Exportar Faturamento");
+        btnExportar.setFont(new Font("Arial", Font.BOLD, 14));
+
+        JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        leftPanel.add(dateLabel);
+        leftPanel.add(dateField);
+        leftPanel.add(btnPesquisa);
+
+        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        rightPanel.add(btnExportar);
+
+        JPanel toolBarPanel = new JPanel(new BorderLayout());
+        toolBarPanel.add(leftPanel, BorderLayout.WEST);
+        toolBarPanel.add(rightPanel, BorderLayout.EAST);
+
+        barraFerramentas.add(toolBarPanel);
         add(barraFerramentas, BorderLayout.NORTH);
 
-        tableModel = new DefaultTableModel(new Object[] { "Data", "Faturamento" }, 0);
+        tableModel = new DefaultTableModel(new Object[]{"Data", "Faturamento"}, 0);
         table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
 
@@ -73,8 +88,11 @@ public class FaturamentoView extends JFrame {
         return this.btnPesquisa;
     }
 
+    public JButton getBtnExportar() {
+        return this.btnExportar;
+    }
+
     public JFormattedTextField getDateField() {
         return dateField;
     }
-
 }

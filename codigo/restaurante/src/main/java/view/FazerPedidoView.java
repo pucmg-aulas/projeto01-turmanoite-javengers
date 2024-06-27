@@ -1,73 +1,71 @@
 package main.java.view;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 
 public class FazerPedidoView extends JFrame {
-    private JComboBox<String> itemComboBox;
+    private JTable cardapioTable;
+    private DefaultTableModel tableModel;
     private JTextField quantidadeTextField;
     private JButton salvarPedidoButton;
 
     public FazerPedidoView() {
         setTitle("Fazer Pedido");
-        setSize(400, 200);
+        setSize(600, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // seção do "formulário"
-        JPanel itemQuantidadePanel = new JPanel(new GridBagLayout());
-        itemQuantidadePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        // Tabela do cardápio
+        tableModel = new DefaultTableModel(new Object[]{"Nome", "Descrição", "Valor"}, 0);
+        cardapioTable = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(cardapioTable);
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        itemQuantidadePanel.add(new JLabel("Item:"), gbc);
+        // "css" da tabela
+        cardapioTable.setFillsViewportHeight(true);
+        cardapioTable.setFont(new Font("Arial", Font.PLAIN, 14));
+        cardapioTable.setRowHeight(30);
 
-        gbc.gridx = 1;
-        itemComboBox = new JComboBox<>();
-        itemComboBox.setPreferredSize(new Dimension(200, 30));
-        itemQuantidadePanel.add(itemComboBox, gbc);
+        // cabeçalho da tabela
+        JTableHeader header = cardapioTable.getTableHeader();
+        header.setFont(new Font("Arial", Font.BOLD, 16));
+        header.setBackground(Color.LIGHT_GRAY);
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        itemQuantidadePanel.add(new JLabel("Quantidade:"), gbc);
-
-        gbc.gridx = 1;
+        // Seção do botão e quantidade
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         quantidadeTextField = new JTextField(10);
         quantidadeTextField.setPreferredSize(new Dimension(100, 30));
-        itemQuantidadePanel.add(quantidadeTextField, gbc);
-
-        // seção do botão
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         salvarPedidoButton = new JButton("Salvar Pedido");
         salvarPedidoButton.setFont(new Font("Arial", Font.BOLD, 14));
         salvarPedidoButton.setPreferredSize(new Dimension(150, 30));
-        buttonPanel.add(salvarPedidoButton);
 
-        add(itemQuantidadePanel, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
+        bottomPanel.add(new JLabel("Quantidade:"));
+        bottomPanel.add(quantidadeTextField);
+        bottomPanel.add(salvarPedidoButton);
 
-        // cor do fundo
+        // Adicionar os componentes ao layout principal
+        add(scrollPane, BorderLayout.CENTER);
+        add(bottomPanel, BorderLayout.SOUTH);
+
+        // Cor do fundo
         setBackground(Color.WHITE);
         getContentPane().setBackground(Color.WHITE);
     }
 
-    public JComboBox<String> getItemComboBox() {
-        return this.itemComboBox;
+    public JTable getCardapioTable() {
+        return cardapioTable;
+    }
+
+    public DefaultTableModel getTableModel() {
+        return tableModel;
     }
 
     public JTextField getQuantidadeTextField() {
-        return this.quantidadeTextField;
+        return quantidadeTextField;
     }
 
     public JButton getSalvarPedidoButton() {
-        return this.salvarPedidoButton;
+        return salvarPedidoButton;
     }
-
-    public void setQuantidade(int quantidade) {
-        quantidadeTextField.setText(String.valueOf(quantidade));
-    }
-
 }
