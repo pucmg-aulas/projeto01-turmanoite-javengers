@@ -20,6 +20,8 @@ public class ListarFaturamentoController {
         carregaTabela();
 
         this.view.getBtnPesquisa().addActionListener(e -> pesquisa());
+        this.view.getBtnExportar().addActionListener(e -> exportar());
+
         this.view.setVisible(true);
     }
 
@@ -61,5 +63,9 @@ public class ListarFaturamentoController {
                 });
 
         view.getTable().setModel(model);
+    }
+
+    private void exportar() {
+        pagamentos.gerarRelatorio();
     }
 }

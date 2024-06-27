@@ -44,9 +44,10 @@ public class ListarClienteController {
     private void carregaTabela() {
         DefaultTableModel model = new DefaultTableModel(new Object[] { "Nome", "CPF" }, 0);
 
-        List<Cliente> clienteList = clientes.getClientes();
-        clienteList.stream()
-                .map(cliente -> new Object[] { cliente.getNome(), cliente.getCpf() })
+        List<Atendimento> atendimentosList = atendimentos.getAtendimentos();
+        atendimentosList.stream()
+                .map(atendimento -> new Object[] { atendimento.getCliente().getNome(),
+                        atendimento.getCliente().getCpf() })
                 .forEach(model::addRow);
 
         view.getTbClientes().setModel(model);

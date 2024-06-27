@@ -7,6 +7,7 @@ import main.java.model.Atendimento;
 import main.java.model.Pedido;
 import main.java.view.FazerPedidoView;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class FazerPedidoController {
     private final FazerPedidoView view;
@@ -34,27 +35,40 @@ public class FazerPedidoController {
                 throw new NumberFormatException("A quantidade deve ser maior que zero.");
             }
 
-            String nomeAlimento = (String) view.getItemComboBox().getSelectedItem();
-            Alimento alimento = alimentos.buscarAlimentoPorNome(nomeAlimento);
-            if (alimento != null) {
-                Pedido pedido = new Pedido(alimento, quantidade);
-                atendimento.getComanda().addPedidos(pedido);
-                atendimentos.altera(atendimento, atendimento.getCliente().getCpf());
-                JOptionPane.showMessageDialog(view, "Pedido salvo com sucesso!");
+            int selectedRow = view.getCardapioTable().getSelectedRow();
 
-                this.view.dispose();
+            if (selectedRow >= 0) {
+                String nomeAlimento = (String) view.getCardapioTable().getValueAt(selectedRow, 0);
+
+                Alimento alimento = alimentos.buscarAlimentoPorNome(nomeAlimento);
+                if (alimento != null) {
+                    Pedido pedido = new Pedido(alimento, quantidade);
+                    atendimento.getComanda().addPedidos(pedido);
+                    atendimentos.altera(atendimento, atendimento.getCliente().getCpf());
+                    JOptionPane.showMessageDialog(view, "Pedido salvo com sucesso!");
+
+                    this.view.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(view, "Alimento não encontrado.", "Erro",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(view, "Alimento não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(view, "Selecione um alimento.", "Erro",
+                        JOptionPane.ERROR_MESSAGE);
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(view, "Quantidade inválida: " + e.getMessage(), "Erro",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(view, "Quantidade inválida.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void carregaComboBox() {
-    alimentos.getAlimentos().stream()
-             .map(Alimento::getNome)
-             .forEach(nome -> this.view.getItemComboBox().addItem(nome));
+        DefaultTableModel model = new DefaultTableModel(
+                new Object[] { "Nome", "Descrição", "Valor" }, 0);
+
+        alimentos.getAlimentos().stream().forEach(alimento -> {
+            model.addRow(new Object[] { alimento.getNome(), alimento.getDescricao(), "R$" + alimento.getValor() });
+        });
+
+        view.getCardapioTable().setModel(model);
     }
 }

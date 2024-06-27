@@ -14,7 +14,8 @@ public class ListarHistoricoController {
     public ListarHistoricoController() {
         this.historico = Historico.getInstance();
         this.view = new HistoricoAtendimentoView();
-        this.view.getBotaoPesquisar().addActionListener(e -> pesquisa());
+        this.view.getBotaoPesquisar().addActionListener(e -> pesquisar());
+        this.view.getBotaoExportar().addActionListener(e -> exportar());
         carregaTabela();
         this.view.setVisible(true);
     }
@@ -34,7 +35,7 @@ public class ListarHistoricoController {
         view.getTabelaHistorico().setModel(model);
     }
 
-    private void pesquisa() {
+    private void pesquisar() {
         String dateString = view.getCampoPesquisa().getText();
 
         LocalDate data;
@@ -58,5 +59,9 @@ public class ListarHistoricoController {
                 }));
 
         view.getTabelaHistorico().setModel(model);
+    }
+
+    private void exportar() {
+        historico.gerarRelatorio();
     }
 }
